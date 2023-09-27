@@ -1,0 +1,39 @@
+.common-dialog-box{
+  overflow: hidden;
+}
+.common-dialog-box ::v-deep .el-dialog__header{
+  padding: 16px 24px;
+}
+.common-dialog-box ::v-deep .el-dialog__title{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  color: #1D2129;
+}
+.common-dialog-box ::v-deep .el-dialog__headerbtn{
+  top: 16px;
+  right: 24px;
+  width: 24px;
+  height: 24px;
+  background: url('../../assets/images/dialog/close-icon.png') center center no-repeat;
+  background-size: 100% 100%;
+}
+.common-dialog-box ::v-deep .el-icon-close:before{
+  content: '';
+}
+.common-dialog-box ::v-deep .el-dialog {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.common-dialog-box ::v-deep .el-dialog__body {
+  padding: 30px;
+  flex-grow: 1;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}

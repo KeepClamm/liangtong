@@ -1,0 +1,9 @@
+<!-- <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 70 70">
+  <path transform="translate(15,15) scale(0.04,0.04)" d="M576,363L810,512L576,661zM342,214L576,363L576,661L342,810z"></path>
+</svg> -->
+
+<!-- 大的 播放 icon -->
+
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M98.895 77.2986C101.413 79.1238 101.413 82.8755 98.8951 84.7008L71.2547 104.74C68.2324 106.931 64 104.772 64 101.039V60.9607C64 57.2276 68.2324 55.0684 71.2547 57.2596L98.895 77.2986Z" fill="white"/>
+</svg>

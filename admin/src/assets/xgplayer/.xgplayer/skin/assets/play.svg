@@ -1,0 +1,9 @@
+<!-- <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <path transform="translate(2,2) scale(0.0320625 0.0320625)" d="M576,363L810,512L576,661zM342,214L576,363L576,661L342,810z"></path>
+</svg> -->
+
+<!-- 小的 播放 icon -->
+
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M16.0008 34.6654L24.6675 29.332V18.6654L16.0008 13.332V34.6654ZM24.6675 29.332L33.3341 23.9987L24.6675 18.6654V29.332Z" fill="white"/>
+</svg>

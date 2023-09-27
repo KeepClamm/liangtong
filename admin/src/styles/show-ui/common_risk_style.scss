@@ -1,0 +1,132 @@
+.risk-container {
+  height: calc(100% - 40px);
+}
+
+.short-crash-header {
+  padding: 24px 20px 16px;
+  background: #ffffff;
+  .header {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+    color: #1D2129;
+  }
+}
+
+.short-risk-overview {
+  background: #ffffff;
+  padding: 24px 20px;
+
+  .header {
+    color: #1d2129;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+
+    >img {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+    }
+
+    .sub-title {
+      font-family: "PingFang SC";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      color: #1d2129;
+    }
+  }
+
+  .subhead {
+    color: #1d2129;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .coefficient-left {
+    .emphasis {
+      padding: 16px;
+      width: 257px;
+      border: 1px solid #e7eaee;
+
+      >p {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        margin: 0;
+        padding: 0;
+        letter-spacing: 0.5px;
+        color: #72777b;
+      }
+
+      >div {
+        font-weight: 800;
+        font-size: 26px;
+        line-height: 31px;
+        letter-spacing: 0.5px;
+        color: #2d2d2d;
+      }
+
+      .progress-text {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 14px;
+        letter-spacing: 0.5px;
+        color: #2d2d2d;
+      }
+    }
+  }
+
+  .coefficient-right {
+    height: 270px;
+  }
+
+  .dealer-echar {
+    width: 512px;
+    height: 288px;
+  }
+
+  .height420 {
+    height: 420px;
+  }
+
+  .height288 {
+    height: 288px;
+  }
+}
+
+.posi-re {
+  position: relative;
+
+  >.calender {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: url("../../assets/images/cockpit-risk/day_icon.png") no-repeat 0 0 / 100% 100%;
+    top: 10px;
+    right: 9px;
+  }
+}
+
+::v-deep .posi-re .el-icon-date {
+  display: none;
+}
+
+::v-deep .posi-re .el-input__inner {
+  width: 258px;
+}
+
+::v-deep .posi-re .el-range__close-icon {
+  padding-right: 12px;
+}
+
+::v-deep .el-progress-bar__outer {
+  height: 4px !important;
+}
+
+::v-deep .posi-re .el-date-editor .el-range-separator {
+  color: #b5b5c3;
+}
