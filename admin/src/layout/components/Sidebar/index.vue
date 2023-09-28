@@ -1,9 +1,11 @@
 <template>
-  <div :class="{'has-logo':showLogo}">
-    <logo v-if="showLogo" :collapse="isCollapse" />
-
-    <div :class="{'h100': true, 'border-box w100 pl-24 pr-24': !isCollapse}">
-      <el-scrollbar wrap-class="scrollbar-wrapper">
+  <div :class="{'slide-item-box':true,'has-logo':showLogo}">
+    <!-- 原始 start -->
+    <!-- <logo v-if="showLogo" :collapse="isCollapse" /> -->
+    <!-- <div :class="{'h100': true, 'border-box w100 pl-24 pr-24': !isCollapse}"> -->
+    <!-- 原始 end -->
+    <div :class="{'h100 border-box w100': true}">
+      <el-scrollbar wrap-class="scrollbar-wrapper pt-24 pl-24 pr-24">
         <el-menu
           :default-active="activeMenu"
           :collapse="isCollapse"
@@ -60,7 +62,8 @@ export default {
       return variables
     },
     isCollapse() {
-      return !this.sidebar.opened
+      // return !this.sidebar.opened
+      return false;
     }
   },
   inject: ['isRouterAlive'],
@@ -94,6 +97,7 @@ export default {
       const CurWatchStock = getCurWatchStockInfo();
       // const curRouteName = this.$route.name || '/';
       let list = this.permission_routes;
+      let routeList = [];
 
       if (CurWatchStock) { // ['shortCrash', 'longCrash'].includes(curRouteName) && CurWatchStock
         list.forEach(item=>{
@@ -117,9 +121,21 @@ export default {
         });
       }
 
-      this.permissionRoutes = list;
+      list.forEach(item=> {
+        if (!item.hasOwnProperty('header')) {
+          routeList.push(item);
+        }
 
+        if (item.hasOwnProperty('header')) {
+          routeList.push(...item.children);
+        }
+      })
+
+      this.permissionRoutes = routeList;
     },
+    getItemRoute(route) {
+      console.log("---获取的内容g----",route);
+    }
   },
 
 

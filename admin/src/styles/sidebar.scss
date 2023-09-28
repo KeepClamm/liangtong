@@ -9,15 +9,15 @@
 
   .sidebar-container {
     transition: width 0.5s;
-    width: $sideBarWidth !important;
+    // width: $sideBarWidth !important;
     background-color: $menuBg;
     height: 100%;
-    position: fixed;
+    // position: fixed;
     font-size: 0px;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1001;
+    // top: 0;
+    // bottom: 0;
+    // left: 0;
+    // z-index: 1001;
     overflow: hidden;
 
     // reset element-ui css
@@ -41,7 +41,7 @@
       .el-scrollbar {
         // height: calc(100% - 50px);
         // height: calc(100% - 156px);
-        height: calc(100% - 125px);
+        // height: calc(100% - 125px);
       }
     }
 

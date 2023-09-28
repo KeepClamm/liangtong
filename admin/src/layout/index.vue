@@ -1,9 +1,17 @@
 <template>
   <div :class="classObj" class="app-wrapper">
+    <div class="header">
+      <navbar />
+    </div>
+    <div class="slidebar">
+      <sidebar class="sidebar-container" />
+    </div>
+    <div class="main-content">
+      <app-main />
+    </div>
 
-    <!-- <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" /> -->
-
-    <sidebar class="sidebar-container" />
+    <!-- 原始 start -->
+    <!-- <sidebar class="sidebar-container" />
 
     <div class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
@@ -11,8 +19,8 @@
       </div>
 
       <app-main />
-    </div>
-
+    </div> -->
+    <!-- 原始 end -->
   </div>
 </template>
 
@@ -58,6 +66,8 @@ export default {
 <style lang="scss" scoped>
   @import "~@/styles/mixin.scss";
   @import "~@/styles/variables.scss";
+  @import "~@/layout/common.scss";
+
 
   .app-wrapper {
     @include clearfix;
@@ -67,6 +77,30 @@ export default {
     &.mobile.openSidebar{
       position: fixed;
       top: 0;
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 3;
+      height: $headerHeight;
+      background: #f00;
+    }
+    .slidebar {
+      position: fixed;
+      top: $headerHeight;
+      left: 0;
+      width: $sliderWidth;
+      height: 100%;
+      z-index: 2;
+      background: #ff0;
+    }
+    .main-content {
+      padding-top: $headerHeight;
+      padding-left: $sliderWidth;
+      min-height: 100%;
     }
   }
   .drawer-bg {

@@ -30,11 +30,9 @@ export default {
 .sidebar-logo-container {
   position: relative;
   width: 100%;
-  height: 110px;
-  background: #FFF;
+  height: 100%;
   overflow: hidden;
   display: flex;
   align-items: center;
-  padding-bottom: 30px;
 }
 </style>

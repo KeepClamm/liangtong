@@ -1,38 +1,33 @@
 <template>
   <div class="navbar border-box w100 pl-0 pr-50 show-flex-box-r fs-0">
-    <!-- navbar border-box w100 pl-30 pr-30 show-flex-box-r fs-0 -->
     <div class="w100 h100 show-flex-box-r show-flex-sb">
-      <div class="input-bar fs-0 show-flex-box-r align-center">
-        <hamburger
-          :is-active="sidebar.opened"
-          class="hamburger-container mr-20 ml-30"
-          @toggleClick="toggleSideBar"
-        />
-        <el-autocomplete
-          style="width: 513px;"
-          v-model="keywords"
-          placeholder="主体名称/服务名称/服务代码..."
-          size="normal"
-          :clearable="false"
-          type="text"
-          :maxlength="50"
-          :debounce="500"
-          value-key="stockShortName"
-          :trigger-on-focus="false"
-          :fetch-suggestions="querySearchAsync"
-          @select="handleSelect"
-        >
-          <img
-            slot="prefix"
-            class="search-icon"
-            :src="searchIcon"
-          >
-        </el-autocomplete>
+      <div class="logo-box">
+        <!-- <logo /> -->
+      </div>
+      <div class="route-menu">
 
+
+      </div>
+      <div class="search-box">
+        <el-autocomplete style="width: 100%;"
+                         v-model="keywords"
+                         placeholder="主体名称/服务名称/服务代码..."
+                         size="normal"
+                         :clearable="false"
+                         type="text"
+                         :maxlength="50"
+                         :debounce="500"
+                         value-key="stockShortName"
+                         :trigger-on-focus="false"
+                         :fetch-suggestions="querySearchAsync"
+                         @select="handleSelect">
+          <span slot="prefix" class="h100 show-flex-box-r show-flex-center">
+            <img class="search-icon" :src="searchIcon">
+          </span>
+        </el-autocomplete>
       </div>
 
       <div class="right-menu show-flex-box-r fs-0">
-        <!-- <img :src="avatar" class="user-avatar mr-20" /> -->
         <img src="@/assets/images/layout/user-icon.png" class="user-avatar mr-20" />
 
         <div class="name-bar show-flex-box-c fs-0">
@@ -78,6 +73,8 @@
 
 <script>
 import { mapGetters } from "vuex";
+
+import Logo from './Sidebar/Logo'
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
 import changePwdDialog from './change-pwd-dialog';
@@ -86,6 +83,7 @@ const searchIcon = require('@/assets/images/layout/search-icon.png');
 
 export default {
   components: {
+    Logo,
     Breadcrumb,
     Hamburger,
     changePwdDialog,
@@ -110,7 +108,8 @@ export default {
   inject: ['reload'],
   methods: {
     toggleSideBar() {
-      this.$store.dispatch("app/toggleSideBar");
+      // 该项目去除导航大小变化
+      // this.$store.dispatch("app/toggleSideBar");
     },
     handleBtn(type){
       switch (type) {
@@ -163,32 +162,33 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/layout/common.scss";
+
 .navbar {
-  height: 80px;
   overflow: hidden;
-  // position: relative;
+  height: 100%;
   background: #FFFFFF;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   border-left: 1px solid #F8F9FE;
+  background: #D9ECFF;
 
-  .hamburger-container {
-    // line-height: 46px;
-    // height: 100%;
-    line-height: 40px;
-    height: 40px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s;
-    -webkit-tap-highlight-color: transparent;
+  .logo-box {
+    flex-shrink: 0;
+    overflow: hidden;
+    width: $sliderWidth;
+  }
 
-    &:hover {
-      // background: rgba(0, 0, 0, 0.025);
-      background: #F8F9FB;
-    }
+  .route-menu {
+    flex-grow: 1;
+  }
+
+  .search-box {
+    flex-shrink: 0;
+    width: 260px;
+    margin-right: 25px;
   }
 
   .right-menu {
-    height: 48px;
+    flex-shrink: 0;
 
     &:focus {
       outline: none;
