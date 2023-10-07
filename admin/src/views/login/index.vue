@@ -1,20 +1,79 @@
 <template>
-  <div class="login-wrap">
-    登录
+  <div class="login-wrap show-flex-box-c">
+    <div class="logo-box">
+      <h1 class="logo">
+        <img src="@/assets/logo.png">
+      </h1>
+    </div>
+    <div class="login-form show-flex-box-r">
+      <div class="login-box">
+        <div class="title">
+          <h2>登录</h2>
+        </div>
+        <el-form ref="loginForm" :model="loginForm" :rules="loginRules">
+          <el-form-item prop="account">
+            <el-input v-model="loginForm.account" placeholder="请输入账号"></el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input show-password v-model="loginForm.password" placeholder="请输入密码"></el-input>
+          </el-form-item>
+          <el-form-item prop="verificationCode">
+            <div class="verification-code-box show-flex-box-r">
+              <el-input v-model="loginForm.verificationCode" maxlength="4" placeholder="请输入验证码"></el-input>
+              <div class="code-image-box" @click="onCreateCode()">
+                <verification-code ref="verification_code_ref" :contentWidth="100" :contentHeight="36" />
+              </div>
+            </div>
+          </el-form-item>
+        </el-form>
+        <div class="login-btn">
+          <el-button type="primary" @click="confirmLogin">登录</el-button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 
+import verificationCode from './components/verification-code-comp';
+
 export default {
   name: "Login",
   components: {
-    
+    verificationCode
   },
-  
   data() {
+    const checkCode = (rule,value,callback) => {
+      if (!value) {
+        return callback(new Error('请输入验证码'));
+      }
+
+      if (this.authTrueCode.toLowerCase() != value.toLowerCase()) {
+        return callback(new Error('请输入正确的验证码'));
+      }
+
+      callback();
+    };
+
     return {
-      
+      loginForm: {
+        account: '',
+        password: '',
+        verificationCode: ''
+      },
+      authTrueCode: '',
+      loginRules: {
+        account: [
+          { required: true, message: '请输入账号', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' }
+        ],
+        verificationCode: [
+          { validator: checkCode, trigger: 'blur' }
+        ],
+      }
     };
   },
   computed: {
@@ -23,111 +82,90 @@ export default {
   watch: {
 
   },
+  mounted() {
+    this.onCreateCode();
+  },
   methods: {
-    
+    onCreateCode() {
+      this.$refs.verification_code_ref.autoDraw(({ code })=> {
+        this.authTrueCode = code;
+      })
+    },
+    confirmLogin() {
+      this.$refs['loginForm'].validate((valid) => {
+        if (valid) {
+          this.toLogin();
+        } else {
+          return false;
+        }
+      });
+    },
+    toLogin() {
+      let params = {
+
+      };
+
+      console.log(JSON.stringify(params));
+    },
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.login-container {
-  min-height: 100%;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-
-  .video-box {
-    position: relative;
-    height: 100vh;
-    background-color: #C1CFF7;
+  .login-wrap {
     overflow: hidden;
-
-    .video-background {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      min-height: 800px;
-    }
-  }
-
-
-  .login-container-center {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    color: #fff;
-
-    .header {
-      padding: 28px 40px 0 24px;
-      align-items: center;
-      font-style: normal;
-      font-weight: 600;
-      font-size: 16px;
-      line-height: 24px;
-
-      .deloitte-istock {
-        >img {
-          width: 216px;
-          height: 23.93px;
+    height: 100%;
+    background: #efefef;
+    .logo-box {
+      padding-top: 20px;
+      padding-left: 20px;
+      &>.logo {
+        display: block;
+        width: 200px;
+        height: 60px;
+        margin: 0;
+        &>img {
+          display: block;
+          width: 100%;
         }
       }
     }
-
-    .center {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    .login-form {
+      flex-grow: 1;
       justify-content: center;
-
-      .warning-mark {
-        width: 772px;
-        height: 199.84px;
-
-        .header-img {
-          text-align: center;
-
-          >img {
-            width: 196.97px;
-            height: 54.62px;
+      align-items: center;
+      padding-bottom: 150px;
+      user-select: none;
+      .login-box {
+        width: 325px;
+        padding: 25px;
+        box-sizing: border-box;
+        border-radius: 8px;
+        background: #fff;
+        .title {
+          margin-bottom: 35px;
+          &>h2 {
+            text-align: center;
+            font-size: 18px;
           }
         }
-
-        >p {
-          justify-content: space-between;
-          font-weight: 900;
-          font-size: 51.4056px;
-          line-height: 130%;
-          text-align: center;
-          letter-spacing: 0.06em;
-          color: #FFFFFF;
+        .verification-code-box {
+          .code-image-box {
+            overflow: hidden;
+            flex-shrink: 0;
+            width: 100px;
+            height: 36px;
+            margin-left: 10px;
+            background: #afafaf;
+          }
         }
-
-        .slogan {
-          font-weight: 400;
-          font-size: 22.49px;
-          line-height: 100%;
-          text-align: center;
-          letter-spacing: 0.56em;
-          // text-align-last: justify;
-          // text-justify:distribute-all-lines;
-          color: #FFFFFF;
+        .login-btn {
+          margin-top: 50px;
+          button {
+            width: 100%;
+          }
         }
-
       }
     }
   }
-
-}
-.transition-box {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
 </style>

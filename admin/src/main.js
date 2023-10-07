@@ -12,6 +12,7 @@ import '@/filter/filter';
 import '@/../static/js/polyfills.min.js';
 import '@/../static/js/directives.js';
 import '@/styles/index.scss'; // global css
+import '@/../static/css/reset.css'; // global css
 import 'normalize.css/normalize.css'; // A modern alternative to CSS resets
 import 'element-ui/lib/theme-chalk/index.css'; // element css file
 
