@@ -161,6 +161,7 @@ export default {
       this.getTableData(false);
     },
     handleSearch(params){
+      console.log('搜索内容', params)
       this.filterForm = params;
       this.getTableData(true);
     },

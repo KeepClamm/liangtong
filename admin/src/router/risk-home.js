@@ -18,12 +18,21 @@ export default [
       }
     },
     {
-      path: 'individual-stock-query',
-      name: 'IndividualStockQuery',
-      component: () => import('@/views/risk-home/individual-stock-query/index'),
+      path: '/individual',
+      component: Layout,
       meta: {
         title: '个股查询',
-      }
+        icon: 'ComparisonOfPeers',
+      },
+      redirect: '/individual/risk-inquiry',
+      children: [{
+        path: 'risk-inquiry',
+        name: 'RiskInquiry',
+        component: () => import('@/views/risk-home/individual-stock-query/risk-inquiry/index'),
+        meta: {
+          title: '个股风险查询',
+        }
+      }]
     },
     {
       path: 'peer-comparison',
