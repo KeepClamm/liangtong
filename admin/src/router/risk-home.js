@@ -18,28 +18,28 @@ export default [
       }
     },
     {
-      path: '/individual',
-      component: Layout,
-      meta: {
-        title: '个股查询',
-        icon: 'ComparisonOfPeers',
-      },
-      redirect: '/individual/risk-inquiry',
-      children: [{
-        path: 'risk-inquiry',
-        name: 'RiskInquiry',
-        component: () => import('@/views/risk-home/individual-stock-query/risk-inquiry/index'),
-        meta: {
-          title: '个股风险查询',
-        }
-      }]
-    },
-    {
       path: 'peer-comparison',
       name: 'PeerComparison',
       component: () => import('@/views/risk-home/peer-comparison/index'),
       meta: {
         title: '同业对比',
+      }
+    }]
+  },
+  {
+    path: '/individual',
+    component: Layout,
+    meta: {
+      title: '个股查询',
+      icon: 'ComparisonOfPeers',
+    },
+    redirect: '/individual/risk-inquiry',
+    children: [{
+      path: 'risk-inquiry',
+      name: 'RiskInquiry',
+      component: () => import('@/views/risk-home/individual-stock-query/risk-inquiry/index'),
+      meta: {
+        title: '个股风险查询',
       }
     }]
   },
