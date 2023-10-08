@@ -1,7 +1,7 @@
 import Storage from './storage';
 
-const TokenKey = 'dq_user_token';
-const UserInfoKey = 'dq_user_userinfo';
+const TokenKey = 'ct_user_token';
+const UserInfoKey = 'ct_user_userinfo';
 
 export function getToken() {
   return Storage.get(TokenKey);

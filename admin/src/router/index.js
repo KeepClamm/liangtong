@@ -45,29 +45,11 @@ export const constantRoutes = [
     path: '/',
     component: () => import('@/views/login/index'),
     hidden: true
-  },
-  ...riskHome,
+  }
 ]
 
 export const asyncRoutes = [
-  // {
-  //   path: '/peers-compare',
-  //   component: Layout,
-  //   meta: {
-  //     title: '同业对比',
-  //     icon: 'ComparisonOfPeers',
-  //   },
-  //   redirect: '/peers-compare/guarantee-list',
-  //   children: [{
-  //     // 标的及担保清单
-  //     path: 'guarantee-list',
-  //     name: 'GuaranteeList',
-  //     component: () => import('@/views/compare-of-peers/guarantee-list/index'),
-  //     meta: {
-  //       title: '标的及担保清单',
-  //     }
-  //   }]
-  // },
+  ...riskHome,
   // 404 page must be placed at the end !!!
   {
     path: '*',

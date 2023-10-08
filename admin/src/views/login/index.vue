@@ -20,14 +20,14 @@
           <el-form-item prop="verificationCode">
             <div class="verification-code-box show-flex-box-r">
               <el-input v-model="loginForm.verificationCode" maxlength="4" placeholder="请输入验证码"></el-input>
-              <div class="code-image-box" @click="onCreateCode()">
-                <verification-code ref="verification_code_ref" :contentWidth="100" :contentHeight="36" />
+              <div class="code-image-box" @click="updateAuthCode()">
+                <img :src="authCodeUrl" />
               </div>
             </div>
           </el-form-item>
         </el-form>
         <div class="login-btn">
-          <el-button type="primary" @click="confirmLogin">登录</el-button>
+          <el-button type="primary" :loading="loginLoading" @click="confirmLogin">登录</el-button>
         </div>
       </div>
     </div>
@@ -36,6 +36,7 @@
 
 <script>
 
+import { getLoginVerifyImage, userLogin } from '@/api/service/login';
 import verificationCode from './components/verification-code-comp';
 
 export default {
@@ -49,20 +50,17 @@ export default {
         return callback(new Error('请输入验证码'));
       }
 
-      if (this.authTrueCode.toLowerCase() != value.toLowerCase()) {
-        return callback(new Error('请输入正确的验证码'));
-      }
-
       callback();
     };
 
     return {
+      authCodeUrl: '',
+      loginLoading: false,
       loginForm: {
         account: '',
         password: '',
         verificationCode: ''
       },
-      authTrueCode: '',
       loginRules: {
         account: [
           { required: true, message: '请输入账号', trigger: 'blur' }
@@ -83,7 +81,7 @@ export default {
 
   },
   mounted() {
-    this.onCreateCode();
+    this.getAuthCodeImage();
   },
   methods: {
     onCreateCode() {
@@ -100,12 +98,38 @@ export default {
         }
       });
     },
+    updateAuthCode() {
+      this.getAuthCodeImage();
+    },
+    getAuthCodeImage() {
+      this.authCodeUrl = getLoginVerifyImage({
+        width: 100,
+        height: 36,
+        codeCount: 4
+      });
+    },
     toLogin() {
       let params = {
-
+        "account": this.loginForm.account,
+        "password": this.loginForm.password,
+        "code": this.loginForm.verificationCode
       };
 
-      console.log(JSON.stringify(params));
+      this.loginLoading = true;
+
+      userLogin(params)
+        .then((ret)=> {
+          const curData = ret.data;
+          // account: "admin"
+          // changePassword: null
+
+          if (curData.token) {
+            this.$store.dispatch('setToken',curData.token);
+            location.reload();
+          }
+        }).catch((err)=> {
+          this.loginLoading = false;
+        })
     },
   }
 };
@@ -115,10 +139,11 @@ export default {
   .login-wrap {
     overflow: hidden;
     height: 100%;
-    background: #efefef;
+    background: url("../../assets/login/logo_bg_1.png") left top no-repeat;
+    background-size: 100% 100%;
     .logo-box {
-      padding-top: 20px;
-      padding-left: 20px;
+      padding-top: 35px;
+      padding-left: 50px;
       &>.logo {
         display: block;
         width: 200px;

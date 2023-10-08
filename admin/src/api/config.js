@@ -17,8 +17,8 @@ function getBaseUrl() {
 const currentOrigin = getBaseUrl();
 const hasDeloitte = origin && origin.indexOf('deloitte') >= 0;
 const hasLocalhost = origin && origin.indexOf('localhost') >= 0;
-let domain = hasDeloitte ? currentOrigin : (hasLocalhost ? 'http://211.90.240.87:8088' : currentOrigin);
-let baseUrl = domain + '/istock-api';
+let domain = hasDeloitte ? currentOrigin : (hasLocalhost ? 'http://47.114.3.239:6808' : currentOrigin);
+let baseUrl = domain + '/api';
 
 const DOMAIN_NAME = {
   // URL_EASYMOCK: '', // 测试服 地址
