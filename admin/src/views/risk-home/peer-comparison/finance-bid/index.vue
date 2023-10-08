@@ -1,16 +1,16 @@
-<!-- eslint-disable vue/attribute-hyphenation -->
 <template>
+  <!-- 融资标的查询 -->
   <div class="container">
-    <router-view />
+    <select-options :radio-opts="radioOpts" :source="'finaceBid'" />
   </div>
 </template>
 
 <script>
-// import SelectOptions from './components/select-options.vue'
+import SelectOptions from '../components/select-options.vue'
 export default {
   name: 'FinanceBid',
   components: {
-    // SelectOptions
+    SelectOptions
   },
   data() {
     return {

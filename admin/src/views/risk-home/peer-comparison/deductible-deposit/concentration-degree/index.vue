@@ -1,30 +1,26 @@
-<!-- eslint-disable vue/attribute-hyphenation -->
 <template>
+  <!-- 集中度查询 -->
   <div class="container">
-    <router-view />
+    <select-options :radio-opts="radioOpts" :source="'finaceBid'" />
   </div>
 </template>
 
 <script>
-// import SelectOptions from './components/select-options.vue'
+import SelectOptions from '../../components/select-options.vue'
 export default {
   name: 'FinanceBid',
   components: {
-    // SelectOptions
+    SelectOptions
   },
   data() {
     return {
       radioOpts: [
         {
-          label: '融资标的保证金比例',
+          label: '集中度',
           value: 1
         },
         {
-          label: '调入调出',
-          value: 2
-        },
-        {
-          label: '融资标的保证金比例变动',
+          label: '集中度变动',
           value: 3
         }
       ]
