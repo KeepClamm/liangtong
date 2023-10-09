@@ -20,27 +20,29 @@ router.beforeEach(async(to, from, next) => {
   // determine whether the user has logged in
   const hasToken = getToken()
 
-  if (!hasToken) {
+  if (hasToken) {
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next({ path: '/' })
       NProgress.done()
     } else {
       const hasRoles = store.getters.roles && store.getters.roles.length > 0
-
+  
       if (hasRoles) {
         next()
       } else {
         try {
           const { rolesList } = await store.dispatch('getLoginUserInfo')
           const accessRoutes = await store.dispatch('permission/generateRoutes', rolesList)
+          const toRoute = to && to.name ? to : accessRoutes[0];
+          
           router.addRoutes(accessRoutes)
-  
-          next({ ...to, replace: true })
+          next({ ...toRoute, replace: true })
         } catch (error) {
           store.dispatch('LOGOUT').then(() => {
             location.reload() // 为了重新实例化vue-router对象 避免bug
           })
+
           NProgress.done();
         }
       }

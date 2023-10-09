@@ -2,11 +2,10 @@
   <div class="navbar border-box w100 pl-0 pr-50 show-flex-box-r fs-0">
     <div class="w100 h100 show-flex-box-r show-flex-sb">
       <div class="logo-box">
-        <!-- <logo /> -->
+        <logo />
       </div>
       <div class="route-menu">
-
-
+        <!-- <header-menu /> -->
       </div>
       <div class="search-box">
         <el-autocomplete style="width: 100%;"
@@ -74,7 +73,8 @@
 <script>
 import { mapGetters } from "vuex";
 
-import Logo from './Sidebar/Logo'
+import Logo from './Sidebar/Logo';
+import headerMenu from './Sidebar/header-menu';
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
 import changePwdDialog from './change-pwd-dialog';
@@ -87,6 +87,7 @@ export default {
     Breadcrumb,
     Hamburger,
     changePwdDialog,
+    headerMenu
   },
   data() {
     return {
@@ -179,6 +180,7 @@ export default {
 
   .route-menu {
     flex-grow: 1;
+    height: 100%;
   }
 
   .search-box {

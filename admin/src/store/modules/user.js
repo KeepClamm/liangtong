@@ -9,7 +9,7 @@ import {
   setCurWatchStockInfo,
 } from '@/utils/auth';
 
-// import { reqUserInfo } from '@/api/http-api';
+import { reqUserInfo } from '@/api/service/login';
 
 const user = {
   state: {
@@ -41,36 +41,39 @@ const user = {
       commit('SET_TOKEN', data);
     },
     getLoginUserInfo({ commit }) {
-      return new Promise((resolve, reject) => {
-        const rolesList = ["admin"];
-        // const rolesList = [];
+      // return new Promise((resolve, reject) => {
+      //   const rolesList = ["admin"];
+      //   // const rolesList = [];
 
-        const userInfo = {
-          account: "admin",
-          rolesList: rolesList,
-        };
+      //   const userInfo = {
+      //     account: "admin",
+      //     rolesList: rolesList,
+      //   };
 
-        commit('GET_USER', userInfo);
-        commit('SET_ROLES', rolesList);
-        resolve(userInfo);
+      //   commit('GET_USER', userInfo);
+      //   commit('SET_ROLES', rolesList);
+      //   resolve(userInfo);
 
-        // const userInfo = getUserInfo();
-        // commit('SET_ROLES', userInfo && userInfo.rolesList || []);
+      //   // const userInfo = getUserInfo();
+      //   // commit('SET_ROLES', userInfo && userInfo.rolesList || []);
         
-        // resolve(userInfo);
-      })
+      //   // resolve(userInfo);
+      // })
 
       return  new Promise((resolve, reject) => {
         reqUserInfo().then(ret => {
+          console.log("----获取的用户信息-----",ret);
           let userInfo = ret.data;
-          let rolesList = ['admin'];
+          let rolesList = [];
 
-          // if (userInfo.account == 'admin') {
-          //   rolesList.push('admin')
-          // } else {
-          //   rolesList = userInfo.permissions;
-          // }
+          if (userInfo.account == 'admin') {
+            rolesList.push('admin')
+          } else {
+            rolesList = userInfo.permissions;
+          }
+
           userInfo.rolesList = rolesList;
+          
           commit('GET_USER', userInfo)
           commit('SET_ROLES', rolesList)
           resolve(userInfo)

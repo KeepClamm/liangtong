@@ -1,23 +1,17 @@
 <template>
-  <div class="sidebar-logo-container" :class="{ collapse: collapse }">
-    <animate-logo :collapse="collapse" ref="animateLogoRef" />
+  <div class="sidebar-logo-container">
+    <span><img src="@/assets/logo.png" /></span>
   </div>
 </template>
 
 <script>
-import animateLogo from '@/components/show-ui/logo/animate-logo';
 
 export default {
   name: "SidebarLogo",
   components: {
-    animateLogo
+    
   },
-  props: {
-    collapse: {
-      type: Boolean,
-      required: true
-    }
-  },
+  props: {},
   data() {
     return {
 
@@ -28,11 +22,19 @@ export default {
 
 <style lang="scss" scoped>
 .sidebar-logo-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
   overflow: hidden;
   display: flex;
+  justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
+  &>span {
+    display: block;
+    width: 70%;
+    &>img  {
+      display: block;
+      width: 100%;
+    }
+  }
 }
 </style>
