@@ -1,12 +1,12 @@
 <template>
-  <div class='border-box w100 h100 idividual-stock-risk-box white-bg'>
-    <div class="w100 h100 show-flex-box-c">
+  <div class='card h100 risk-inquiry white-bg'>
+    <div class="h100 show-flex-box-c">
       <header class="show-flex-box-c">
         <div class="header-top-content show-flex-box-r">
           <p class="page-title mb-24">个股风险查询</p>
         </div>
 
-        <div class="w100 search-box mb-42 fs-0" v-if="searchList.length > 0">
+        <div class="search-box mb-42 fs-0" v-if="searchList.length > 0">
           <select-panel
             :showList="searchList"
             @handle-search="handleSearch"
@@ -18,6 +18,7 @@
         <basic-table
           :page="page"
           :limit="limit"
+          :loading="tableLoading"
           :prop-list="propConfig"
           :table-data="tableListData"
           @handle-page="handlePage"
@@ -75,7 +76,7 @@
 
 <script>
 import SelectPanel from '@/components/show-ui/search/select-panel';
-import BasicTable from '@/components/show-ui/table-comp';
+import BasicTable from '@/components/show-ui/table/basic-table';
 export default {
   name: "IndividualStockQuery",
   components: {
@@ -87,6 +88,7 @@ export default {
       page: 1,
       limit: 10,
       filterForm: {},
+      tableLoading: false,
       tableListData: {},
       propConfig: [
         { prop: 'stockCode', label: '股票代码',slotName: 'stockCode' },
@@ -171,8 +173,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
-
-
+.risk-inquiry {
+  position: relative;
+}
 </style>

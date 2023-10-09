@@ -6,6 +6,7 @@
         ref="dataTable"
         class="w100 table-line"
         height="100%"
+        v-loading="loading"
         header-row-class-name="custom-header-row"
         header-cell-class-name="custom-header-cell"
         :header-cell-style="{
@@ -226,7 +227,7 @@
 </template>
 
 <script>
-import pagination from '@/components/show-ui/pagination-comp';
+import pagination from './pagination-comp';
 
 export default {
   components: {
@@ -244,6 +245,10 @@ export default {
     stripe: {
       type: Boolean,
       default: false
+    },
+    loading: {
+      type: Boolean,
+      default: false,
     },
     border: {
       type: Boolean,
