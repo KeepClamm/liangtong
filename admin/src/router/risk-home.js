@@ -52,6 +52,14 @@ export default [
               title: '个股集中控制度查询',
             }
           },
+          {
+            path: 'risk-fluctuation',
+            name: 'RiskFluctuation',
+            component: () => import('@/views/risk-home/individual-stock-query/risk-fluctuation/index'),
+            meta: {
+              title: '风险波动概览',
+            }
+          },
         ]
       },
       {
