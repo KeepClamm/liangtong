@@ -34,13 +34,23 @@ export default [
       icon: 'ComparisonOfPeers',
     },
     redirect: '/individual/risk-inquiry',
-    children: [{
-      path: 'risk-inquiry',
-      name: 'RiskInquiry',
-      component: () => import('@/views/risk-home/individual-stock-query/risk-inquiry/index'),
-      meta: {
-        title: '个股风险查询',
-      }
-    }]
+    children: [
+      {
+        path: 'risk-inquiry',
+        name: 'IndividualRiskInquiry',
+        component: () => import('@/views/risk-home/individual-stock-query/risk-inquiry/index'),
+        meta: {
+          title: '个股风险查询',
+        }
+      },
+      {
+        path: 'equity-inquiry',
+        name: 'IndividualEquityInquiry',
+        component: () => import('@/views/risk-home/individual-stock-query/equity-inquiry/index'),
+        meta: {
+          title: '个股权益查询',
+        }
+      },
+    ]
   },
 ];
