@@ -6,6 +6,7 @@
       width="380px"
       center
       append-to-body
+      :show-close="showClose"
       :close-on-click-modal="false"
     >
       <el-form
@@ -59,7 +60,7 @@
         </div>
       </el-form>
       <span slot="footer">
-        <el-button @click="changePwdPopStatus = false">取 消</el-button>
+        <el-button v-if="showClose" @click="changePwdPopStatus = false">取 消</el-button>
         <el-button type="primary" :loading="submitting" @click="confirmChangePwd('form')">确 定</el-button>
       </span>
     </el-dialog>
@@ -68,8 +69,17 @@
 
 <script>
 
+import { userModifyPasswors } from '@/api/service/login';
+import { locale } from 'moment';
+
 export default {
   components: {},
+  props: {
+    showClose: {
+      type: Boolean,
+      default: true
+    }
+  },
   data() {
     const checkConfirmPwd = (rule, value, callback) => {
       if (value) {
@@ -152,6 +162,12 @@ export default {
             confirmPwd: this.form.confirmPassword, 
           };
 
+          userModifyPasswors(params)
+            .then((ret)=> {
+              this.submitting = false;
+            }).catch((err)=>{
+              this.submitting = false;
+            })
         } else {
           return false;
         }

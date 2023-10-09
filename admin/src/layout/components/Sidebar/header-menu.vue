@@ -20,7 +20,7 @@ export default {
   props: {},
   data() {
     return {
-      activeName: '',
+      activeName: 'home',
       routerList: [
         {name: 'home',title: '风险首页'},
         {name: 'management',title: '持仓管理'},
@@ -53,6 +53,18 @@ export default {
         .el-tabs__item {
           display: flex;
           align-items: center;
+          font-size: 18px;
+          font-weight: bold;
+          &:hover {
+            color: #1065A0;
+          }
+          &.is-active {
+            color: #1065A0;
+          }
+        }
+        .el-tabs__active-bar {
+          height: 3px;
+          background-color: #1065A0;
         }
       }
     }

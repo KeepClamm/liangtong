@@ -21,5 +21,5 @@ export function userlogout(data = {}, params = {}){
 }
 
 export function userModifyPasswors(params = {}, config = {}){
-  return axios.get('/user/modifyPassword', params);
+  return axios.put('/user/modifyPassword', params);
 }

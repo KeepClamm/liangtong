@@ -30,7 +30,7 @@ export default {
   height: 100%;
   &>span {
     display: block;
-    width: 70%;
+    width: 65%;
     &>img  {
       display: block;
       width: 100%;

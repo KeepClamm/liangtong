@@ -5,7 +5,7 @@
         <logo />
       </div>
       <div class="route-menu">
-        <!-- <header-menu /> -->
+        <header-menu />
       </div>
       <div class="search-box">
         <el-autocomplete style="width: 100%;"
@@ -64,7 +64,9 @@
 
     <!-- 修改密码 弹窗 -->
     <div>
-      <change-pwd-dialog ref="change-pwd-ref" @change-pwd="logout()" />
+      <change-pwd-dialog ref="change-pwd-ref"
+                         :showClose="!needChangePassword" 
+                         @change-pwd="logout()" />
     </div>
 
   </div>
@@ -105,8 +107,20 @@ export default {
     account(){
       return this.userinfo.account || '';
     },
+    needChangePassword() {
+      const userInfo = this.userinfo;
+      return userInfo && userInfo.account != 'admin' ? !userInfo.changePassword : false;
+    },
   },
   inject: ['reload'],
+  watch: {
+    changePassword() {
+      this.checkChangePasswordStatus();
+    }
+  },
+  mounted() {
+    this.checkChangePasswordStatus();
+  },
   methods: {
     toggleSideBar() {
       // 该项目去除导航大小变化
@@ -127,6 +141,13 @@ export default {
         location.reload(); // 为了重新实例化vue-router对象 避免bug
       });
     },
+    checkChangePasswordStatus() {
+      const needChange = this.needChangePassword;
+
+      if (needChange) {
+        this.$refs['change-pwd-ref'].open();
+      }
+    },
     // 搜索
     toSearch(){},
     querySearchAsync(queryString, cb) {
@@ -137,8 +158,6 @@ export default {
         cb(cacheData);
         return;
       }
-
-  
     },
     handleSelect(row) {
       this.keywords = '';
@@ -156,8 +175,6 @@ export default {
 
       this.$store.dispatch("setCurWatchStockInfo", info);
     },
-
-
   }
 };
 </script>
@@ -175,12 +192,17 @@ export default {
   .logo-box {
     flex-shrink: 0;
     overflow: hidden;
-    width: $sliderWidth;
+    width: $logoWidth;
   }
 
   .route-menu {
+    margin-left: -10px;
+    margin-right: 10px;
+    padding-left: 50px;
     flex-grow: 1;
     height: 100%;
+    background: url("../../assets/images/common/header_1.png") left top no-repeat;
+    background-size: auto 100%;
   }
 
   .search-box {

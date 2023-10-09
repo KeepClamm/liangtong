@@ -4,6 +4,7 @@ Vue.use(Router);
 
 import Layout from '@/layout';
 import riskHome from "./risk-home";
+import authorityManagement from "./authority-management";
 
 // risk-home
 // opinion-monitoring
@@ -50,6 +51,7 @@ export const constantRoutes = [
 
 export const asyncRoutes = [
   ...riskHome,
+  ...authorityManagement,
   // 404 page must be placed at the end !!!
   {
     path: '*',
