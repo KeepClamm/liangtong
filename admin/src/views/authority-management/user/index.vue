@@ -17,17 +17,20 @@
         </template>
       </basic-table>
     </div>
+    <add-edit-pop ref="add_edit_pop_ref"></add-edit-pop>
   </div>
 </template>
 
 <script>
 
 import BasicTable from '@/components/show-ui/table-comp';
+import addEditPop from './components/add-edit-pop-comp';
 
 export default {
   name: "AuthorityUser",
   components: {
-    BasicTable
+    BasicTable,
+    addEditPop
   },
   data() {
     return {
