@@ -3,6 +3,16 @@
     <div class="risk-wark-top">
       <div class="risk-warn-top-left">
         <div class="risk-warn-title">高危预警&评级下调</div>
+        <div style="width:20px;height:20px">
+          <el-popover placement="right" width="200" trigger="hover" content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
+            <img slot="reference" src="@/assets/images/common/warning-fill.png" alt="" style="width:100%;height:100%">
+          </el-popover>
+        </div>
+        <div v-if="isActive === 2" class="upgarte-container">
+          <el-select v-model="upgrateValue" placeholder="请选择">
+            <el-option v-for="item in upgradeOpts" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
+        </div>
       </div>
       <div class="risk-warn-top-right">
         <div class="risk-warn-top-right-date">
@@ -28,6 +38,7 @@ export default {
   data() {
     return {
       dateValue: '',
+      upgrateValue: 1,
       dateRange: '',
       tableData: [],
       tableRow: [
@@ -60,6 +71,10 @@ export default {
         { label: '高危预警个股展示', value: 1 },
         { label: '评级调整个股展示', value: 2 }
       ],
+      upgradeOpts: [
+        { label: '评级下调', value: 1 },
+        { label: '评级上调', value: 2 }
+      ],
       isActive: 1
     }
   },
@@ -89,6 +104,15 @@ export default {
 ::v-deep.el-range-editor--medium .el-range-input {
     background: #f2f3f5;
 }
+::v-deep .risk-warn-top-left .el-select>.el-input {
+  width: 120px;
+}
+::v-deep .risk-warn-top-left .el-input--medium .el-input__inner {
+ height: 28px;
+}
+::v-deep .risk-warn-top-left .el-input--medium .el-input__icon {
+  line-height: 28px;
+}
 .is-active {
     background-color: #fff;
     color: #00a3e0 !important;
@@ -104,16 +128,21 @@ export default {
             display: flex;
             align-items: center;
             .risk-warn-title {
-                font-weight: 500;
-                font-size: 20px;
-                color: #1d2129;
-                margin-right: 10px;
+              white-space: nowrap;
+              font-weight: 500;
+              font-size: 20px;
+              color: #1d2129;
+              margin-right: 10px;
+            }
+            .upgarte-container {
+              margin-left: 10px;
             }
         }
         .risk-warn-top-right {
             display: flex;
             align-items: center;
             .risk-warn-top-right-radio {
+                white-space: nowrap;
                 height: 36px;
                 padding: 4px;
                 margin-left: 15px;
@@ -131,6 +160,7 @@ export default {
                 }
             }
             .risk-warn-top-right-button {
+                white-space: nowrap;
                 padding: 4px 8px;
                 background:#f2f3f5;
                 border-radius: 3px;

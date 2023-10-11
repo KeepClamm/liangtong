@@ -6,11 +6,9 @@
 </template>
 
 <script>
-// import SelectOptions from './components/select-options.vue'
 export default {
   name: 'FinanceBid',
   components: {
-    // SelectOptions
   },
   data() {
     return {
@@ -44,10 +42,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-div {
-  font-size: 14px;
-  box-sizing: border-box;
-}
 .container {
   width: 100%;
   height: 100%;

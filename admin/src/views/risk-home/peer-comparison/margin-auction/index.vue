@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="box-container">
     <select-options :radio-opts="radioOpts" :source="'marginAuction'" />
   </div>
 </template>
@@ -47,9 +47,8 @@ div {
   font-size: 14px;
   box-sizing: border-box;
 }
-.container {
+.box-container {
   width: 100%;
   height: 100%;
-  padding: 32px 32px 0px 32px;
 }
 </style>

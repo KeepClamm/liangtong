@@ -9,7 +9,9 @@
             <div class="content-item-top">{{ item.title }}</div>
             <div class="content-item-main">
               <div class="content-item-main-num">{{ item.today }}</div>
-              <div v-if="item.today && item.yesterday" class="content-item-main-compare">{{ item.today > item.yesterday ? '增加' : '减少' }}</div>
+              <div v-if="item.today && item.yesterday" class="content-item-main-compare">
+                <img :src="item.today > item.yesterday ? iconList[0] : iconList[1]" class="wh100"/>
+              </div>
               <div class="content-item-main-compare-yestreday">昨日 {{ item.yesterday }}</div>
             </div>
           </div>
@@ -40,8 +42,12 @@ export default {
   },
   data() {
     return {
+      iconList: [
+        require("@/assets/images/cockpit-risk/arrow-up.png"),
+        require("@/assets/images/cockpit-risk/arrow-down.png")
+      ],
       mockData: [
-        { title: '评级下调个数', today: 120, yesterday: 180, id: 1 },
+        { title: '评级下调个数', today: 120, yesterday: 10, id: 1 },
         { title: '评级上调个数', today: 20, yesterday: 50, id: 2 },
         { title: '当日全时长平均折算率', today: '66%', yesterday: '72%', id: 3 },
         { title: '负面舆情个数', today: 30, yesterday: 123, id: 4 },
@@ -68,6 +74,10 @@ div {
 .el-col-5 {
   width: 20%;
 }
+.wh100 {
+  width: 100%;
+  height: 100%;
+}
 .risk-cockpit-wrap {
   overflow: auto;
   padding: 30px;
@@ -93,6 +103,7 @@ div {
       flex-direction: column;
       justify-content: space-between;
       .content-item-top {
+        white-space: nowrap;
         font-weight: 400;
         font-size: 12px;
         line-height: 20px;
@@ -103,6 +114,7 @@ div {
         flex-direction: row;
         align-items: flex-end;
         .content-item-main-num {
+          white-space: nowrap;
           font-weight: 700;
           font-size: 28px;
           line-height: 28px;
@@ -110,13 +122,17 @@ div {
           padding-right: 14px;
         }
         .content-item-main-compare {
+          white-space: nowrap;
           font-weight: 400;
           font-size: 12px;
           line-height: 17px;
           color: #012169;
           margin-right: 10px;
+          width: 18px;
+          height: 18px;
         }
         .content-item-main-compare-yestreday {
+          white-space: nowrap;
           font-weight: 400;
           font-size: 12px;
           line-height: 17px;

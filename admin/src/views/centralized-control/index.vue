@@ -1,20 +1,20 @@
 <template>
   <div class="template">
-    
+    <router-view />
   </div>
 </template>
 
 <script>
 
 export default {
-  name: "Template",
+  name: 'Template',
   components: {
-    
+
   },
   data() {
     return {
-      
-    };
+
+    }
   },
   computed: {
 
@@ -23,14 +23,11 @@ export default {
 
   },
   methods: {
-    
+
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
-
-
-
 
 </style>

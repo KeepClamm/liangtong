@@ -30,32 +30,49 @@
           <div v-for="item in radioOpts" :key="item.value" class="radio-container-content-text" :class="{'radio-active': radioActive === item.value}" @click="handleRadio(item)">{{ item.label }}</div>
         </div>
       </div>
-      <el-button
-        size="small"
-        type="primary"
-        icon="el-icon-download"
-        class="export-button-color"
-        @click="handleExport"
-      >数据导出</el-button>
+      <div class="component-header-buttons-item button-color" @click="handleExport">导出</div>
     </div>
     <div class="table-container">
       <!-- 表格 -->
       <el-table tooltip-effect="dark" style="width: 100%" :data="tableData" :cell-style="cellStyle" :header-cell-style="rowClass" border>
-        <el-table-column v-for="item in tableRow" :key="item.label" :prop="item.prop" :label="item.label" />
+        <template v-for="item in tableRow">
+          <el-table-column v-if="item.prop !== 'test06' && item.prop !== 'test07'" :key="item.label" :prop="item.prop" :label="item.label" />
+          <el-table-column v-if="item.prop == 'test06'" :key="item.label" :prop="item.prop" :label="item.label" sortable :filters="getfilterNameItem()" column-key="filterTag" :filter-method="filterChange">
+            <template slot-scope="scope">
+              <el-popover trigger="hover" placement="right" content="测试测试测111试">
+                <div slot="reference">
+                  <span>{{ scope.row['test06'] }}</span>
+                </div>
+              </el-popover>
+            </template>
+          </el-table-column>
+          <el-table-column v-if="item.prop == 'test07'" :key="item.label" :prop="item.prop" :label="item.label" sortable>
+            <template slot-scope="scope">
+              <el-popover trigger="hover" placement="right" content="312321321">
+                <div slot="reference">
+                  <span>{{ scope.row['test07'] }}</span>
+                </div>
+              </el-popover>
+            </template>
+          </el-table-column>
+        </template>
       </el-table>
       <!-- 分页 -->
-      <el-pagination :current-page="page" :page-size="limit" :total="total" layout="total, sizes, prev, pager, next, jumper" @size-change="handleLimitChange" @current-change="handlePageChange">
-        1
-      </el-pagination>
+      <div class="page-container">
+        <!-- <el-pagination :current-page="page" :page-size="limit" :total="total" layout="total,->,sizes, prev, pager, next, jumper" @size-change="handleLimitChange" @current-change="handlePageChange" /> -->
+          <pagination class="mt-24" :total="10" :current-page="1" :cur-limit="10" :showRecods="1"></pagination>
+      </div>
     </div>
 
   </div>
 </template>
 
 <script>
+import pagination from '@/components/show-ui/table/pagination-comp.vue'
 export default {
 
   components: {
+    pagination
   },
   props: {
     radioOpts: { type: Array, default: () => ([]) },
@@ -155,7 +172,13 @@ export default {
           prop: 'test08'
         }
       ],
-      tableData: [],
+      tableData: [
+        { 'test01': '000001', 'test02': '平安银行', 'test03': '主板', 'test04': '审批制', 'test06': 6, 'test07': 6 },
+        { 'test01': '000002', 'test02': '平安银行', 'test03': '主板2', 'test04': '审批制', 'test06': 2, 'test07': 1 },
+        { 'test01': '000003', 'test02': '平安银行', 'test03': '主板3', 'test04': '审批制', 'test06': 40, 'test07': 16 },
+        { 'test01': '000004', 'test02': '平安银行', 'test03': '主板4', 'test04': '审批制', 'test06': 20, 'test07': 3 },
+        { 'test01': '000001', 'test02': '平安银行', 'test03': '主板5', 'test04': '审批制', 'test06': 11, 'test07': 45 }
+      ],
       radioActive: 1, // 单选按钮高亮
       page: 1,
       limit: 5,
@@ -171,7 +194,6 @@ export default {
     }
   },
   created() {
-    console.log(this.source)
   },
   methods: {
     rowClass({ row, rowIndex }) {
@@ -197,6 +219,21 @@ export default {
     handleRadio(item) {
       this.radioActive = item.value
     },
+    // 表格的筛选
+    getfilterNameItem() {
+      const filterArr = [
+        { text: '10', value: 10 },
+        { text: '6', value: 6 },
+        { text: '1', value: 1 },
+        { text: '20', value: 20 }
+      ]
+      return filterArr
+    },
+    // 表格筛选结果
+    filterChange(value, row, column) {
+      const property = column['property']
+      return row[property] === value
+    },
     handlefinaceBid() {
       const that = this
       if (that.radioActive === 1) {
@@ -206,6 +243,7 @@ export default {
       } else {
         that.tableRow.splice(5, 2, { label: '上调券商数', prop: 'test06' }, { label: '下调券商数', prop: 'test07' })
       }
+      console.log('tableRow', that.tableRow)
     },
     handleMarginAuction() {
 
@@ -226,11 +264,28 @@ export default {
     height: 100%;
     border-radius: 4px;
   }
+  ::v-deep .el-input--medium .el-input__inner {
+    height: 28px;
+    line-height: 28px;
+  }
+  ::v-deep .el-input__icon {
+    line-height: inherit;
+  }
+
   ::v-deep .el-select>.el-input {
     width: 120px;
   }
   ::v-deep .el-date-editor.el-input, .el-date-editor.el-input__inner {
     width: 200px;
+  }
+  .component-header-buttons-item {
+      padding: 6px 20px;
+      font-size: 14px;
+      background-color: #012169;
+      color: #fff;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-right: 8px;
   }
   .export-button-color {
     background-color: #0f58d5;
@@ -238,6 +293,8 @@ export default {
   .peer-comparison-wrap {
     width: 100%;
     height: 100%;
+    padding: 24px 20px;
+    background-color: #fff;
     .finance-bid-select-top {
       width: 100%;
       display: flex;
@@ -247,12 +304,14 @@ export default {
       align-items: center;
         .margin-20 {
           margin-right: 20px;
+          min-width: 60px;
         }
       }
     }
     .finance-bid-radio {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       margin-top: 30px;
       .radio-container {
         height: 36px;
@@ -264,6 +323,7 @@ export default {
             height: 100%;
             display: flex;
             .radio-container-content-text {
+                white-space: nowrap;
                 font-weight: 600;
                 padding: 0px 24px 0px 24px;
                 color: #68717f;
@@ -277,8 +337,11 @@ export default {
         height: 600px;
         width: 100%;
         background-color: #fff;
-        padding: 16px;
+        // padding: 16px;
         margin-top: 20px;
+    }
+    .page-container {
+      margin-top: 20px;
     }
   }
   </style>

@@ -7,11 +7,6 @@
         <el-select v-model="selectValue" placeholder="请选择">
           <el-option v-for="item in selectOpts" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
-        <div style="width:20px;height:20px">
-          <el-popover placement="right" width="200" trigger="hover" content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
-            <img slot="reference" src="@/assets/images/common/warning-fill.png" alt="" style="width:100%;height:100%">
-          </el-popover>
-        </div>
       </div>
       <div class="assessment-top-right">
         <div v-for="item in radioOpts" :key="item.value" :class="{'is-active': item.value === isActive}" @click="handleRadioClick(item.value)">{{ item.label }}</div>
@@ -67,6 +62,7 @@ export default {
         { label: '短期暴跌预警', value: 1 },
         { label: '长期趋势预警', value: 2 }
       ],
+      testArr: [1000, 2400, 1200, 1400, 1600],
       isActive: 1
     }
   },
@@ -91,8 +87,15 @@ export default {
       const that = this
       that.isActive = value
     },
+    // 求和
+    sum(arr) {
+      return eval(arr.join('+'))
+    },
     // 初始化echarts
     initEchart() {
+      const that = this
+      const testValue = [...that.testArr]
+      that.testArr = testValue.map(item => Math.round(parseFloat(item) / parseFloat(that.sum(testValue)) * 10000) / 100)
       const barEchart = echarts.init(document.getElementById('bar01'))
       const lineChart = echarts.init(document.getElementById('lineChart'))
       barEchart.setOption({
@@ -106,47 +109,134 @@ export default {
           x: 'center',
           y: 'bottom'
         },
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'cross',
-            crossStyle: {
-              color: '#999'
-            }
-          }
-        },
+        // tooltip: {
+        //   trigger: 'axis',
+        //   axisPointer: {
+        //     type: 'cross',
+        //     crossStyle: {
+        //       color: '#999'
+        //     }
+        //   }
+        // },
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
+          data: ['SR1', 'SR2', 'SR3', 'SR4', 'SR5'],
+          axisTick: { show: false },
+          axisLabel: {
+            interval: 0,
+            textStyle: {
+              color: '#666666'
+            }
+          },
+          axisLine: { lineStyle: { color: '#dddddd' }}
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          name: '单位（%）',
+          nameGap: 35
         },
         series: [
           {
             name: '收入',
             type: 'bar',
-            data: [7000, 7100, 7200, 7300, 7400],
+            data: that.testArr,
             barWidth: 20,
             itemStyle: {
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: '#83bff6' },
-                { offset: 0.5, color: '#188df0' },
-                { offset: 1, color: '#188df0' }
-              ])
+              emphasis: {
+                label: {
+                  show: true,
+                  formatter: function(params) {
+                    const num = Math.round(that.sum(testValue) * params.data / 100)
+                    return `人数 ${num} 人 \n 占比 ${params.data}%`
+                  },
+                  backgroundColor: 'rgba(61,126,255,0.09)',
+                  borderColor: '#3d7eff',
+                  borderWidth: 0.5,
+                  borderRadius: 2,
+                  padding: 6,
+                  position: 'top',
+                  textStyle: {
+                    fontSize: 14,
+                    marginLeft: 0,
+                    lineHeight: 20
+                  }
+                }
+              }
             }
           }
         ]
       })
       lineChart.setOption({
+        title: {
+          show: true,
+          text: '两融折算率分布图',
+          textStyle: {
+            fontWeight: 'bold',
+            fontSize: 18
+          },
+          x: 'center',
+          y: 'bottom'
+        },
+        legend: {
+          orient: 'horizontal',
+          x: 'right',
+          y: 'top',
+          textStyle: {
+            fontSize: 12
+          },
+          data: [
+            {
+              name: '德勤折算率'
+            },
+            {
+              name: '其他券商折算率'
+            }
+          ]
+        },
         xAxis: {
           data: ['A', 'B', 'C', 'D', 'E']
         },
         yAxis: {},
         series: [
           {
+            name: '德勤折算率',
             data: [10, 22, 28, 23, 19],
             type: 'line',
+            smooth: true,
+            areaStyle: {
+              normal: {
+                color: {
+                  type: 'linear',
+                  x: 0,
+                  y: 0,
+                  x2: 0,
+                  y2: 1,
+                  colorStops: [
+                    {
+                      offset: 0,
+                      color: '#bdcff2'
+                    },
+                    {
+                      offset: 1,
+                      color: '#FFF'
+                    }
+                  ]
+                }
+              }
+            },
+            itemStyle: {
+              normal: {
+                lineStyle: {
+                  width: 5
+                }
+              }
+            }
+          },
+          {
+            name: '其他券商折算率',
+            data: [1, 3, 0, 5, 2],
+            type: 'line',
+            color: '#00b3f6',
             smooth: true
           }
         ]
@@ -180,17 +270,20 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-bottom: 16px;
         .assessment-top-left {
             display: flex;
             align-items: center;
             & div{
-                font-weight: 500;
-                font-size: 20px;
-                color: #1d2129;
-                margin-right: 10px;
+              white-space: nowrap;
+              font-weight: 500;
+              font-size: 20px;
+              color: #1d2129;
+              margin-right: 10px;
             }
         }
         .assessment-top-right {
+            white-space: nowrap;
             height: 36px;
             padding: 4px;
             background: #f2f3f5;

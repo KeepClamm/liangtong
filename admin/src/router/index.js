@@ -2,15 +2,15 @@ import Vue from 'vue';
 import Router from 'vue-router';
 Vue.use(Router);
 
-import Layout from '@/layout';
-import riskHome from "./risk-home";
-import authorityManagement from "./authority-management";
+import Layout from '@/layout'
+import riskHome from './risk-home'
+import centralizedControl from './centralized-control'
+import authorityManagement from './authority-management'
 
 // risk-home
 // opinion-monitoring
 // authority-management
 // centralized-control
-
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -52,6 +52,7 @@ export const constantRoutes = [
 export const asyncRoutes = [
   ...riskHome,
   ...authorityManagement,
+  ...centralizedControl,
   // 404 page must be placed at the end !!!
   {
     path: '*',
