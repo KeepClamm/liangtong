@@ -28,7 +28,7 @@
 
 import { getRoleList,deleteRole } from '@/api/service/authority';
 
-import BasicTable from '@/components/show-ui/table-comp';
+import BasicTable from '@/components/show-ui/table/basic-table';
 import addEditPop from './components/add-edit-pop-comp';
 import { Loading } from 'element-ui';
 

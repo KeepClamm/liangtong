@@ -15,7 +15,6 @@ export default {
   name: "search-bar-comp",
   data() {
     return {
-      filename: "workbench-module"
     };
   },
   computed: {},
