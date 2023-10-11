@@ -78,7 +78,7 @@ export default {
       this.sendData(selectedCodeList);
     },
     onChangeData() {
-      this.$emit("update:selected", []);
+
     },
     sendData(list) {
       this.$emit("update:selected", list);

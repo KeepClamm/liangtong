@@ -25,8 +25,8 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="confirm-btn show-flex-box-r">
-          <el-button :loading="submitLoading" @click="close()">取 消</el-button>
-          <el-button :loading="submitLoading" type="primary" @click="onConfirm">确 定</el-button>
+          <el-button :loading="submitLoading" size="mini" @click="close()">取 消</el-button>
+          <el-button :loading="submitLoading" class="dark-blue-primary-button" size="mini" type="primary" @click="onConfirm">确 定</el-button>
         </div>
       </div>
     </el-dialog>
@@ -35,7 +35,7 @@
 
 <script>
 
-import { getAuthTree,addRole,editRole } from '@/api/service/authority';
+import { getAuthTree,addRole,editRole,getRoleDetail } from '@/api/service/authority';
 
 import menuTree from './menu-tree-comp';
 
@@ -46,6 +46,8 @@ export default {
   },
   data() {
     return {
+      editId: '',
+      roleDetail: null,
       popTitle: '添加',
       addEditRolePopShowStatus: false,
       roleRules: {
@@ -72,6 +74,11 @@ export default {
         initiate: false,
         approve: false,
       },
+      roleFormKeyName: {
+        export: 'DataExport',
+        initiate: 'SubjectAdjustLaunch',
+        approve: 'SubjectAdjustAudit',
+      },
       permissionTree: [],
       submitLoading: false,
       openCallback: null,
@@ -87,15 +94,27 @@ export default {
     this.getServiceAuthTree();
   },
   methods: {
-    open(callback) {
+    open(callback,data) {
       this.addEditRolePopShowStatus = true;
       this.openCallback = callback;
+      this.editId = data ? data.id : '';
+      this.getRoleDetailById();
     },
     close() {
       this.$refs['add_edit_pop_form'].resetFields();
       
+      this.roleDetail = null;
       this.addEditRolePopShowStatus = false;
       this.submitLoading = false;
+    },
+    resetRoleForm() {
+      this.roleForm = {
+        name: '',
+        tree: [],
+        export: false,
+        initiate: false,
+        approve: false,
+      };
     },
     onBeforeClose() {
 
@@ -109,21 +128,70 @@ export default {
         }
       });
     },
+    setRoleShowInfo() {
+      const detail = this.roleDetail || {};
+      const { name,permission } = detail;
+
+      if (!name) {
+        return;
+      }
+
+      const keyNameMap = this.roleFormKeyName;
+
+      this.roleForm = {
+        name: name,
+        tree: permission,
+        export: permission.indexOf(keyNameMap['export']) != -1,
+        initiate: permission.indexOf(keyNameMap['initiate']) != -1,
+        approve: permission.indexOf(keyNameMap['approve']) != -1,
+      };
+    },
     getServiceAuthTree() {
       getAuthTree()
         .then((ret)=> {
           this.permissionTree = ret.data;
         }).catch((err)=> {})
     },
-    addEdit() {
-      this.submitLoading = true;
+    getRoleDetailById() {
+      if (!this.editId) {
+        return;
+      }
 
+      getRoleDetail({id: this.editId})
+        .then((ret)=> {
+          this.roleDetail = ret.data;
+          this.setRoleShowInfo();
+        }).catch((err)=> {})
+    },
+    addEdit() {
+      // this.submitLoading = true;
+
+      const formData = JSON.parse(JSON.stringify(this.roleForm));
+      const formKeyMap = this.roleFormKeyName;
       let params = {
-        name: this.roleForm.name,
-        permission: this.roleForm.tree,
+        name: formData.name,
+        permission: formData.tree,
       };
+      let clientModel = addRole;
+
+      if (formData.export) {
+        params.permission.push(formKeyMap['export']);
+      }
+
+      if (formData.initiate) {
+        params.permission.push(formKeyMap['initiate']);
+      }
+
+      if (formData.approve) {
+        params.permission.push(formKeyMap['approve']);
+      }
+
+      if (this.editId) {
+        clientModel = editRole;
+        params.id = this.editId;
+      }
       
-      addRole(params)
+      clientModel(params)
         .then((ret)=> {
           this.openCallback && this.openCallback({
             type: 'success',
@@ -144,7 +212,7 @@ export default {
   .add-edit-pop-wrap {
     .confirm-btn {
       margin-top: 10px;
-      justify-content: flex-end;
+      justify-content: center;
     }
   }
 </style>

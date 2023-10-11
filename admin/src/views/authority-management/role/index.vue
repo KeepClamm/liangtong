@@ -2,7 +2,7 @@
   <div class="role-wrap show-flex-box-c">
     <div class="top-title-box show-flex-box-r">
       <h2>账号管理</h2>
-      <el-button type="primary" icon="el-icon-plus" @click="onHandleTableCell('add')">添加角色</el-button>
+      <el-button class="dark-blue-primary-button" size="mini" icon="el-icon-plus" @click="onHandleTableCell('add')">添加角色</el-button>
     </div>
     <div class="table-box">
       <basic-table :propList="propConfig"
@@ -85,7 +85,7 @@ export default {
             // }
 
             this.getServiceRoleList();
-          },row ? {id: row.id} : null);
+          },row);
         break;
         case 'delete':
           this.$confirm(`确认删除角色「${row.name}」吗？`, '提示', {
@@ -162,7 +162,7 @@ export default {
 
 <style lang="scss" scoped>
   .role-wrap {
-    padding: 20px;
+    padding: 30px;
     height: 100%;
     box-sizing: border-box;
     .top-title-box,

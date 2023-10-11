@@ -22,6 +22,9 @@ export default {
   watch: {
 
   },
+  mounted() {
+
+  },
   methods: {
     
   }

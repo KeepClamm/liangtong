@@ -8,24 +8,24 @@
                :before-close="onBeforeClose">
       <div class="add-edit-handle-box form-line-wrap">
         <el-form ref="add_edit_pop_form" :model="roleUserForm" :rules="roleUserRules">
-          <el-form-item label="姓名：" prop="name">
-            <el-input v-model="roleUserForm.name" autocomplete="off"></el-input>
+          <el-form-item label="姓名：" prop="realName">
+            <el-input v-model="roleUserForm.realName" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="工号：" prop="jobNumber">
-            <el-input v-model="roleUserForm.jobNumber" autocomplete="off"></el-input>
+          <el-form-item label="工号：" prop="employeeNo">
+            <el-input v-model="roleUserForm.employeeNo" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="部门名称：" prop="departmentName">
             <el-input v-model="roleUserForm.departmentName" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="岗位名称：" prop="postName">
-            <el-input v-model="roleUserForm.postName" autocomplete="off"></el-input>
+          <el-form-item label="岗位名称：" prop="positionName">
+            <el-input v-model="roleUserForm.positionName" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="手机号：" prop="phone">
             <el-input v-model="roleUserForm.phone" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="角色名称：" prop="role">
+          <el-form-item label="角色名称：" prop="roleId">
             <!-- multiple -->
-            <el-select v-model="roleUserForm.role" placeholder="请选择">
+            <el-select v-model="roleUserForm.roleId" placeholder="请选择">
               <el-option v-for="item in roleList"
                          :key="item.id"
                          :label="item.name"
@@ -35,8 +35,8 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="confirm-btn show-flex-box-r">
-          <el-button :loading="submitLoading" @click="close()">取 消</el-button>
-          <el-button :loading="submitLoading" type="primary" @click="onConfirm">确 定</el-button>
+          <el-button :loading="submitLoading" size="mini" @click="close()">取 消</el-button>
+          <el-button :loading="submitLoading" class="dark-blue-primary-button" size="mini" type="primary" @click="onConfirm">确 定</el-button>
         </div>
       </div>
     </el-dialog>
@@ -45,7 +45,7 @@
 
 <script>
 
-import { getRoleList } from '@/api/service/authority';
+import { getRoleList,addAdminUser,editAdminUser } from '@/api/service/authority';
 
 export default {
   name: "AddEditUserPop",
@@ -54,36 +54,37 @@ export default {
   },
   data() {
     return {
+      editId: '',
       popTitle: '添加',
       addEditRoleUserPopShowStatus: false,
       roleList: [],
       roleUserRules: {
-        name: [
+        realName: [
           { required: true, message: '请输入姓名', trigger: 'blur' },
         ],
-        jobNumber: [
+        employeeNo: [
           { required: true, message: '请输入工号', trigger: 'blur' },
         ],
         departmentName: [
           { required: true, message: '请输入部门名称', trigger: 'blur' },
         ],
-        postName: [
+        positionName: [
           { required: true, message: '请输入岗位名称', trigger: 'blur' },
         ],
         phone: [
           { required: true, message: '请输入手机号', trigger: 'blur' },
         ],
-        role: [
+        roleId: [
           { required: true, message: '请选择角色名称', trigger: 'blur' },
         ],
       },
       roleUserForm: {
-        name: '',
-        jobNumber: '',
+        realName: '',
+        employeeNo: '',
         departmentName: '',
-        postName: '',
+        positionName: '',
         phone: '',
-        role: [],
+        roleId: '',
       },
       submitLoading: false,
       openCallback: null,
@@ -99,13 +100,19 @@ export default {
     this.getServiceRoleList();
   },
   methods: {
-    open(callback) {
+    open(callback,data) {
       this.addEditRoleUserPopShowStatus = true;
       this.openCallback = callback;
+
+      if (data) {
+        this.editId = data.id;
+        this.roleUserForm = JSON.parse(JSON.stringify(data));
+      }
     },
     close() {
       this.$refs['add_edit_pop_form'].resetFields();
       
+      this.editId = '';
       this.addEditRoleUserPopShowStatus = false;
       this.submitLoading = false;
     },
@@ -130,11 +137,35 @@ export default {
     },
     addEdit() {
       this.submitLoading = true;
-
+      let userForm = this.roleUserForm;
       let params = {
-        name: this.roleUserForm.name,
-
+        realName: userForm.realName,
+        employeeNo: userForm.employeeNo,
+        departmentName: userForm.departmentName,
+        positionName: userForm.positionName,
+        phone: userForm.phone,
+        roleId: userForm.roleId
       };
+
+      let clientModel = addAdminUser;
+
+      if (this.editId) {
+        params.id = this.editId;
+        clientModel = editAdminUser;
+      }
+
+      clientModel(params)
+        .then((ret)=> {
+          this.openCallback && this.openCallback({
+            type: this.editId ? 'editSuccess' : 'addSuccess',
+            data: params
+          })
+
+          this.close();
+          this.submitLoading = false;
+        }).catch((err)=> {
+          this.submitLoading = false;
+        })
     },
   }
 };
@@ -144,7 +175,7 @@ export default {
   .add-edit-pop-wrap {
     .confirm-btn {
       margin-top: 20px;
-      justify-content: flex-end;
+      justify-content: center;
     }
   }
 </style>

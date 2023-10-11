@@ -47,3 +47,17 @@
 .el-range-separator {
   box-sizing: content-box;
 }
+
+.dark-blue-primary-button {
+  border: 0!important;
+  border-radius: 0!important;
+  background: #012169!important;
+  color: #fff!important;
+  &:hover {
+    opacity: 0.8;
+    background: #012169;
+  }
+  &:active {
+    background: #012169;
+  }
+}
