@@ -68,6 +68,14 @@ export default [
               title: '风险指标详情',
             }
           },
+          {
+            path: 'public-sentiment',
+            name: 'PublicSentiment',
+            component: () => import('@/views/risk-home/individual-stock-query/public-sentiment/index'),
+            meta: {
+              title: '个股舆情预警',
+            }
+          },
         ]
       },
       {

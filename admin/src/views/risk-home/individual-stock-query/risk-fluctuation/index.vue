@@ -2,7 +2,7 @@
   <div class="risk-fluctuation-page h100 show-flex-box-c">
     <breadcrumb-bar title="风险波动概览"></breadcrumb-bar>
 
-    <div class="risk-container">
+    <div class="container">
       <!-- 股票信息 -->
       <div class="short-crash-header card">
         <div>
@@ -402,13 +402,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "../../../../styles/show-ui/common_risk_style.scss";
-.risk-container {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  overflow: auto;
-}
+@import "@/styles/show-ui/common_risk_style.scss";
 .exclamation-circle {
   width: 14px;
   height: 14px;
@@ -442,4 +436,18 @@ export default {
     color: #1d2129;
   }
 }
+
+.posi-re {
+  position: relative;
+
+  >.calender {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: url("../../../../assets/images/cockpit-risk/day_icon.png") no-repeat 0 0 / 100% 100%;
+    top: 10px;
+    right: 9px;
+  }
+}
+
 </style>

@@ -2,7 +2,7 @@
   <div class="risk-indicator-page h100 show-flex-box-c">
     <breadcrumb-bar title="风险指标详情"></breadcrumb-bar>
 
-    <div class="risk-container">
+    <div class="container">
       <!-- 股票信息 -->
       <div class="short-crash-header card">
         <div>
@@ -204,10 +204,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.risk-container {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  overflow: auto;
-}
+@import "@/styles/show-ui/common_risk_style.scss";
 </style>

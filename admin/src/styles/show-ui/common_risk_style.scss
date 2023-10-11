@@ -13,6 +13,13 @@
   }
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: auto;
+}
+
 .short-risk-overview {
   background: #ffffff;
   padding: 24px 20px;
@@ -95,19 +102,6 @@
 
   .height288 {
     height: 288px;
-  }
-}
-
-.posi-re {
-  position: relative;
-
-  >.calender {
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    background: url("../../../../assets/images/cockpit-risk/day_icon.png") no-repeat 0 0 / 100% 100%;
-    top: 10px;
-    right: 9px;
   }
 }
 
