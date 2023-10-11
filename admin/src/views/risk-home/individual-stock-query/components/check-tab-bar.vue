@@ -2,8 +2,8 @@
   <div class='check-tab-bar-comp'>
     <ul class="show-flex-box-r">
       <li
-        :class="{'cursor-pointer': true, 'is-select': item.type == curType}"
-        v-for="(item, index) in showLong ? allTypeList : noLongTypeList"
+        :class="{'cursor-pointer': true, 'is-select': item.type == curTab}"
+        v-for="(item, index) in tabList"
         :key="index"
         @click="chooseThisType(item, index)"
       >
@@ -17,45 +17,31 @@
 
 export default {
   props: {
-    showLong: {
-      type: Boolean,
-      default: true,
+    tabList: {
+      type: Array,
+      default: () => [
+        { type: 'short', title: '短期', val: 1 }
+      ]
     },
+    defaultTab: {
+      type: String,
+      default: 'short'
+    }
   },
-  components: {},
   data() {
     return {
-      curType: 'short', // short / long
-      allTypeList: [
-        { type: 'short', title: '短期' },
-        { type: 'long', title: '长期' },
-      ],
-      noLongTypeList: [
-        { type: 'short', title: '短期' },
-      ],
-
+      curTab: this.defaultTab
     };
-  },
-  computed: {},
-  watch: {},
-  created() {},
-  mounted() {
-    
   },
   methods: {
     chooseThisType(item, index){
-      if (this.curType == item.type) {
+      if (this.curTab == item.type) {
         return ;
       }
 
-      this.curType = item.type;
-      const map = {
-        'short': 1,
-        'long': 2,
-      };
-
+      this.curTab = item.type;
       this.$emit('switchTab', {
-        type: map[item.type]
+        type: item.val
       });
     },
 

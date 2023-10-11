@@ -60,6 +60,14 @@ export default [
               title: '风险波动概览',
             }
           },
+          {
+            path: 'risk-indicator',
+            name: 'RiskIndicator',
+            component: () => import('@/views/risk-home/individual-stock-query/risk-indicator/index'),
+            meta: {
+              title: '风险指标详情',
+            }
+          },
         ]
       },
       {

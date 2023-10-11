@@ -1,9 +1,9 @@
 <template>
-  <div class="rish-fluctuation-page h100 border-box show-flex-box-c">
+  <div class="risk-fluctuation-page h100 show-flex-box-c">
     <breadcrumb-bar title="风险波动概览"></breadcrumb-bar>
 
     <div class="risk-container">
-      <!-- 股份信息 -->
+      <!-- 股票信息 -->
       <div class="short-crash-header card">
         <div>
           {{ curStockInfo.name || '' }}
@@ -14,7 +14,7 @@
       </div>
       <!-- 长期 / 短期 切换栏 -->
       <div class="check-tab-bar mt-30">
-        <checkTabBar :showLong="isBJOver" @switchTab="switchTab" />
+        <checkTabBar :tabList="tabList" @switchTab="switchTab" />
       </div>
       <!-- 历史行情波动 -->
       <div class="short-risk-overview card w100">
@@ -224,18 +224,19 @@ export default {
     };
   },
   computed: {
-    isBJOver() {
-      let showLongStatus = true;
+    tabList() {
+      const list = [
+        { type: 'short', title: '短期', val: 1 }
+      ]
       const codeArr =
         this.stockBasicInfo.stockCode &&
         this.stockBasicInfo.stockCode.split(".");
 
-      // 如主体为北交所，则不显示本切换？
-      if (codeArr && codeArr[codeArr.length - 1] == "BJ") {
-        showLongStatus = false;
+      if (codeArr && codeArr[codeArr.length - 1] != "BJ") {
+        list.splice(1, 0, { type: 'long', title: '长期', val: 2 });
       }
 
-      return showLongStatus;
+      return list;
     }
   },
   mounted() {
