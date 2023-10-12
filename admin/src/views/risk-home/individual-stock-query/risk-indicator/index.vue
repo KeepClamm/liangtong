@@ -18,7 +18,7 @@
       </div>
 
       <!-- 指标行业偏离度 -->
-      <div class="short-risk-overview card">
+      <div v-show="type !== 4" class="short-risk-overview card">
         <header class="header show-flex-box-r align-center">
           <span class="fg-1">指标行业偏离度</span>
         </header>
@@ -32,14 +32,25 @@
       </div>
 
       <!-- 短期暴跌预警模型详情 -->
+      
       <crash-warning-model
+        v-show="type == 1 || type == 2"
         :header-title="`${type == 1 ? '短期' : '长期'}暴跌预警模型详情`"
-        header-tip=""
         :type="type"
         ref="tableListDataShortCrashRef"
         :basic-information="stockBasicInfo"
         @change-show="changeShowRiskItem"
       />
+      <finance-warning
+        v-show="type == 3"
+        header-title="财务类退市预警模型详情"
+        :basic-information="{}"
+      ></finance-warning>
+      <trade-warning
+        v-show="type == 4"
+        header-title="交易类退市预警模型详情"
+        :basic-information="{}"
+      ></trade-warning>
     </div>
   </div>
 </template>
@@ -48,6 +59,8 @@
 import BreadcrumbBar from "../components/breadcrumb-bar.vue";
 import ShareHeader from "../components/share-header.vue";
 import checkTabBar from "../components/check-tab-bar.vue";
+import TradeWarning from "./components/trade-warning.vue";
+import FinanceWarning from "./components/finance-warning.vue";
 import CrashWarningModel from "./components/crash-warning-model.vue";
 import industryDeviationDegreeEcharts from "./components/industry-deviation-degree-echart";
 
@@ -59,6 +72,8 @@ export default {
     BreadcrumbBar,
     ShareHeader,
     checkTabBar,
+    TradeWarning,
+    FinanceWarning,
     CrashWarningModel,
     industryDeviationDegreeEcharts,
   },

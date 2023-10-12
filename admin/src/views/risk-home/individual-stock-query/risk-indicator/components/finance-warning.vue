@@ -116,10 +116,9 @@
             icon: require('@/assets/images/common/warning-orange.png') }
         ],
         propConfig: [
-          { prop: "FirstIndex", label: "一级指标"},
-          { prop: "SecondIndex", label: "二级指标"},
-          { prop: "ThirdIndex", label: "三级指标", slotName: 'ThirdIndex', width: 190, notOverflow: true, },
-          { prop: "indexData", label: "指标数据", slotName: 'indexData', emptyInfo: ' '},
+          { prop: "FirstIndex", label: "指标类型"},
+          { prop: "SecondIndex", label: "指标名称"},
+          { prop: "ThirdIndex", label: "指标值", slotName: 'ThirdIndex', width: 190, notOverflow: true, },
           { prop: "indexScore", label: "指标分数", slotName: 'indexScore'},
           { prop: "indexRanking", label: "指标排名", slotName: 'indexRanking'},
           { prop: "averageIndexScore", label: "市场平均指标得分", slotName: 'averageIndexScore'},
