@@ -1,3 +1,4 @@
+@import '../variables.scss';
 .w100 {
   width: 100%;
 }
@@ -10,9 +11,13 @@
   box-sizing: border-box;
 }
 
+.font-weight-bold {
+  font-weight: bold;
+}
+
 .card {
   background-color: #fff;
-  padding: 24px 10px 30px 20px;
+  padding: 24px 20px 30px 20px;
 }
 
 .fg-1 {
@@ -259,3 +264,77 @@ figure{
 //  *::-webkit-scrollbar {
 //    display: none;
 //  }
+
+.point {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: $primaryColor;
+}
+
+.color-primary {
+  color: $primaryColor;
+}
+
+.color-sed {
+  color: $sedColor;
+}
+
+.gray-fst-ext {
+  color: $grayFstText;
+}
+
+.gray-sed-text {
+  color: $graySedText;
+}
+
+.gray-bg {
+  color: $grayBg;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0 10px;
+  height: 18px;
+  font-size: 12px;
+  line-height: 18px;
+  border-radius: 2px;
+  color: $grayFstText;
+  background-color: $grayBg;
+  &.yellow {
+    color: $yellowText;
+    background-color: $yellowBg;
+  }
+}
+
+.export-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #606266;
+  border-radius: 4px;
+  border: 1px solid #DCDFE6;
+  background-color: #fff;
+  cursor: pointer;
+  &:hover {
+    border-color: #409EFF;
+  }
+  i {
+    font-size: 12px;
+  }
+}
+
+.select-btn {
+  height: 28px;
+  padding: 0 15px;
+  font-size: 12px;
+  line-height: 28px;
+  color: #606266;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: #fff;
+  border: 1px solid #DCDFE6;
+  text-align: center;
+}

@@ -5,8 +5,8 @@ Vue.use(Router);
 import Layout from '@/layout'
 import riskHome from './risk-home'
 import centralizedControl from './centralized-control'
+import opinionMonitoring from "./opinion-monitoring"
 import authorityManagement from './authority-management'
-
 // risk-home
 // opinion-monitoring
 // authority-management
@@ -53,6 +53,7 @@ export const asyncRoutes = [
   ...riskHome,
   ...authorityManagement,
   ...centralizedControl,
+  ...opinionMonitoring,
   // 404 page must be placed at the end !!!
   {
     path: '*',

@@ -28,7 +28,6 @@
           <div class="head hide-line1">同业劵商平均折算率</div>
           <div class="show-flex-box-r pt-10 ai-fe">
             <div class="number pr-12">
-              <!-- {{ dealShowPersent(showDatum.brokerageAverageLossRate || 0)}} -->
               {{ showDatum.brokerageAverageLossRate || 0 }}
             </div>
             <div class="show-flex-box-r pb-3">
