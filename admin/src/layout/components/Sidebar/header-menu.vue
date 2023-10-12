@@ -38,21 +38,23 @@ export default {
   watch: {
     permission_routes: {
       handler(newName, oldName) {
-        // this.setMenuList();
+        this.setMenuList();
       },
       deep: true
     },
     $route(to,from){
-      this.toRouter = to;
-      console.log("---获取的路由信息---",to);
+      this.setMenuActiveByRoute(to);
     },
+    activeMenuName() {
+      this.activeName = this.activeMenuName;
+    }
   },
   mounted() {
     this.setMenuList();
+    this.setMenuActiveByRoute(this.$route);
   },
   methods: {
     handleClick(menuData) {
-      this.setCurrentActiveMenuName(menuData.name);
       this.jumpPageByActiveName();
     },
     jumpPageByActiveName() {
@@ -63,13 +65,25 @@ export default {
       }
 
       const path = this.getRouterPushPath(routerData);
-      
-      console.log(this.toRouter);
-      console.log(path);
 
       this.$router.push({
         path: path
       })
+    },
+    setMenuActiveByRoute(to) {
+      const toPath = to.path;
+      const routeMap = this.menuRouterMap;
+
+      for(let key in routeMap) {
+        if (routeMap.hasOwnProperty(key)) {
+          let routeData = routeMap[key];
+
+          if (toPath.indexOf(routeData.path) >= 0) {
+            this.setCurrentActiveMenuName(routeData.name);
+            break;
+          }
+        }
+      }
     },
     getRouterPushPath(routerData,path) {
       let routerPath = path;
@@ -88,22 +102,21 @@ export default {
     setMenuList() {
       let list = this.permission_routes;
       let menuList = [];
+      let activeMenuName = '';
 
       list.forEach(item => {
         if (item.hasOwnProperty('header') && item.header) {
-          console.log("--item--",item);
           let routerName = item.name;
 
           menuList.push(item);
 
+          activeMenuName = activeMenuName || routerName;
           this.menuRouterMap[routerName] = item;
-          this.activeName = this.activeMenuName || routerName;
         }
       });
 
+      this.activeName = this.activeMenuName || activeMenuName;
       this.menuList = menuList;
-      this.setCurrentActiveMenuName(this.activeName);
-      this.jumpPageByActiveName();
     }
   }
 };

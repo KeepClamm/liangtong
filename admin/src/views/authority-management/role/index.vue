@@ -16,7 +16,7 @@
                    :showIndexColumn="true"
                    @handle-page="onHandlePage">
         <template #createdAt="{ row }">
-          <span>{{ row.createdAt }}</span>
+          <span>{{ (row.createdAt / 1000) | dateformat('YYYY-MM-DD HH:ss') }}</span>
         </template>
         <template #handle="{ row }">
           <div class="table-handle-box show-flex-box-r show-flex-center">

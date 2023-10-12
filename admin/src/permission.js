@@ -1,14 +1,24 @@
-import router from './router'
-import store from './store'
-import { Message } from 'element-ui'
-import NProgress from 'nprogress' // progress bar
-import 'nprogress/nprogress.css' // progress bar style
-import { getToken } from '@/utils/auth' // get token from cookie
-import getPageTitle from '@/utils/get-page-title'
+import router from './router';
+import store from './store';
+import { Message } from 'element-ui';
+import NProgress from 'nprogress'; // progress bar
+import 'nprogress/nprogress.css'; // progress bar style
+import { getToken } from '@/utils/auth'; // get token from cookie
+import getPageTitle from '@/utils/get-page-title';
 
-NProgress.configure({ showSpinner: false }) // NProgress Configuration
+NProgress.configure({ showSpinner: false }); // NProgress Configuration
 
-const whiteList = ['/login', '/user-protocol'] // no redirect whitelist
+const whiteList = ['/login', '/user-protocol']; // no redirect whitelist
+const hasRolesWhiteList = ['/','/login', '/user-protocol'];
+
+
+function getToRouter(to) {
+  if (to.children && to.children.length > 0) {
+    return getToRouter(to.children[0]);
+  }
+
+  return to;
+}
 
 router.beforeEach(async(to, from, next) => {
   // start progress bar
@@ -34,10 +44,10 @@ router.beforeEach(async(to, from, next) => {
         try {
           const { rolesList } = await store.dispatch('getLoginUserInfo')
           const accessRoutes = await store.dispatch('permission/generateRoutes', rolesList)
-          const toRoute = to && to.name ? to : accessRoutes[0];
-          
-          router.addRoutes(accessRoutes)
-          next({ ...toRoute, replace: true })
+          const toRoute = to && to.path && hasRolesWhiteList.indexOf(to.path) < 0 ? to : getToRouter(accessRoutes[0]);
+
+          router.addRoutes(accessRoutes);
+          next({ ...toRoute, replace: true });
         } catch (error) {
           store.dispatch('LOGOUT').then(() => {
             location.reload() // 为了重新实例化vue-router对象 避免bug
@@ -54,7 +64,8 @@ router.beforeEach(async(to, from, next) => {
       next()
     } else {
       // other pages that do not have permission to access are redirected to the login page.
-      next(`/login?redirect=${to.path}`)
+      // next(`/login?redirect=${to.path}`)
+      next({ path: '/login', replace: true });
       NProgress.done()
     }
   }

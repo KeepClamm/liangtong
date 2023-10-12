@@ -55,11 +55,11 @@ export const asyncRoutes = [
   ...opinionMonitoring,
   ...authorityManagement,
   // 404 page must be placed at the end !!!
-  {
-    path: '*',
-    redirect: '/404',
-    hidden: true
-  },
+  // {
+  //   path: '*',
+  //   redirect: '/404',
+  //   hidden: true
+  // },
 ]
 
 // 导出权限树
@@ -68,10 +68,12 @@ export const asyncRoutes = [
 //   return arr.reduce((acc, cur) => {
 //     let obj = {
 //       label: cur.meta.title,
-//       code: cur.meta.roles[0]
+//       code: cur.meta.code
 //     }
 //     if (cur.children) {
 //       obj.children = convert(cur.children);
+//     } else if (cur.meta.roles && cur.meta.roles.length > 0) {
+//       obj.children = cur.meta.roles;
 //     }
 
 //     acc.push(obj);

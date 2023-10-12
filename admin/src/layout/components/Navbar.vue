@@ -7,6 +7,15 @@
       <div class="route-menu">
         <header-menu />
       </div>
+      <!-- <div class="test-box">
+        <el-select v-model="value" placeholder="请选择">
+          <el-option v-for="item in options"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value">
+          </el-option>
+        </el-select>
+      </div> -->
       <div class="search-box">
         <el-autocomplete style="width: 100%;"
                          v-model="keywords"
@@ -96,7 +105,18 @@ export default {
       searchIcon,
       logoutPopStatus: false,
       keywords: '',
-      searchKeywordValueMap: {}
+      searchKeywordValueMap: {},
+      options: [{
+          value: '选项1',
+          label: '电子**23**'
+        }, {
+          value: '选项2',
+          label: '中叶**0**'
+        }, {
+          value: '选项3',
+          label: '多多**01**'
+        }],
+        value: '选项1'
     };
   },
   computed: {
@@ -129,7 +149,22 @@ export default {
     handleBtn(type){
       switch (type) {
         case 'changePwd': // 修改密码
-          this.$refs['change-pwd-ref'].open();
+          this.$refs['change-pwd-ref'].open(({ type }) => {
+            switch (type) {
+              case 'success':
+                this.$message({
+                  showClose: true,
+                  message: '密码修改成功，需重新登录',
+                  type: "success",
+                });
+
+                this.logout();
+              break;
+              case 'fail':
+              
+              break;
+            }
+          });
           break;
         case 'logout': // 退出登录
           this.logoutPopStatus = true;
@@ -266,4 +301,17 @@ export default {
     height: 24px;
   }
 }
+</style>
+
+<style lang="scss">
+  .test-box {
+    width: 150px;
+    margin-right: 10px;
+    .el-select {
+      input {
+        background: none;
+        color: #1065A0;
+      }
+    }
+  }
 </style>

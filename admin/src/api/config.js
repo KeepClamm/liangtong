@@ -5,7 +5,7 @@ function getBaseUrl() {
   // if (!origin || typeof(origin) == "undefined") {
   //   origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
   // }
-  let origin = window.location.protocol + "//" + window.location.hostname;
+  let origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
   // + ':8080'
   // const domainUrl = baseUrl && baseUrl.indexOf('localhost') < 0 ? (baseUrl + '/api') : 'http://information.xueqiusoft.com/api';
 

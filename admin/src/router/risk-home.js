@@ -26,7 +26,7 @@ export default [
         component: () => import('@/views/risk-home/individual-stock-query/index'),
         meta: {
           title: '个股查询',
-          icon: 'ComparisonOfPeers',
+          // icon: 'ComparisonOfPeers',
         },
         redirect: '/risk-home/individual-stocks/risk-inquiry',
         children: [

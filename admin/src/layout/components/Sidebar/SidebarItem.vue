@@ -190,7 +190,8 @@ export default {
   ::v-deep .sub-item{
     // width: 212px;
     // width: 196px;
-    width: 172px;
+    font-size: 18px;
+    // width: 172px;
     transition: background-color .3s;
     border-radius: 4px;
     overflow: hidden;

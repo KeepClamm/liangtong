@@ -12,7 +12,7 @@ const directives = [{
       console.log(binding.value);
 
       if (isAdmin) {
-        el.parentNode.removeChild(el)
+        // el.parentNode.removeChild(el)
       } else {
         
       }

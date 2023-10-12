@@ -7,6 +7,7 @@ export default [
     component: Layout,
     meta: {
       title: '权限管理',
+      code: '/authority-management',
     },
     header: true,
     redirect: '/authority-management/role',
@@ -16,7 +17,12 @@ export default [
         name: 'authorityManagementRole',
         component: () => import('@/views/authority-management/role/index'),
         meta: {
-          title: '角色管理'
+          title: '角色管理',
+          code: '/authority-management/role',
+          roles: [
+            {code: '/authority-management/role/view',label: '查看',},
+            {code: '/authority-management/role/addRoles',label: '添加角色',}
+          ]
         }
       },
       {
@@ -24,7 +30,12 @@ export default [
         name: 'authorityManagementUser',
         component: () => import('@/views/authority-management/user/index'),
         meta: {
-          title: '用户管理'
+          title: '用户管理',
+          code: '/authority-management/user',
+          roles: [
+            {code: '/authority-management/user/view',label: '查看',},
+            {code: '/authority-management/user/addRoles',label: '添加用户',}
+          ]
         }
       }
     ]

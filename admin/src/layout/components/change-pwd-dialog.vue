@@ -60,7 +60,7 @@
         </div>
       </el-form>
       <span slot="footer">
-        <el-button v-if="showClose" @click="changePwdPopStatus = false">取 消</el-button>
+        <el-button v-if="showClose" :loading="submitting" @click="changePwdPopStatus = false">取 消</el-button>
         <el-button type="primary" :loading="submitting" @click="confirmChangePwd('form')">确 定</el-button>
       </span>
     </el-dialog>
@@ -68,6 +68,7 @@
 </template>
 
 <script>
+import Regex from '@/utils/regex';
 
 import { userModifyPasswors } from '@/api/service/login';
 import { locale } from 'moment';
@@ -81,6 +82,17 @@ export default {
     }
   },
   data() {
+    const checkPassword = (rule, value, callback) => {
+      if (value) {
+        if (Regex.isUserPassword(value)) {
+          callback();
+        } else {
+          callback(new Error("请输入6-16位的密码"));
+        }
+      } else {
+        callback(new Error("请输入确认密码"));
+      }
+    };
     const checkConfirmPwd = (rule, value, callback) => {
       if (value) {
         if (value == this.form.password) {
@@ -106,10 +118,10 @@ export default {
       submitting: false,
       editPwdRules: {
         oldPassword: [{ required: true, message: '请输入原密码', trigger: 'blur' }],
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+        password: [{ required: true,  validator: checkPassword, trigger: 'blur' }],
         confirmPassword: [{ required: true, validator: checkConfirmPwd, trigger: 'blur' }],
       },
-
+      openCallback: null,
     };
   },
   computed: {},
@@ -121,10 +133,13 @@ export default {
     
   },
   methods: {
-    open(){
+    open(callback){
       this.changePopStatus(true);
+      this.submitting = false;
+      this.openCallback = callback;
     },
     close(){
+      this.submitting = false;
       this.changePopStatus(false);
     },
     changePopStatus(status){
@@ -164,9 +179,10 @@ export default {
 
           userModifyPasswors(params)
             .then((ret)=> {
-              this.submitting = false;
+              this.openCallback && this.openCallback({type: 'success'});
             }).catch((err)=>{
               this.submitting = false;
+              this.openCallback && this.openCallback({type: 'fail'});
             })
         } else {
           return false;
