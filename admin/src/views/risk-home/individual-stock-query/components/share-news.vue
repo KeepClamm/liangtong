@@ -51,10 +51,10 @@
               <div class="contrast">
                 <img :src="showDatum.averageLossRateContrast > 0 ? iconList[0]:iconList[1]" />
               </div>
-              <span class="declare white-space pl-4">
-                <!-- 0 - 等于 1-高于  -1 -低于 -->
-                {{ '低于' }}行业平均值
-              </span>
+              <span
+                class="declare white-space pl-4"
+                v-if="showDatum.stockBasicInfo"
+              >{{ dealShowPersent(showDatum.stockBasicInfo.chgRatio)}}</span>
             </div>
           </div>
         </div>
@@ -83,14 +83,9 @@
           <div class="show-flex-box-r pt-10 ai-fe">
             <div class="number pr-12">{{showDatum.todayHighPublicOpinionNumber || 0}}</div>
             <div class="show-flex-box-r pb-3">
-              <div class="contrast">
-                <img
-                  :src="calculatedSize(showDatum.todayHighPublicOpinionNumber,showDatum.yesterdayHighPublicOpinionNumber) > 0 ? iconList[0]: iconList[1] "
-                />
-              </div>
               <span
                 class="declare white-space pl-4"
-              >较昨日：{{showDatum.yesterdayHighPublicOpinionNumber || 0}}</span>
+              >昨日数量：{{showDatum.yesterdayHighPublicOpinionNumber || 0}}</span>
             </div>
           </div>
         </div>
@@ -108,7 +103,8 @@
               </div>
               <span
                 class="declare white-space pl-4"
-              >较昨日：{{showDatum.yesterdayHighPublicOpinionNumber || 0}}</span>
+                v-if="showDatum.stockBasicInfo"
+              >{{ dealShowPersent(showDatum.stockBasicInfo.chgRatio)}}</span>
             </div>
           </div>
         </div>

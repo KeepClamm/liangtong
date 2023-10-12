@@ -13,19 +13,19 @@
             <em></em>
             <span>五级分层波动</span>
           </li>
-          <!-- <li>
+          <li>
             <em></em>
             <span>高风险舆情数量</span>
-          </li> -->
+          </li>
         </ul>
       </div>
       
-      <!-- <ul class="right-bar">
+      <ul class="right-bar">
         <li @click="changeShowStatus()">
           <em :class="{'is-selected': showGreatConcern}"></em>
           <span>显示高度关注與情</span>
         </li>
-      </ul> -->
+      </ul>
     </div>
   </div>
 </template>
