@@ -12,7 +12,7 @@
               <div v-if="item.today && item.yesterday" class="content-item-main-compare">
                 <img :src="item.today > item.yesterday ? iconList[0] : iconList[1]" class="wh100"/>
               </div>
-              <div class="content-item-main-compare-yestreday">昨日 {{ item.yesterday }}</div>
+              <div class="content-item-main-compare-yestreday" v-if="item.yesterday">昨日 {{ item.yesterday }}</div>
             </div>
           </div>
         </el-col>
@@ -26,10 +26,15 @@
     <div class="high-risk-warn">
       <high-risk-warn />
     </div>
+    <!-- 财务类退市预警&交易类退市预警 -->
+    <div class="high-risk-warn">
+      <delisting-warn></delisting-warn>
+    </div>
   </div>
 </template>
 
 <script>
+import DelistingWarn from './component/delisting-warn.vue'
 import HighRiskWarn from './component/high-risk-warn.vue'
 import RiskAssessment from './component/risk-assessment.vue'
 
@@ -37,7 +42,8 @@ export default {
   name: 'RiskCockpit',
   components: {
     RiskAssessment,
-    HighRiskWarn
+    HighRiskWarn,
+    DelistingWarn
 
   },
   data() {

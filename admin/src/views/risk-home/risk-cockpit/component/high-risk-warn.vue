@@ -22,7 +22,7 @@
         <div class="risk-warn-top-right-radio">
           <div v-for="item in radioOpts" :key="item.value" :class="{'is-active': item.value === isActive}" @click="handleRadioClick(item.value)">{{ item.label }}</div>
         </div>
-        <div class="risk-warn-top-right-button">导出</div>
+        <div class="component-header-buttons-item button-color">导出</div>
       </div>
     </div>
     <div class="risk-warn-table">
@@ -112,6 +112,15 @@ export default {
 }
 ::v-deep .risk-warn-top-left .el-input--medium .el-input__icon {
   line-height: 28px;
+}
+.component-header-buttons-item {
+      padding: 6px 20px;
+      font-size: 14px;
+      background-color: #012169;
+      color: #fff;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-left: 15px;
 }
 .is-active {
     background-color: #fff;

@@ -1,5 +1,19 @@
 <template>
   <div class="peer-comparison-wrap">
+    <div class="container-title">
+      <div class="container-title-left">{{ overTitle }}</div>
+      <div class="component-header-buttons">
+          <div class="component-header-buttons-item">
+            查询
+          </div>
+          <div class="component-header-buttons-item button-color">
+            重置
+          </div>
+          <div class="component-header-buttons-item button-color">
+            导出
+          </div>
+        </div>
+    </div>
     <div class="finance-bid-select-top">
       <div class="select-top-flex-box">
         <div class="margin-20">交易市场</div>
@@ -30,7 +44,7 @@
           <div v-for="item in radioOpts" :key="item.value" class="radio-container-content-text" :class="{'radio-active': radioActive === item.value}" @click="handleRadio(item)">{{ item.label }}</div>
         </div>
       </div>
-      <div class="component-header-buttons-item button-color" @click="handleExport">导出</div>
+      <!-- <div class="component-header-buttons-item button-color" @click="handleExport">导出</div> -->
     </div>
     <div class="table-container">
       <!-- 表格 -->
@@ -170,6 +184,10 @@ export default {
         {
           label: '中信证券',
           prop: 'test08'
+        },
+        {
+          label: '华泰证券',
+          prop: 'test09'
         }
       ],
       tableData: [
@@ -182,15 +200,29 @@ export default {
       radioActive: 1, // 单选按钮高亮
       page: 1,
       limit: 5,
-      total: 0
+      total: 0,
     }
   },
   computed: {
   },
   watch: {
-    radioActive(newValue, oldValue) {
-      const that = this
-      that.source === 'finaceBid' ? that.handlefinaceBid() : that.source === 'marginAuction' ? that.handleMarginAuction() : that.handleDeposit()
+    radioActive: {
+      handler(newValue, oldValue) {
+        const that = this
+        that.source === 'finaceBid' ? that.handlefinaceBid() : that.source === 'marginAuction' ? that.handleMarginAuction() : that.source === 'conversionRate' ? that.handleConversionRate() : that.handleConcenterationDegree()        
+      },
+      immediate: true
+    }
+  },
+  computed: {
+    overTitle() {
+      const titleObj = {
+        'finaceBid': '融资标的查询',
+        'marginAuction': '融券标的查询',
+        'concenterationDegree': '集中度查询',
+        'conversionRate': '折算率查询'
+      }
+      return titleObj[this.source]
     }
   },
   created() {
@@ -243,12 +275,35 @@ export default {
       } else {
         that.tableRow.splice(5, 2, { label: '上调券商数', prop: 'test06' }, { label: '下调券商数', prop: 'test07' })
       }
-      console.log('tableRow', that.tableRow)
     },
     handleMarginAuction() {
-
+      const that = this
+      if (that.radioActive === 1) {
+        that.tableRow.splice(5, 2, { label: '设为融券标的券商数', prop: 'test06' }, { label: '平均融券保证金比例', prop: 'test07' })
+      } else if (that.radioActive === 2) {
+        that.tableRow.splice(5, 2, { label: '融券调入券商数', prop: 'test06' }, { label: '融券调出券商数', prop: 'test07' })
+      } else {
+        that.tableRow.splice(5, 2, { label: '上调券商数', prop: 'test06' }, { label: '下调券商数', prop: 'test07' })
+      }
     },
-    handleDeposit() {}
+    handleConversionRate() {
+      const that = this
+      if (that.radioActive === 1) {
+        that.tableRow.splice(5, 2, { label: '设为担保品券商数', prop: 'test06' }, { label: '券商平均折算率', prop: 'test07' })
+      } else if (that.radioActive === 2) {
+        that.tableRow.splice(5, 2, { label: '调入券商数', prop: 'test06' }, { label: '调出券商数', prop: 'test07' })
+      } else {
+        that.tableRow.splice(5, 2, { label: '上调券商数', prop: 'test06' }, { label: '下调券商数', prop: 'test07' })
+      }
+    },
+    handleConcenterationDegree() {
+      const that = this
+      if (that.radioActive === 1) {
+        that.tableRow.splice(5, 2, { label: '设为担保品券商数', prop: 'test06' }, { label: '五级分类结果', prop: 'test07' })
+      } else {
+        that.tableRow.splice(5, 2, { label: '上调券商数', prop: 'test06' }, { label: '下调券商数', prop: 'test07' })
+      }
+    }
   }
 }
 </script>
@@ -278,14 +333,9 @@ export default {
   ::v-deep .el-date-editor.el-input, .el-date-editor.el-input__inner {
     width: 200px;
   }
-  .component-header-buttons-item {
-      padding: 6px 20px;
-      font-size: 14px;
-      background-color: #012169;
-      color: #fff;
-      border-radius: 3px;
-      cursor: pointer;
-      margin-right: 8px;
+  .button-color {
+    background-color: #E5E6EB !important;
+    color: #012169 !important;
   }
   .export-button-color {
     background-color: #0f58d5;
@@ -295,6 +345,27 @@ export default {
     height: 100%;
     padding: 24px 20px;
     background-color: #fff;
+    .container-title {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      .container-title-left {
+        font-size: 20px;
+        font-weight: 500;
+      }
+      .component-header-buttons {
+        display: flex;
+        .component-header-buttons-item {
+          padding: 6px 20px;
+          font-size: 14px;
+          background-color: #012169;
+          color: #fff;
+          border-radius: 3px;
+          cursor: pointer;
+          margin-right: 8px;
+        }
+      }
+    }
     .finance-bid-select-top {
       width: 100%;
       display: flex;

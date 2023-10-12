@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="table-container">
     <el-table tooltip-effect="dark" style="width: 100%" :data="tableData" :cell-style="cellStyle" :header-cell-style="rowClass" border>
       <el-table-column v-if="adjustTable" label="全选">
         <el-table-column type="selection" width="50" />
@@ -51,14 +51,15 @@
         <el-table-column label="调整时间" />
       </template>
     </el-table>
+    <pagination class="mt-24" :total="10" :current-page="1" :cur-limit="10" :showRecods="1"></pagination>
   </div>
 </template>
 <script>
-
+import pagination from '@/components/show-ui/table/pagination-comp.vue'
 export default {
   name: 'Template',
   components: {
-
+    pagination
   },
   props: {
     adjustTable: {
@@ -93,5 +94,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.table-container {
+  padding: 24px 20px;
+  background-color: #fff;
+}
 </style>
 

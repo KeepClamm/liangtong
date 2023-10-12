@@ -8,7 +8,7 @@
             <div class="component-header-buttons-item" @click="openAdjustDialog">
               单只标的调整
             </div>
-            <div class="component-header-buttons-item button-color">
+            <div class="component-header-buttons-item button-color" @click="openMutAdjustDialog">
               批量调整
             </div>
           </template>
@@ -53,13 +53,15 @@
       </div>
     </div>
     <adjust-dialog ref="adjustDialog"></adjust-dialog>
+    <adjust-mutdialog></adjust-mutdialog>
   </div>
 </template>
 
 <script>
 import adjustDialog from './adjust-dialog.vue'
+import AdjustMutdialog from './adjust-mutdialog.vue'
 export default {
-  components: { adjustDialog },
+  components: { adjustDialog, AdjustMutdialog },
   name: 'Template',
   props: {
     adjustLabel: {
@@ -110,8 +112,13 @@ export default {
     },
     handleChange() {
     },
+    // 单只标的调整
     openAdjustDialog() {
       this.$refs.adjustDialog.open()
+    },
+    // 批量调整
+    openMutAdjustDialog() {
+
     }
   }
 }

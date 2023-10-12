@@ -1,10 +1,7 @@
 <template>
   <!-- 担保品证券 -->
   <div class="template">
-    <select-table :label-obj="labelObj" :table-row="tableRow" />
-    <div class="pagination-container">
-      <pagination class="mt-24" :total="10" :current-page="1" :cur-limit="10" :showRecods="1"></pagination>
-    </div>
+    <select-table :label-obj="labelObj" :table-row="tableRow" :table-data="tableData"/>
   </div>
 </template>
 
@@ -26,30 +23,33 @@ export default {
         rangeOtherTitle: '德勤折算率',
         statusTitle: '担保状态'
       },
+      tableData: [
+        {'tradeMarket': '上交所', 'stockCode': '00000002', 'stockName': '平安证券', 'rzConversionRate': 0.3, 'rqConversionRate': 0.5},
+        {'tradeMarket': '深交所', 'stockCode': '00000001', 'stockName': '平安证券', 'rzConversionRate': 0.6, 'rqConversionRate': 0.4},
+        {'tradeMarket': '深交所', 'stockCode': '00000003', 'stockName': '平安证券', 'rzConversionRate': 0.5, 'rqConversionRate': 0.53},
+        {'tradeMarket': '上交所', 'stockCode': '00000004', 'stockName': '平安证券', 'rzConversionRate': 0.4, 'rqConversionRate': 0.52},
+        {'tradeMarket': '上交所', 'stockCode': '00000005', 'stockName': '平安证券', 'rzConversionRate': 0.5, 'rqConversionRate': 0.45},
+      ],
       tableRow: [
         {
-          label: '序号',
-          prop: 'test01'
-        },
-        {
           label: '交易市场',
-          prop: 'test02'
+          prop: 'tradeMarket'
         },
         {
           label: '证券代码',
-          prop: 'test03'
+          prop: 'stockCode'
         },
         {
           label: '证券名称',
-          prop: 'test04'
+          prop: 'stockName'
         },
         {
           label: '监管要求折算率',
-          prop: 'test05'
+          prop: 'rzConversionRate'
         },
         {
           label: '公司折算率',
-          prop: 'test06'
+          prop: 'rqConversionRate'
         },
         {
           label: '德勤折算率',

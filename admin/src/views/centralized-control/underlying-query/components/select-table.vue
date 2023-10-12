@@ -45,10 +45,10 @@
             </el-select>
           </el-descriptions-item>
         </el-descriptions>
-      </div>
-    </div>
+      </div>   
     <div class="component-table">
       <el-table tooltip-effect="dark" style="width: 100%" :data="tableData" :cell-style="cellStyle" :header-cell-style="rowClass" border>
+        <el-table-column type="index" label="序号" width="60"></el-table-column>
         <template v-for="item in tableRow">
           <el-table-column
             :key="item.label"
@@ -59,15 +59,17 @@
         </template>
       </el-table>
     </div>
+    <pagination class="mt-24" :total="10" :current-page="1" :cur-limit="10" :showRecods="1"></pagination>
+    </div>
   </div>
 </template>
 
 <script>
-
+import pagination from '@/components/show-ui/table/pagination-comp.vue'
 export default {
   name: 'Template',
   components: {
-
+    pagination
   },
   props: {
     labelObj: {
@@ -79,6 +81,10 @@ export default {
       type: Array,
       required: true,
       default: () => { ([]) }
+    },
+    tableData: {
+      type: Array,
+      default: () => { ([]) }
     }
   },
   data() {
@@ -86,7 +92,6 @@ export default {
       codeVal: '', // 证券代码/名称
       fiveClassifyVal: '', // 五级分类
       financeStatusVal: '', // 融资状态
-      tableData: [],
       fiveClassifyOpt: [
         {
           label: 'test01',
@@ -134,7 +139,7 @@ export default {
 ::v-deep .el-descriptions-item__container {
     align-items: center;
 }
-::v-deep .el-input--medium .el-input__inner {
+::v-deep .component-select .el-input--medium .el-input__inner {
     width: 160px;
     height: 28px;
     line-height: 28px;

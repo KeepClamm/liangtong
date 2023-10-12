@@ -1,15 +1,9 @@
 <template>
   <!-- 今日调整明细 -->
   <div class="template">
-    <adjust-component :label-obj="labelObj" :column-name="columnName" />
-    <div class="pagination-container">
-      <pagination class="mt-24" :total="10" :current-page="1" :cur-limit="10" :showRecods="1"></pagination>
-    </div>
+    <adjust-component :label-obj="labelObj" :table-row="tableRow" :table-data="tabledata"/>
     <div class="divide-div" />
-    <adjust-component :label-obj="labelObjOther" :column-name="columnNameOther" />
-    <div class="pagination-container">
-      <pagination class="mt-24" :total="10" :current-page="1" :cur-limit="10" :showRecods="1"></pagination>
-    </div>
+    <adjust-component :label-obj="labelObjOther" :table-row="tableRowed" :table-data="tabledata"/>
   </div>
 </template>
 
@@ -35,33 +29,46 @@ export default {
         originlvLabel: '集中度变动',
         newlvLabel: '折算率变动'
       },
-      columnName: {
-        'zuorifanwei': true,
-        'jizhongdubiandong': {
-          'yuanshipingji': '原始评级',
-          'dangqianmoxing': '当前模型评级',
-          'biandongyuanyin': '变动原因'
-        },
-        'zhesuanlv': {
-          'yuanshi': '原始折算率',
-          'deqin': '德勤折算率',
-          'yuanyin': '变动原因',
-          'admin': '操作'
-        }
+      tabledata: [
+        {'tradeFloor': '测试', 'stockCode': '00000001', 'originLv': 'C', 'nowLv': 'A', 'changeReason': '原因', 'oldConversionRate': '0.65', 'dqConversionRate': '0.3'},
+        {'tradeFloor': '测试2', 'stockCode': '000000201', 'originLv': 'C', 'nowLv': 'E', 'changeReason': '原因2', 'oldConversionRate': '0.5', 'dqConversionRate': '0.66'},
+        {'tradeFloor': '测试3', 'stockCode': '000000031', 'originLv': 'C', 'nowLv': 'B', 'changeReason': '原因3', 'oldConversionRate': '0.25', 'dqConversionRate': '0.34'},
+        {'tradeFloor': '测试3', 'stockCode': '000000031', 'originLv': 'C', 'nowLv': 'B', 'changeReason': '原因3', 'oldConversionRate': '0.25', 'dqConversionRate': '0.34'},
+        {'tradeFloor': '测试3', 'stockCode': '000000031', 'originLv': 'C', 'nowLv': 'B', 'changeReason': '原因3', 'oldConversionRate': '0.25', 'dqConversionRate': '0.34'},
+      ],
+      tableRow: {
+        '较昨日标的范围变动': [
+          {'label': '融资标的证券', 'prop': 'rzStock'},
+          {'label': '融券标的证券', 'prop': 'rqStock'},
+          {'label': '可冲抵保证金券', 'prop': 'salryStock'}
+        ],
+        '集中度变化': [
+         {'label': '原始评级', 'prop': 'originLv'},
+         {'label': '当前模型评级', 'prop': 'nowLv'}, 
+         {'label': '变动原因', 'prop': 'changeReason'} 
+        ],
+        '折算率变动': [
+          {'label': '原始折算率', 'prop': 'oldConversionRate'},
+          {'label': '德勤折算率', 'prop': 'dqConversionRate'},
+          {'label': '变动原因', 'prop': 'rateChangeReason'}
+        ]
       },
-      columnNameOther: {
-        'jizhongdu': {
-          'tiaozhengqian': '调整前评级',
-          'tiaozhenghou': '调整后评级',
-          'biandong': '变动'
-        },
-        'zhesuan': {
-          'tiaozhengqian': '调整前折算率',
-          'tiaozhenghou': '调整后折算率',
-          'biandong': '变动'
-        },
-        'reason': '调整原因（变动）',
-        'date': '调整时间'
+      tableRowed: {
+        '标的范围': [
+          {'label': '融资标的证券', 'prop': 'rzStock'},
+          {'label': '融券标的证券', 'prop': 'rqStock'},
+          {'label': '可冲抵保证金券', 'prop': 'salryStock'}
+        ],
+        '集中度': [
+         {'label': '调整前评级', 'prop': 'originLv'},
+         {'label': '调整后评级', 'prop': 'nowLv'}, 
+         {'label': '变动', 'prop': 'changeReason'} 
+        ],
+        '折算率': [
+          {'label': '调整前折算率', 'prop': 'oldConversionRate'},
+          {'label': '调整后折算率', 'prop': 'dqConversionRate'},
+          {'label': '变动', 'prop': 'rateChangeReason'}
+        ]
       }
     }
   },
@@ -80,11 +87,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.template {
+  overflow-y: auto;
+}
 .divide-div {
   height: 40px;
-  width: 100%;
-}
-.pagination-container {
   width: 100%;
 }
 </style>

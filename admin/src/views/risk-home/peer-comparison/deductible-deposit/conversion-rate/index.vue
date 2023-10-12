@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <select-options :radio-opts="radioOpts" :source="'finaceBid'" />
+    <select-options :radio-opts="radioOpts" :source="'conversionRate'" />
   </div>
 </template>
 

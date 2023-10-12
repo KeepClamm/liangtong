@@ -3,9 +3,6 @@
   <div class="template">
     <underlying-top :adjust-label="adjustLabel" :adjust-query="adjustQuery" :global-config="listOfAdjustmentsQuery"/>
     <underlying-table :adjust-query="adjustQuery" />
-    <div class="pagination-container">
-      <pagination class="mt-24" :total="10" :current-page="1" :cur-limit="10" :showRecods="1"></pagination>
-    </div>
   </div>
 </template>
 

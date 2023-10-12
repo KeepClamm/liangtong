@@ -1,7 +1,7 @@
 <template>
   <!-- 集中度查询 -->
   <div class="box-container">
-    <select-options :radio-opts="radioOpts" :source="'finaceBid'" />
+    <select-options :radio-opts="radioOpts" :source="'concenterationDegree'" />
   </div>
 </template>
 

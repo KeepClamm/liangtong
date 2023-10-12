@@ -10,44 +10,46 @@
       </div>
     </div>
     <div class="table-box">
-      <basic-table :table-data="tableData" :prop-list="propConfig" :show-index-column="true" @handle-page="handlePage" :page="page" :limit="limit">
-        <template #handle="{ row }">
-          <div class="table-handle-box show-flex-box-r show-flex-center">
-            <span class="el-icon-delete handle-delete" @click="handleDelete(row)"></span>
-            <span class="el-icon-edit-outline handle-edit" @click="handleEdit(row)"></span>
-          </div>
-        </template>
-      </basic-table>
-      <composition-dialog ref="compositionDialogRef"></composition-dialog>
+      <el-table tooltip-effect="dark" style="width: 100%" :data="tableData" :cell-style="cellStyle" :header-cell-style="rowClass" border>
+          <el-table-column type="index" label="序号" width="60"></el-table-column>
+          <el-table-column label="组合名称" prop="groupName"></el-table-column>
+          <el-table-column label="证券数量" prop="numOfSecurities"></el-table-column>
+          <el-table-column label="创建人" prop="createName"></el-table-column>
+          <el-table-column label="创建时间" prop="createName"></el-table-column>
+          <el-table-column label="操作">
+            <template slot-scope="{ row }">
+              <div class="table-handle-box show-flex-box-r show-flex-center">
+                <span class="el-icon-delete handle-delete" @click="handleDelete(row)"></span>
+                <span class="el-icon-edit-outline handle-edit" @click="handleEdit(row)"></span>
+              </div>
+            </template>
+          </el-table-column>
+      </el-table>
+      <pagination class="mt-24" :total="10" :current-page="1" :cur-limit="10" :showRecods="1"></pagination>
     </div>
+    <composition-dialog ref="compositionDialogRef"></composition-dialog>
   </div>
 </template>
 
 <script>
 import BasicTable from '@/components/show-ui/table/basic-table.vue'
 import CompositionDialog from './component/composition-dialog.vue'
+import pagination from '@/components/show-ui/table/pagination-comp.vue'
 
 export default {
   name: 'Template',
   components: {
     BasicTable,
-    CompositionDialog
-
+    CompositionDialog,
+    pagination
   },
   data() {
     return {
       page: 1,
       limit: 10,
       serachVal: '',
-      tableData: {},
-      listData: [
-      ],
-      propConfig: [
-        { prop: 'groupName', label: '组合名称' },
-        { prop: 'numOfSecurities', label: '证券数量' },
-        { prop: 'createName', label: '创建人' },
-        { prop: 'createName', label: '创建时间', slotName: 'Time' },
-        { prop: 'handle', label: '操作',slotName: 'handle',width: 133 }
+      tableData: [
+        {'groupName': '组合A', 'numOfSecurities': 10, 'createName': 'admin'}
       ]
     }
   },
@@ -58,12 +60,14 @@ export default {
 
   },
   created() {
-    this.tableData = {
-      total: 11,
-      items: this.listData
-    }
   },
   methods: {
+    rowClass({ row, rowIndex }) {
+      return 'text-align: center;background: #f8f9fb;color: #86909c;height:48px'
+    },
+    cellStyle({ row, rowIndex, column, columnIndex }) {
+      return 'text-align: center;height: 60px;'
+    },
     handlePage() {
 
     },
@@ -80,6 +84,10 @@ export default {
       }).then(() => {
 
       }).catch(() => {})
+    },
+    // 编辑
+    handleEdit(row) {
+      this.$refs.compositionDialogRef.open()
     }
   }
 }
@@ -143,9 +151,9 @@ div {
         }
   }
   .table-box {
-    margin-top: 40px;
+    padding: 24px 20px;
     width: 100%;
-    height: 500px;
+    background-color: #fff;
   }
 }
 </style>

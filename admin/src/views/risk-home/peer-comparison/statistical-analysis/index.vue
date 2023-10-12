@@ -1,6 +1,7 @@
 <template>
   <div class="box-analysis-container">
     <!-- 表格 -->
+    <div class="analysis-title">统计分析</div>
     <el-table tooltip-effect="dark" style="width: 100%" :data="tableData" :cell-style="cellStyle" :header-cell-style="rowClass" border>
       <el-table-column label="券商" prop="quanshang" />
       <el-table-column label="担保品证券数量" prop="shuliang" />
@@ -104,5 +105,10 @@ export default {
   width: 100%;
   padding: 24px 20px;
   background-color: #fff;
+  .analysis-title {
+    font-weight: 500;
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
 }
 </style>

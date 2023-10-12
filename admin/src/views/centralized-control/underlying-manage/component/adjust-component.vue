@@ -26,8 +26,8 @@
             </el-select>
           </el-descriptions-item>
           <el-descriptions-item label="融资/担保状态">
-            <el-select v-model="fiveClassifyVal">
-              <el-option v-for="item in fiveClassifyOpt" :key="item.value" :label="item.label" :value="item.value" />
+            <el-select v-model="financeStatusVal">
+              <el-option v-for="item in financeStatusOpts" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
           </el-descriptions-item>
           <el-descriptions-item label="标的范围">
@@ -63,55 +63,44 @@
           </el-descriptions-item>
         </el-descriptions>
       </div>
-    </div>
+      
     <div class="component-table">
       <el-table tooltip-effect="dark" style="width: 100%" :data="tableData" :cell-style="cellStyle" :header-cell-style="rowClass" border>
-        <el-table-column prop="test01" label="序号" />
-        <el-table-column prop="test02" label="交易市场" />
-        <el-table-column prop="test03" label="证券代码" />
-        <el-table-column :label="columnName.zuorifanwei ? '较昨日标的范围变动' : '标的范围' ">
-          <el-table-column prop="test04" label="证券名称" />
-          <el-table-column prop="test05" label="融资标的证券" />
-          <el-table-column prop="test06" label="融券标的证券" />
-          <el-table-column prop="test07" label="可冲抵保证金券" />
-        </el-table-column>
-        <el-table-column v-if="columnName.jizhongdubiandong" label="集中度变动">
-          <el-table-column prop="test08" :label="columnName.jizhongdubiandong.yuanshipingji" />
-          <el-table-column prop="test09" :label="columnName.jizhongdubiandong.dangqianmoxing" />
-          <el-table-column prop="test10" :label="columnName.jizhongdubiandong.biandongyuanyin" />
-        </el-table-column>
-        <el-table-column v-if="columnName.jizhongdu" label="集中度">
-          <el-table-column prop="test08" :label="columnName.jizhongdu.tiaozhengqian" />
-          <el-table-column prop="test09" :label="columnName.jizhongdu.tiaozhenghou" />
-          <el-table-column prop="test10" :label="columnName.jizhongdu.biandong" />
-        </el-table-column>
-        <el-table-column v-if="columnName.zhesuanlv" label="折算率变动">
-          <el-table-column prop="test11" :label="columnName.zhesuanlv.yuanshi" />
-          <el-table-column prop="test12" :label="columnName.zhesuanlv.deqin" />
-          <el-table-column prop="test13" :label="columnName.zhesuanlv.yuanyin" />
+        <el-table-column label="序号" type="index"/>
+        <el-table-column prop="tradeFloor" label="交易市场" />
+        <el-table-column prop="stockCode" label="证券代码" />
+        <template v-for="(val, key, index) in tableRow">
+          <el-table-column :key="index" :label="key">
+            <template v-for="item in val">
+              <el-table-column :key="item.prop" :label="item.label" :prop="item.prop" ></el-table-column>
+            </template>
+          </el-table-column>
+        </template>
+        <template v-if="labelObj.title == '待调整清单'">  
+          <el-table-column prop="test13" label="变动原因" />
           <el-table-column label="操作">
             <template>
               <el-button type="text">加自选</el-button>
             </template>
           </el-table-column>
-        </el-table-column>
-        <el-table-column v-if="columnName.zhesuan" label="折算率">
-          <el-table-column prop="test11" :label="columnName.zhesuan.tiaozhengqian" />
-          <el-table-column prop="test12" :label="columnName.zhesuan.tiaozhenghou" />
-          <el-table-column prop="test13" :label="columnName.zhesuan.biandong" />
-        </el-table-column>
-        <el-table-column v-if="columnName.reason" :label="columnName.reason" />
-        <el-table-column v-if="columnName.date" :label="columnName.date" />
+        </template>
+        <template v-if="labelObj.title == '已调整明细'">
+          <el-table-column prop="test13" label="调整原因（备注）" />
+          <el-table-column label="调整时间"/>
+        </template>
       </el-table>
+      <pagination class="mt-24" :total="10" :current-page="1" :cur-limit="10" :showRecods="1"></pagination>
+    </div>
     </div>
   </div>
 </template>
 
 <script>
+import pagination from '@/components/show-ui/table/pagination-comp.vue'
 export default {
   name: 'Template',
   components: {
-
+    pagination
   },
   props: {
     labelObj: {
@@ -119,47 +108,33 @@ export default {
       required: true,
       default: () => { ({}) }
     },
-    columnName: {
+    tableRow: {
       type: Object,
       required: true,
       default: () => { ({}) }
+    },
+    tableData: {
+      type: Array,
+      default: () => { ([]) }
     }
-    // tableRow: {
-    //   type: Array,
-    //   required: true,
-    //   default: () => { ([]) }
-    // }
   },
   data() {
     return {
       codeVal: '', // 证券代码/名称
       fiveClassifyVal: '', // 五级分类
       financeStatusVal: '', // 融资状态
-      tableData: [{
-        'test01': 1
-      }],
-      tableRow: [
-        {
-          label: '序号',
-          prop: 'test01'
-        },
-        {
-          label: '交易市场',
-          prop: 'test02'
-        },
-        {
-          label: '证券代码',
-          prop: 'test03'
-        }
-      ],
       fiveClassifyOpt: [
         {
-          label: 'test01',
+          label: '上交所',
           value: 1
         },
         {
-          label: 'test02',
+          label: '深交所',
           value: 2
+        },
+        {
+          label: '北交所',
+          value: 3
         }
       ],
       financeStatusOpts: [
@@ -204,7 +179,7 @@ export default {
   ::v-deep .el-descriptions-item__container {
       align-items: center;
   }
-  ::v-deep .el-input--medium .el-input__inner {
+  ::v-deep .component-select .el-input--medium .el-input__inner {
       width: 160px;
       height: 28px;
       line-height: 28px;
