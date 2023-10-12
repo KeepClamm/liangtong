@@ -211,7 +211,6 @@
     </div>
 
     <div v-if="showPagination">
-      <!--  && tableData && tableData.total > 10 -->
       <pagination
         class="mt-24"
         :class-type="classType"
@@ -219,8 +218,8 @@
         :showRecods="tableData && tableData.items && tableData.items.length"
         :current-page="page"
         :cur-limit="limit"
-        @post-curNOP="recieveCurNOP"
-        @post-curlimit="recieveCurLimit"
+        @post-cur-page="recieveCurNOP"
+        @post-cur-limit="recieveCurLimit"
       />
     </div>
   </div>
