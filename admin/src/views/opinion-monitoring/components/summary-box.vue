@@ -38,7 +38,7 @@ export default {
     flex-grow: 1;
     background-color: #fff;
     .name {
-      margin-bottom: 46px;
+      margin-bottom: 20px;
     }
     .num {
       margin-right: 4px;

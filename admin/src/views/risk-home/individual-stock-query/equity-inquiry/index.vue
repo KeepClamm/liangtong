@@ -9,10 +9,10 @@
       <search-bar @searchInfo="searchInfo">
         <el-form :model="searchParams" inline>
           <el-form-item label="证券代码/名称：">
-            <el-input v-model="searchParams.materialName" size="small" placeholder="请输入证券代码/名称"></el-input>
+            <el-input v-model="searchParams.materialName" size="mini" placeholder="请输入证券代码/名称"></el-input>
           </el-form-item>
           <el-form-item label="分红类型：" prop="userId">
-              <el-select v-model="searchParams.dividendTypeOpts" placeholder="请选择分红类型">
+              <el-select v-model="searchParams.dividendTypeOpts" placeholder="请选择分红类型" size="mini">
                   <el-option
                       v-for="item in dividendTypeOpts"
                       :key="item.value"
@@ -23,7 +23,7 @@
               </el-select>
           </el-form-item>
           <el-form-item label="比例因子：" prop="userId">
-              <el-select v-model="searchParams.dividendTypeOpts" placeholder="请选择比例因子">
+              <el-select v-model="searchParams.dividendTypeOpts" placeholder="请选择比例因子" size="mini">
                   <el-option
                       v-for="item in dividendTypeOpts"
                       :key="item.value"
@@ -37,7 +37,7 @@
               <el-date-picker
                   v-model="daterange"
                   type="daterange"
-                  size="small"
+                  size="mini"
                   range-separator="至"
                   style="width: 250px"
                   start-placeholder="开始日期"
@@ -48,7 +48,7 @@
               <el-date-picker
                   v-model="daterange"
                   type="daterange"
-                  size="small"
+                  size="mini"
                   range-separator="至"
                   style="width: 250px"
                   start-placeholder="开始日期"

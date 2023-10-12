@@ -9,10 +9,10 @@
       <search-bar @searchInfo="searchInfo">
         <el-form :model="searchParams" inline>
           <el-form-item label="证券代码/名称：">
-            <el-input v-model="searchParams.materialName" size="small" placeholder="请输入证券代码/名称"></el-input>
+            <el-input v-model="searchParams.materialName" size="mini" placeholder="请输入证券代码/名称"></el-input>
           </el-form-item>
           <el-form-item label="交易市场：" prop="userId">
-              <el-select v-model="searchParams.dividendTypeOpts" placeholder="请选择分红类型">
+              <el-select v-model="searchParams.dividendTypeOpts" placeholder="请选择分红类型" size="mini">
                   <el-option
                       v-for="item in dividendTypeOpts"
                       :key="item.value"
@@ -23,7 +23,7 @@
               </el-select>
           </el-form-item>
           <el-form-item label="是否两融标的证券：" prop="userId">
-              <el-select v-model="searchParams.dividendTypeOpts" placeholder="请选择比例因子">
+              <el-select v-model="searchParams.dividendTypeOpts" placeholder="是否两融标的证券" size="mini">
                   <el-option
                       v-for="item in dividendTypeOpts"
                       :key="item.value"
@@ -34,7 +34,7 @@
               </el-select>
           </el-form-item>
           <el-form-item label="是否可冲抵保证金证券：" prop="userId">
-              <el-select v-model="searchParams.dividendTypeOpts" placeholder="请选择比例因子">
+              <el-select v-model="searchParams.dividendTypeOpts" placeholder="是否可冲抵保证金证券" size="mini">
                   <el-option
                       v-for="item in dividendTypeOpts"
                       :key="item.value"
@@ -48,7 +48,7 @@
               <el-date-picker
                   v-model="daterange"
                   type="daterange"
-                  size="small"
+                  size="mini"
                   range-separator="至"
                   style="width: 250px"
                   start-placeholder="开始日期"
@@ -56,14 +56,14 @@
               </el-date-picker>
           </el-form-item>
           <el-form-item label="单一股票担保物比例比例：">
-            <el-input-number :controls="false" v-model="searchParams.min" size="small" :min="0" :max="100" placeholder="上限"></el-input-number>
+            <el-input-number :controls="false" v-model="searchParams.min" size="mini" :min="0" :max="100" placeholder="上限"></el-input-number>
             <span class="ml-5 mr-5">~</span>
-            <el-input-number :controls="false" v-model="searchParams.max" size="small" :min="0" :max="100" placeholder="下限"></el-input-number>
+            <el-input-number :controls="false" v-model="searchParams.max" size="mini" :min="0" :max="100" placeholder="下限"></el-input-number>
           </el-form-item>
           <el-form-item label="静态市盈率：">
-            <el-input-number :controls="false" v-model="searchParams.min" size="small" :min="0" :max="100" placeholder="上限"></el-input-number>
+            <el-input-number :controls="false" v-model="searchParams.min" size="mini" :min="0" :max="100" placeholder="上限"></el-input-number>
             <span class="ml-5 mr-5">~</span>
-            <el-input-number :controls="false" v-model="searchParams.max" size="small" :min="0" :max="100" placeholder="下限"></el-input-number>
+            <el-input-number :controls="false" v-model="searchParams.max" size="mini" :min="0" :max="100" placeholder="下限"></el-input-number>
           </el-form-item>
         </el-form>
       </search-bar>

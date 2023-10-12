@@ -276,6 +276,10 @@ figure{
   color: $primaryColor;
 }
 
+.color-sed {
+  color: $sedColor;
+}
+
 .gray-fst-ext {
   color: $grayFstText;
 }
@@ -301,4 +305,36 @@ figure{
     color: $yellowText;
     background-color: $yellowBg;
   }
+}
+
+.export-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #606266;
+  border-radius: 4px;
+  border: 1px solid #DCDFE6;
+  background-color: #fff;
+  cursor: pointer;
+  &:hover {
+    border-color: #409EFF;
+  }
+  i {
+    font-size: 12px;
+  }
+}
+
+.select-btn {
+  height: 28px;
+  padding: 0 15px;
+  font-size: 12px;
+  line-height: 28px;
+  color: #606266;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: #fff;
+  border: 1px solid #DCDFE6;
+  text-align: center;
 }

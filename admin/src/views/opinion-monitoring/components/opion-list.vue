@@ -9,7 +9,7 @@
           </div>
           <p class="gray-sed-text f-12 hide-line1 mt-8 mb-8">{{ item.desc }}</p>
           <div class="show-flex-box-r">
-            <div class="stock-wrap color-primary f-12">
+            <div class="stock-wrap color-sed f-12">
               <span class="point mr-5"></span>
               <span>{{ item.stockName }}</span>
               <span v-if="item.stockCode">（{{ item.stockCode }}）</span>
@@ -49,9 +49,17 @@ export default {
   },
   data() {
     return {
+      page: 1,
+      limit: 10
     };
   },
   methods: {
+    changeCurPage(v) {
+      this.page = v;
+    },
+    changeLimit(v) {
+      this.limit = v;
+    }
   }
 };
 </script>
