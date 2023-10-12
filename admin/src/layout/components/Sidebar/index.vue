@@ -16,13 +16,11 @@
           :collapse-transition="false"
           mode="vertical"
         >
-          <sidebar-item
-            classType="parent"
-            v-for="route in permissionRoutes"
-            :key="route.path + Math.random()"
-            :item="route"
-            :base-path="route.path"
-          />
+          <sidebar-item classType="parent"
+                        v-for="route in permissionRoutes"
+                        :key="route.path + Math.random()"
+                        :item="route"
+                        :base-path="route.path"/>
         </el-menu>
       </el-scrollbar>
     </div>
@@ -30,11 +28,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Logo from './Logo'
-import SidebarItem from './SidebarItem'
-import variables from '@/styles/variables.scss'
-import { getCurWatchStockInfo, setCurWatchStockInfo } from '@/utils/auth';
+import { mapGetters } from 'vuex';
+import Logo from './Logo';
+import SidebarItem from './SidebarItem';
+import variables from '@/styles/variables.scss';
 
 export default {
   components: { SidebarItem, Logo },
@@ -64,7 +61,10 @@ export default {
     isCollapse() {
       // return !this.sidebar.opened
       return false;
-    }
+    },
+    activeMenuName() {
+      return this.$store.state.settings.activeMenuName;
+    },
   },
   inject: ['isRouterAlive'],
   data() {
@@ -90,51 +90,30 @@ export default {
       immediate: true,
       deep: true
     },
-
+    activeMenuName() {
+      this.checkIsNeedHidden();
+    }
   },
   methods: {
     checkIsNeedHidden(){
-      const CurWatchStock = getCurWatchStockInfo();
       // const curRouteName = this.$route.name || '/';
       let list = this.permission_routes;
       let routeList = [];
 
-      if (CurWatchStock) { // ['shortCrash', 'longCrash'].includes(curRouteName) && CurWatchStock
-        list.forEach(item=>{
-          if (item.path == '/individual-stocks') {
-            item.children[0].hidden = true;
-            item.children[1].hidden = false;
-            item.children[2].hidden = false;
-            item.children[3].hidden = false;
-          }
-        });
-      } else {
-        // setCurWatchStockInfo(null);
-        
-        list.forEach(item=>{
-          if (item.path == '/individual-stocks') { // item.path == '/individual-stocks' && !CurWatchStock
-            item.children[0].hidden = false;
-            item.children[1].hidden = true;
-            item.children[2].hidden = true;
-            item.children[3].hidden = true;
-          }
-        });
-      }
-
       list.forEach(item=> {
-        if (!item.hasOwnProperty('header')) {
-          routeList.push(item);
-        }
-
         if (item.hasOwnProperty('header')) {
-          routeList.push(...item.children);
+          if (item.name == this.activeMenuName) {
+            routeList.push(...item.children);
+          }
+        } else {
+          routeList.push(item);
         }
       })
 
       this.permissionRoutes = routeList;
     },
     getItemRoute(route) {
-      console.log("---获取的内容g----",route);
+ 
     }
   },
 

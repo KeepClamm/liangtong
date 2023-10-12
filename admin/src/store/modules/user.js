@@ -7,6 +7,7 @@ import {
   getUserInfo,
   getCurWatchStockInfo,
   setCurWatchStockInfo,
+  removeActiveMunuName
 } from '@/utils/auth';
 
 import { reqUserInfo } from '@/api/service/login';
@@ -84,6 +85,7 @@ const user = {
     },
     LOGOUT({ commit, state }) {
       removeToken();
+      removeActiveMunuName();
       clearUserInfo();
       commit('SET_ROLES', []);
       commit('SET_CUR_WATCH_STOCK_INFO', null);

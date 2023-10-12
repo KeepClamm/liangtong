@@ -2,7 +2,13 @@
   <div class="role-wrap show-flex-box-c">
     <div class="top-title-box show-flex-box-r">
       <h2>账号管理</h2>
-      <el-button class="dark-blue-primary-button" size="mini" icon="el-icon-plus" @click="onHandleTableCell('add')">添加角色</el-button>
+      <el-button v-permission="'/authority-management/role/addRole'"
+                 class="dark-blue-primary-button" 
+                 size="mini" 
+                 icon="el-icon-plus" 
+                 @click="onHandleTableCell('add')">
+        添加角色
+      </el-button>
     </div>
     <div class="table-box">
       <basic-table :propList="propConfig"

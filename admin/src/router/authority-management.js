@@ -3,10 +3,12 @@ import Layout from '@/layout';
 export default [
   {
     path: '/authority-management',
+    name: 'AuthorityManagement',
     component: Layout,
     meta: {
       title: '权限管理',
     },
+    header: true,
     redirect: '/authority-management/role',
     children: [
       {

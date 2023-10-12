@@ -160,20 +160,7 @@ export default {
       }
     },
     handleSelect(row) {
-      this.keywords = '';
-      const info = {
-        id: row.stockCode,
-        name: row.stockShortName,
-      };
-
-      if (this.$route.name == 'riskFluctuationOverview') {
-        this.reload(); // 静默刷新（v-if原理）
-        // location.reload(); // 页面刷新
-      } else {
-        this.$router.push({ path: '/individual-stocks/risk-fluctuation-overview' });
-      }
-
-      this.$store.dispatch("setCurWatchStockInfo", info);
+      
     },
   }
 };

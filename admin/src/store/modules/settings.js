@@ -1,11 +1,13 @@
-import defaultSettings from '@/settings'
+import defaultSettings from '@/settings';
+import { getActiveMenuName, setActiveMenuName } from '@/utils/auth';
 
-const { showSettings, fixedHeader, sidebarLogo } = defaultSettings
+const { showSettings, fixedHeader, sidebarLogo } = defaultSettings;
 
 const state = {
   showSettings: showSettings,
   fixedHeader: fixedHeader,
-  sidebarLogo: sidebarLogo
+  sidebarLogo: sidebarLogo,
+  activeMenuName: getActiveMenuName(),
 }
 
 const mutations = {
@@ -13,12 +15,20 @@ const mutations = {
     if (state.hasOwnProperty(key)) {
       state[key] = value
     }
-  }
+  },
 }
 
 const actions = {
   changeSetting({ commit }, data) {
     commit('CHANGE_SETTING', data)
+  },
+  setActiveMenuName({ commit }, name) {
+    setActiveMenuName(name);
+
+    commit('CHANGE_SETTING', {
+      key: 'activeMenuName',
+      value: name
+    })
   }
 }
 

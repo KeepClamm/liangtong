@@ -1,9 +1,9 @@
 <template>
   <div class="header-menu-wrap">
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane v-for="(item,index) in routerList" 
-                   :key="index"
-                   :label="item.title" 
+      <el-tab-pane v-for="(item) in menuList" 
+                   :key="item.name"
+                   :label="item.meta.title" 
                    :name="item.name">
       </el-tab-pane>
     </el-tabs>
@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 
 export default {
   name: "HeaderMenu",
@@ -20,18 +21,84 @@ export default {
   props: {},
   data() {
     return {
-      activeName: 'home',
-      routerList: [
-        {name: 'home',title: '风险首页'},
-        {name: 'management',title: '持仓管理'},
-        {name: 'control',title: '舆情监控'},
-        {name: 'auth',title: '权限管理'},
-      ]
+      activeName: '',
+      menuRouterMap: {},
+      toRouter: null,
+      menuList: [],
     };
   },
+  computed: {
+    ...mapGetters([
+      'permission_routes',
+    ]),
+    activeMenuName() {
+      return this.$store.state.settings.activeMenuName;
+    },
+  },
+  watch: {
+    permission_routes: {
+      handler(newName, oldName) {
+        // this.setMenuList();
+      },
+      deep: true
+    },
+    $route(to,from){
+      this.toRouter = to;
+      console.log("---获取的路由信息---",to);
+    },
+  },
+  mounted() {
+    this.setMenuList();
+  },
   methods: {
-    handleClick() {
+    handleClick(menuData) {
+      this.setCurrentActiveMenuName(menuData.name);
+      this.jumpPageByActiveName();
+    },
+    jumpPageByActiveName() {
+      const routerData = this.menuRouterMap[this.activeName];
+      const path = this.getRouterPushPath(routerData);
+      
+      console.log(this.toRouter);
+      console.log(path);
 
+      this.$router.push({
+        path: path
+      })
+    },
+    getRouterPushPath(routerData,path) {
+      let routerPath = path;
+
+      if (routerData.children && routerData.children.length > 0) {
+        return this.getRouterPushPath(routerData.children[0],routerData.path);
+      } else {
+        routerPath = routerData.path;
+      }
+
+      return routerPath;
+    },
+    setCurrentActiveMenuName(name) {
+      this.$store.dispatch('settings/setActiveMenuName',name);
+    },
+    setMenuList() {
+      let list = this.permission_routes;
+      let menuList = [];
+
+      list.forEach(item => {
+        if (item.hasOwnProperty('header') && item.header) {
+          let routerName = item.name;
+
+          menuList.push(item);
+
+          this.menuRouterMap[routerName] = item;
+          this.activeName = this.activeMenuName || routerName;
+        }
+      });
+      console.log("---路由信息----");
+      console.log(this.menuRouterMap)
+      this.menuList = menuList;
+      this.setCurrentActiveMenuName(this.activeName);
+      this.jumpPageByActiveName();
     }
   }
 };

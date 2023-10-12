@@ -35,3 +35,15 @@ export function getCurWatchStockInfo() {
 export function setCurWatchStockInfo(data) {
   Storage.set('CurWatchStock', data);
 }
+
+export function getActiveMenuName() {
+  return Storage.get('activeMenuName');
+}
+
+export function setActiveMenuName(name) {
+  Storage.set('activeMenuName', name);
+}
+
+export function removeActiveMunuName() {
+  Storage.remove('activeMenuName');
+}

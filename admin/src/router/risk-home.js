@@ -4,15 +4,17 @@ import Layout from '@/layout'
 export default [
   {
     path: '/risk-home',
+    name: 'RiskHome',
     component: Layout,
     meta: {
       title: '风险首页',
       icon: 'ComparisonOfPeers'
     },
     redirect: '/risk-home/risk-cockpit',
+    header: true,
     children: [
       {
-        path: 'risk-cockpit',
+        path: '/risk-home/risk-cockpit',
         name: 'RiskCockpit',
         component: () => import('@/views/risk-home/risk-cockpit/index'),
         meta: {
@@ -20,16 +22,16 @@ export default [
         }
       },
       {
-        path: '/individual-stocks',
+        path: '/risk-home/individual-stocks',
         component: () => import('@/views/risk-home/individual-stock-query/index'),
         meta: {
           title: '个股查询',
           icon: 'ComparisonOfPeers',
         },
-        redirect: '/individual/risk-inquiry',
+        redirect: '/risk-home/individual-stocks/risk-inquiry',
         children: [
           {
-            path: 'risk-inquiry',
+            path: '/risk-home/individual-stocks/risk-inquiry',
             name: 'RiskInquiry',
             component: () => import('@/views/risk-home/individual-stock-query/risk-inquiry/index'),
             meta: {
@@ -37,7 +39,7 @@ export default [
             }
           },
           {
-            path: 'equity-inquiry',
+            path: '/risk-home/individual-stocks/equity-inquiry',
             name: 'EquityInquiry',
             component: () => import('@/views/risk-home/individual-stock-query/equity-inquiry/index'),
             meta: {
@@ -45,7 +47,7 @@ export default [
             }
           },
           {
-            path: 'oncentration-query',
+            path: '/risk-home/individual-stocks/oncentration-query',
             name: 'ConcentrationControl',
             component: () => import('@/views/risk-home/individual-stock-query/concentration-query/index'),
             meta: {
@@ -53,7 +55,7 @@ export default [
             }
           },
           {
-            path: 'risk-fluctuation',
+            path: '/risk-home/individual-stocks/risk-fluctuation',
             name: 'RiskFluctuation',
             component: () => import('@/views/risk-home/individual-stock-query/risk-fluctuation/index'),
             meta: {
@@ -61,7 +63,7 @@ export default [
             }
           },
           {
-            path: 'risk-indicator',
+            path: '/risk-home/individual-stocks/risk-indicator',
             name: 'RiskIndicator',
             component: () => import('@/views/risk-home/individual-stock-query/risk-indicator/index'),
             meta: {
@@ -69,7 +71,7 @@ export default [
             }
           },
           {
-            path: 'public-sentiment',
+            path: '/risk-home/individual-stocks/public-sentiment',
             name: 'PublicSentiment',
             component: () => import('@/views/risk-home/individual-stock-query/public-sentiment/index'),
             meta: {
@@ -79,7 +81,7 @@ export default [
         ]
       },
       {
-        path: 'peer-comparison',
+        path: '/risk-home/peer-comparison',
         name: 'PeerComparison',
         component: () => import('@/views/risk-home/peer-comparison/index'),
         meta: {
@@ -87,7 +89,7 @@ export default [
         },
         children: [
           {
-            path: 'finance-bid',
+            path: '/risk-home/peer-comparison/finance-bid',
             name: 'FinanceBid',
             component: () => import('@/views/risk-home/peer-comparison/finance-bid'),
             meta: {
@@ -95,7 +97,7 @@ export default [
             }
           },
           {
-            path: 'margin-auction',
+            path: '/risk-home/peer-comparison/margin-auction',
             name: 'MarginAuction',
             component: () => import('@/views/risk-home/peer-comparison/margin-auction'),
             meta: {
@@ -103,7 +105,7 @@ export default [
             }
           },
           {
-            path: 'deductible-deposit',
+            path: '/risk-home/peer-comparison/deductible-deposit',
             name: 'DeductibleDeposit',
             component: () => import('@/views/risk-home/peer-comparison/deductible-deposit'),
             meta: {
@@ -111,7 +113,7 @@ export default [
             },
             children: [
               {
-                path: 'conversion-rate',
+                path: '/risk-home/peer-comparison/deductible-deposit/conversion-rate',
                 name: 'ConversionRate',
                 component: () => import('@/views/risk-home/peer-comparison/deductible-deposit/conversion-rate'),
                 meta: {
@@ -119,7 +121,7 @@ export default [
                 }
               },
               {
-                path: 'concentration-degree',
+                path: '/risk-home/peer-comparison/deductible-deposit/concentration-degree',
                 name: 'ConcentrationDegree',
                 component: () => import('@/views/risk-home/peer-comparison/deductible-deposit/concentration-degree'),
                 meta: {
@@ -129,7 +131,7 @@ export default [
             ]
           },
           {
-            path: 'statistical-analysis',
+            path: '/risk-home/peer-comparison/statistical-analysis',
             name: 'StatisticalAnalysis',
             component: () => import('@/views/risk-home/peer-comparison/statistical-analysis'),
             meta: {

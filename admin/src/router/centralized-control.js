@@ -3,14 +3,17 @@ import Layout from '@/layout'
 export default [
   {
     path: '/centralized-control',
+    name: 'CentralizedControl',
     component: Layout,
     meta: {
       title: '集中度管控',
       icon: 'ComparisonOfPeers'
     },
+    header: true,
     redirect: '/centralized-control/underlying-query',
-    children: [{
-      path: 'underlying-query',
+    children: [
+      {
+      path: '/centralized-control/underlying-query',
       name: 'UnderlyingQuery',
       component: () => import('@/views/centralized-control/underlying-query'),
       meta: {
@@ -18,7 +21,7 @@ export default [
       },
       children: [
         {
-          path: 'collateral-securities',
+          path: '/centralized-control/underlying-query/collateral-securities',
           name: 'CollateralSecurities',
           component: () => import('@/views/centralized-control/underlying-query/collateral-securities'),
           meta: {
@@ -26,7 +29,7 @@ export default [
           }
         },
         {
-          path: 'tender-securities',
+          path: '/centralized-control/underlying-query/tender-securities',
           name: 'TenderSecurities',
           component: () => import('@/views/centralized-control/underlying-query/tender-securities'),
           meta: {
@@ -36,7 +39,7 @@ export default [
       ]
     },
     {
-      path: 'underlying-manage',
+      path: '/centralized-control/underlying-manage',
       name: 'UnderlyingManage',
       component: () => import('@/views/centralized-control/underlying-manage'),
       meta: {
@@ -44,7 +47,7 @@ export default [
       },
       children: [
         {
-          path: 'adjustment-detail',
+          path: '/centralized-control/underlying-manage/adjustment-detail',
           name: 'AdjustmentDetail',
           component: () => import('@/views/centralized-control/underlying-manage/adjustment-detail'),
           meta: {
@@ -52,7 +55,7 @@ export default [
           }
         },
         {
-          path: 'underlying-adjust',
+          path: '/centralized-control/underlying-manage/underlying-adjust',
           name: 'UnderlyingAdjust',
           component: () => import('@/views/centralized-control/underlying-manage/underlying-adjust'),
           meta: {
@@ -60,7 +63,7 @@ export default [
           }
         },
         {
-          path: 'adjust-query',
+          path: '/centralized-control/underlying-manage/adjust-query',
           name: 'AdjustQuery',
           component: () => import('@/views/centralized-control/underlying-manage/adjust-query'),
           meta: {
@@ -70,7 +73,7 @@ export default [
       ]
     },
     {
-      path: 'attention-pool',
+      path: '/centralized-control/attention-pool',
       name: 'AttentionPool',
       component: () => import('@/views/centralized-control/attention-pool'),
       meta: {

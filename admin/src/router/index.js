@@ -51,8 +51,8 @@ export const constantRoutes = [
 
 export const asyncRoutes = [
   ...riskHome,
-  ...authorityManagement,
   ...centralizedControl,
+  ...authorityManagement,
   // 404 page must be placed at the end !!!
   {
     path: '*',

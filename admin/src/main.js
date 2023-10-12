@@ -5,6 +5,8 @@ import router from './router';
 import Vuex from 'vuex';
 import store from './store';
 import Element from 'element-ui';
+import { useDirectives } from './directives';
+
 import '@/icons'; // icon
 import '@/permission'; // permission control
 import '@/filter/filter';
@@ -24,5 +26,6 @@ new Vue({
   el: '#app',
   router,
   store,
+  directives: useDirectives(Vue),
   render: h => h(App)
 });
