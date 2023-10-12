@@ -28,9 +28,9 @@
   * @param    {string}    classType    class类 center end
   *
   * 组件调用方法 (调用后需要重新调用接口刷新数据)
-  * @post-curNOP
+  * @post-cur-page
   * @returns    {number}    val    当前所在页数
-  * @post-curlimit
+  * @post-cur-limit
   * @returns    {number}    val    当前每页显示数量
   */
 
@@ -41,8 +41,14 @@ export default {
       type: Number,
       default: 0
     },
-    curLimit: Number,
-    currentPage: Number,
+    curLimit: {
+      type: Number,
+      default: 10
+    },
+    currentPage: {
+      type: Number,
+      default: 1
+    },
     classType: {
       type: String,
        default: 'left'
@@ -92,10 +98,10 @@ export default {
       }
     },
     handleSizeChange(val) {
-      this.$emit('post-curlimit', val)
+      this.$emit('post-cur-limit', val)
     },
     handleCurrentChange(val) {
-      this.$emit('post-curNOP', val)
+      this.$emit('post-cur-page', val)
     }
   }
 }

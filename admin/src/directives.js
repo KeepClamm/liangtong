@@ -14,7 +14,7 @@ const directives = [{
       if (isAdmin) {
         el.parentNode.removeChild(el)
       } else {
-
+        
       }
       // const hasPer = CommonUtils.checkHasThisPermission(binding.value);
 
