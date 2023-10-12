@@ -23,6 +23,10 @@ const actions = {
     commit('CHANGE_SETTING', data)
   },
   setActiveMenuName({ commit }, name) {
+    if (!name) {
+      return;
+    }
+
     setActiveMenuName(name);
 
     commit('CHANGE_SETTING', {

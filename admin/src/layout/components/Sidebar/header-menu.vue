@@ -57,6 +57,11 @@ export default {
     },
     jumpPageByActiveName() {
       const routerData = this.menuRouterMap[this.activeName];
+
+      if (!routerData) {
+        return;
+      }
+
       const path = this.getRouterPushPath(routerData);
       
       console.log(this.toRouter);
@@ -86,6 +91,7 @@ export default {
 
       list.forEach(item => {
         if (item.hasOwnProperty('header') && item.header) {
+          console.log("--item--",item);
           let routerName = item.name;
 
           menuList.push(item);
@@ -94,8 +100,7 @@ export default {
           this.activeName = this.activeMenuName || routerName;
         }
       });
-      console.log("---路由信息----");
-      console.log(this.menuRouterMap)
+
       this.menuList = menuList;
       this.setCurrentActiveMenuName(this.activeName);
       this.jumpPageByActiveName();

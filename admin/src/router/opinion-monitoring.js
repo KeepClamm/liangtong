@@ -3,14 +3,16 @@ import Layout from '@/layout';
 export default [
   {
     path: '/opinion-monitor',
+    name: 'OpinionMonitor',
     component: Layout,
+    header: true,
     meta: {
       title: '舆情监控',
     },
-    redirect: '/opinion-monitor/role',
+    redirect: '/opinion-monitor/today',
     children: [
       {
-        path: '/today',
+        path: '/opinion-monitor/today',
         name: 'TodayOpinionMonitor',
         component: () => import('@/views/opinion-monitoring/today-monitor/index'),
         meta: {
@@ -18,7 +20,7 @@ export default [
         }
       },
       {
-        path: '/history',
+        path: '/opinion-monitor/history',
         name: 'HistoryOpinionMonitor',
         component: () => import('@/views/opinion-monitoring/history-monitor/index'),
         meta: {
