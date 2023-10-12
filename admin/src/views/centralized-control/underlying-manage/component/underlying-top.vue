@@ -19,41 +19,36 @@
           </template>
         </div>  
       </div>
-      <div class="component-select">
-        <el-descriptions>
-          <template v-for="(val, key, index) in globalConfig">
-            <el-descriptions-item :key="index" :label="val.label">
-              <template v-if="val.type == 'input'">
+      <div class="select-container">
+        <template v-for="(val, key, index) in globalConfig">
+          <div class="select-item" :key="index">
+          <div class="select-container-label">
+            {{val.label}}:
+          </div>
+          <div class="select-container-options">
+            <template v-if="val.type == 'input'">
                 <el-input v-model="selectVal[val.valName]" :placeholder="val.placeHolder" @change="handleChange"/>
-              </template>
-              <template v-if="val.type == 'select'">
-                <el-select v-model="selectVal[val.valName]" @change="handleChange">
-                  <el-option v-for="item in val.selectOpts" :key="item.value" :value="item.value" :label="item.label"></el-option>
-                </el-select>
-              </template>
-              <template v-if="val.type == 'selectMut'">
-                <el-select v-model="selectVal[val.valName]" multiple collapse-tags class="tags-select-input" @change="handleChange">
-                  <el-option v-for="item in val.selectOpts" :key="item.value" :value="item.value" :label="item.label"></el-option>
-                </el-select>
-              </template>
-              <template v-if="val.type == 'date'">
-                  <el-date-picker v-model="selectVal[val.valName]" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" />
-              </template>
-            </el-descriptions-item>
-          </template>
-        </el-descriptions>
-        <div class="passAndReject" v-if="passReject">
-          <div class="component-header-buttons-item">
-              批量通过
-            </div>
-            <div class="component-header-buttons-item button-color">
-              批量驳回
-            </div>
+            </template>
+            <template v-if="val.type == 'select'">
+              <el-select v-model="selectVal[val.valName]" @change="handleChange">
+                <el-option v-for="item in val.selectOpts" :key="item.value" :value="item.value" :label="item.label"></el-option>
+              </el-select>
+            </template>
+            <template v-if="val.type == 'selectMut'">
+              <el-select v-model="selectVal[val.valName]" multiple collapse-tags class="tags-select-input" @change="handleChange">
+                <el-option v-for="item in val.selectOpts" :key="item.value" :value="item.value" :label="item.label"></el-option>
+              </el-select>
+            </template>
+            <template v-if="val.type == 'date'">
+                <el-date-picker v-model="selectVal[val.valName]" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" />
+            </template>
+          </div>
         </div>
+        </template>
       </div>
     </div>
     <adjust-dialog ref="adjustDialog"></adjust-dialog>
-    <adjust-mutdialog></adjust-mutdialog>
+    <adjust-mutdialog ref="adjustMutDialog"></adjust-mutdialog>
   </div>
 </template>
 
@@ -118,7 +113,7 @@ export default {
     },
     // 批量调整
     openMutAdjustDialog() {
-
+      this.$refs.adjustMutDialog.open()
     }
   }
 }
@@ -220,6 +215,25 @@ export default {
                   display: flex;
                   margin-top: 10px;
                 }
+            }
+            .select-container {
+              margin-top: 36px;
+              width: 100%;
+              display: flex;
+              flex-wrap: wrap;
+              .select-item {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                margin-right: 36px;
+                margin-bottom: 16px;
+                .select-container-label {
+                  color: #606266;
+                  font-size: 14px;
+                  white-space: nowrap;
+                  margin-right: 10px;
+                }
+              }
             }
         }
     }

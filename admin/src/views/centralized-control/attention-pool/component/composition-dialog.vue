@@ -3,7 +3,7 @@
     class="common-dialog-box"
     title="新建组合"
     :visible.sync="dialogStatus"
-    width="700px"
+    width="600px"
     top="0"
     show-close
     :append-to-body="false"
@@ -13,7 +13,7 @@
     <div class="form-container">
       <el-form
         ref="compositionForm"
-        :model="comForm"
+        :model="compositionForm"
         label-width="150px"
         size="small"
       >
@@ -77,7 +77,7 @@ export default {
 
 <style lang="scss" scoped>
 ::v-deep .el-dialog {
-  height: 688px;
+  height: 420px;
   margin-top: calc(54vh - 344px) !important;
 }
 .common-dialog-box ::v-deep .el-dialog__body {

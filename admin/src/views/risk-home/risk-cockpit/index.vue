@@ -24,11 +24,11 @@
     </div>
     <!-- 高危预警&评级调整 -->
     <div class="high-risk-warn">
-      <high-risk-warn />
+      <high-risk-warn :table-data="tableData"/>
     </div>
     <!-- 财务类退市预警&交易类退市预警 -->
     <div class="high-risk-warn">
-      <delisting-warn></delisting-warn>
+      <delisting-warn :table-data="delistingTableData"/>
     </div>
   </div>
 </template>
@@ -58,6 +58,18 @@ export default {
         { title: '当日全时长平均折算率', today: '66%', yesterday: '72%', id: 3 },
         { title: '负面舆情个数', today: 30, yesterday: 123, id: 4 },
         { title: '近一周调出标的券商数', today: 120, id: 5 }
+      ],
+      tableData: [
+        {'stockCode': '000012.SZ', 'stockAcronyms': '南极A', 'currentRate': 'E', 'oldRate': 'A', 'mainRisk': '业务亏损，关联交易较多，资产负载率过高'},
+        {'stockCode': '000012.SZ', 'stockAcronyms': '南极A', 'currentRate': 'E', 'oldRate': 'A', 'mainRisk': '业务亏损，关联交易较多，资产负载率过高'},
+        {'stockCode': '000012.SZ', 'stockAcronyms': '南极A', 'currentRate': 'E', 'oldRate': 'A', 'mainRisk': '业务亏损，关联交易较多，资产负载率过高'},
+        {'stockCode': '000012.SZ', 'stockAcronyms': '南极A', 'currentRate': 'E', 'oldRate': 'A', 'mainRisk': '业务亏损，关联交易较多，资产负载率过高'},
+      ],
+      delistingTableData: [
+        {'stockCode': '000012.SZ', 'stockAcronyms': '南极A', 'currentRate': 'E', 'oldRate': 'A', 'mainRisk': '业务亏损，关联交易较多，资产负载率过高'},
+        {'stockCode': '000012.SZ', 'stockAcronyms': '南极A', 'currentRate': 'E', 'oldRate': 'A', 'mainRisk': '业务亏损，关联交易较多，资产负载率过高'},
+        {'stockCode': '000012.SZ', 'stockAcronyms': '南极A', 'currentRate': 'E', 'oldRate': 'A', 'mainRisk': '业务亏损，关联交易较多，资产负载率过高'},
+        {'stockCode': '000012.SZ', 'stockAcronyms': '南极A', 'currentRate': 'E', 'oldRate': 'A', 'mainRisk': '业务亏损，关联交易较多，资产负载率过高'},        
       ]
     }
   },
