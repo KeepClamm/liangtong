@@ -491,7 +491,66 @@ const TABLE_DATA = [
   }
 ]
 
+const FINANCE_TABLE_DATA = [
+    {
+        "code": null,
+        "name": "盈利能力",
+        "level": 2,
+        "list": [
+            {
+                "code": "PROFITABILITY_1",
+                "name": "近三年经营活动现金流为负次数",
+                "desc": "近3年内经营活动现金流出现负数的次数",
+                "level": 3,
+                "isRisk": 1,
+                "dataNumber": 1,
+                "score": 28.7,
+                "ranking": 1184,
+                "brokerTotalNumber": 4973,
+                "averageScore": 31.57,
+                "scoreAnalysis": {
+                    "series": [
+                        8.6,
+                        94.7,
+                        28.7,
+                        10.1,
+                        0
+                    ],
+                    "xaxis": [
+                        "Missing",
+                        "( . ,0]",
+                        "(0,1]",
+                        "(1,2]",
+                        "(2, . )"
+                    ]
+                },
+                "currentScoreLinePointXAxis": "(0,1]",
+                "currentScoreLinePointYAxis": 28.7,
+                "subjectDistributionAnalysis": {
+                    "series": [
+                        0,
+                        37.71,
+                        23.01,
+                        20.3,
+                        18.98
+                    ],
+                    "xaxis": [
+                        "Missing",
+                        "( . ,0]",
+                        "(0,1]",
+                        "(1,2]",
+                        "(2, . )"
+                    ]
+                },
+                "currentScoreBarPointXAxis": "(0,1]",
+                "currentScoreBarPointYAxis": 23.01
+            }
+        ]
+    }
+  ]
+  
 export {
   RADAR_CHART_DATA,
-  TABLE_DATA
+  TABLE_DATA,
+  FINANCE_TABLE_DATA
 }

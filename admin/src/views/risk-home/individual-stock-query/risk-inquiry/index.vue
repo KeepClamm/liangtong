@@ -89,7 +89,26 @@ export default {
       limit: 10,
       filterForm: {},
       tableLoading: false,
-      tableListData: {},
+      tableListData: {
+        total: 1,
+        items: [
+          {
+              "stockCode": "000001.SZ",
+              "stockShortName": "平安银行",
+              "industryName": "银行",
+              "plateName": "深股通,融资融券",
+              "shortTermFiveLevelClassification": "SR1",
+              "shortTermDurationDays": 392,
+              "conversionRate": 0.7,
+              "longTermFiveLevelClassification": "LR1",
+              "longTermDurationDays": 392,
+              "stockPledgeRate": 0.45,
+              "financingObjectInOutState": null,
+              "marginLendingSubjectInOutState": "调出",
+              "offsetMarginSecuritiesInOutState": null
+          }
+        ]
+      },
       propConfig: [
         { prop: 'stockCode', label: '股票代码',slotName: 'stockCode' },
         { prop: 'stockShortName', label: '证券简称', slotName: 'stknme' },

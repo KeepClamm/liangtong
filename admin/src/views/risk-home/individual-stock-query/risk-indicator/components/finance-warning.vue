@@ -116,9 +116,9 @@
             icon: require('@/assets/images/common/warning-orange.png') }
         ],
         propConfig: [
-          { prop: "FirstIndex", label: "指标类型"},
-          { prop: "SecondIndex", label: "指标名称"},
-          { prop: "ThirdIndex", label: "指标值", slotName: 'ThirdIndex', width: 190, notOverflow: true, },
+          { prop: "SecondIndex", label: "指标类型"},
+          { prop: "ThirdIndex", label: "指标名称"},
+          { prop: "indexData", label: "指标值", slotName: 'ThirdIndex', width: 190, notOverflow: true, },
           { prop: "indexScore", label: "指标分数", slotName: 'indexScore'},
           { prop: "indexRanking", label: "指标排名", slotName: 'indexRanking'},
           { prop: "averageIndexScore", label: "市场平均指标得分", slotName: 'averageIndexScore'},
@@ -133,7 +133,7 @@
       setData(info){
         this.tableListData = info;
 
-        this.spanArr = this.getSpanArr(info.items, 'FirstIndex');
+        // this.spanArr = this.getSpanArr(info.items, 'FirstIndex');
         this.aaaArrSecondIndex = this.getSpanArr(info.items, 'SecondIndex');
 
         const yAxisCustom = {
@@ -163,15 +163,15 @@
         }, 0);
       },
       spanMethod({ row, column, rowIndex, columnIndex }) {
-        if (columnIndex === 0) {
-          const _row = this.spanArr[rowIndex];
-          const _col = _row > 0 ? 1 : 0;
-          return {
-            rowspan: _row,
-            colspan: _col
-          }
-        }
-        if(columnIndex === 1) {
+        // if (columnIndex === 0) {
+        //   const _row = this.spanArr[rowIndex];
+        //   const _col = _row > 0 ? 1 : 0;
+        //   return {
+        //     rowspan: _row,
+        //     colspan: _col
+        //   }
+        // }
+        if(columnIndex === 0) {
           const _row = this.aaaArrSecondIndex[rowIndex];
           const _col = _row > 0 ? 1 : 0;
           return {
