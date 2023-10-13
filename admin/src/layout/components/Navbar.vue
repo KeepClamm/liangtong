@@ -21,7 +21,7 @@
       </div>
       
       <div class="search-box">
-        <div class="search-button">
+        <div class="search-button" @click="toSearch">
           <img class="search-icon" :src="searchIcon">
         </div>
         <!-- <div class="search-input-box">
@@ -197,7 +197,11 @@ export default {
       }
     },
     // 搜索
-    toSearch(){},
+    toSearch(){
+      this.$router.push({
+        path: '/search/home'
+      })
+    },
     querySearchAsync(queryString, cb) {
       const params = { keywords: queryString };
       const cacheData = this.searchKeywordValueMap[queryString];

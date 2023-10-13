@@ -188,10 +188,8 @@ export default {
     content: '';
   }
   ::v-deep .sub-item{
-    // width: 212px;
-    // width: 196px;
     font-size: 18px;
-    // width: 172px;
+    padding-left: 20px;
     transition: background-color .3s;
     border-radius: 4px;
     overflow: hidden;

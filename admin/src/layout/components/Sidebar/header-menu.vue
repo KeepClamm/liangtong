@@ -73,17 +73,20 @@ export default {
     setMenuActiveByRoute(to) {
       const toPath = to.path;
       const routeMap = this.menuRouterMap;
+      let routeName = '';
 
       for(let key in routeMap) {
         if (routeMap.hasOwnProperty(key)) {
           let routeData = routeMap[key];
 
           if (toPath.indexOf(routeData.path) >= 0) {
-            this.setCurrentActiveMenuName(routeData.name);
+            routeName = routeData.name;
             break;
           }
         }
       }
+      console.log("------获取的名称---" + routeName);
+      this.setCurrentActiveMenuName(routeName);
     },
     getRouterPushPath(routerData,path) {
       let routerPath = path;

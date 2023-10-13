@@ -3,10 +3,10 @@
     <div class="header">
       <navbar />
     </div>
-    <div class="slidebar">
+    <div v-if="!sidebarHidden" class="slidebar">
       <sidebar class="sidebar-container" />
     </div>
-    <div class="main-content">
+    <div :class="{'main-content':true, 'full-main-content': sidebarHidden}">
       <app-main />
     </div>
 
@@ -35,6 +35,11 @@ export default {
     Sidebar,
     AppMain
   },
+  data() {
+    return {
+      sidebarHidden: false,
+    }
+  },
   // mixins: [ResizeMixin],
   computed: {
     sidebar() {
@@ -55,10 +60,28 @@ export default {
       }
     }
   },
+  watch: {
+    $route: {
+      handler: function(val, oldVal){
+        this.setLayoutRenderType();
+      },
+      // 深度观察监听
+      deep: true
+    }
+  },
+  mounted() {
+    this.setLayoutRenderType();
+  },
   methods: {
     // handleClickOutside() {
     //   this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
     // }
+    setLayoutRenderType() {
+      const routeData = this.$route;
+      const slidebarHidden = routeData.meta ? routeData.meta.sidebarHidden : false;
+      
+      this.sidebarHidden = slidebarHidden;
+    }
   }
 }
 </script>
@@ -102,6 +125,9 @@ export default {
       padding-top: $headerHeight;
       padding-left: $sliderWidth;
       min-height: 100%;
+      &.full-main-content {
+        padding-left: 0;
+      }
     }
   }
   .drawer-bg {

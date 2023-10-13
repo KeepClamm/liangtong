@@ -20,14 +20,15 @@ export default {
   props: {},
   data() {
     return {
+      activeName: '',
       companyList: [
-        {name: '电*源0******Z',code: 1},
-        {name: '中**业0******Z',code: 2},
-        {name: '多*多0******Z',code: 3},
-        // {name: '小明*测试',code: 4},
-        // {name: '小明*测试',code: 5},
-        // {name: '小明*测试',code: 6},
-        // {name: '小明*测试',code: 7},
+        {name: '万科A000002.SZ',code: '1'},
+        {name: '紫光国微002049.SZ',code: '2'},
+        {name: '国华网安000004.SZ',code: '3'},
+        // {name: 'ST星源000005.SZ',code: 4},
+        // {name: '深振业A000006.SZ',code: 5},
+        // {name: '*ST全新000007.SZ',code: 6},
+        // {name: '神州高铁000008.SZ',code: 7},
       ],
     };
   },
@@ -89,6 +90,7 @@ export default {
           }
         }
         .el-tabs__active-bar {
+          display: none!important;
           height: 3px;
           background-color: #1065A0;
         }
