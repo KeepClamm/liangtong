@@ -90,12 +90,13 @@ export default {
     }
     .slidebar {
       position: fixed;
-      top: $headerHeight;
+      top: 0;
       left: 0;
       width: $sliderWidth;
       height: 100%;
+      padding-top: $headerHeight;
+      box-sizing: border-box;
       z-index: 2;
-      background: #ff0;
     }
     .main-content {
       padding-top: $headerHeight;

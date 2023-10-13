@@ -14,8 +14,8 @@
         </template>
         <template #handle="{ row }">
           <div class="table-handle-box show-flex-box-r show-flex-center">
-            <span class="el-icon-delete handle-delete" @click="onHandleTableCell('delete',row)"></span>
-            <span class="el-icon-edit-outline handle-edit" @click="onHandleTableCell('edit',row)"></span>
+            <el-button type="danger" size="mini" icon="el-icon-delete" @click="onHandleTableCell('delete',row)"></el-button>
+            <el-button type="primary" size="mini" icon="el-icon-edit" @click="onHandleTableCell('edit',row)"></el-button>
           </div>
         </template>
       </basic-table>

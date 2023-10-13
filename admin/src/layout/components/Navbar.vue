@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar border-box w100 pl-0 pr-50 show-flex-box-r fs-0">
+  <div class="navbar border-box w100 pl-0 pr-30 show-flex-box-r fs-0">
     <div class="w100 h100 show-flex-box-r show-flex-sb">
       <div class="logo-box">
         <logo />
@@ -16,35 +16,45 @@
           </el-option>
         </el-select>
       </div> -->
+      <div class="company-list-box">
+        <company-list></company-list>
+      </div>
+      
       <div class="search-box">
-        <el-autocomplete style="width: 100%;"
-                         v-model="keywords"
-                         placeholder="主体名称/服务名称/服务代码..."
-                         size="normal"
-                         :clearable="false"
-                         type="text"
-                         :maxlength="50"
-                         :debounce="500"
-                         value-key="stockShortName"
-                         :trigger-on-focus="false"
-                         :fetch-suggestions="querySearchAsync"
-                         @select="handleSelect">
-          <span slot="prefix" class="h100 show-flex-box-r show-flex-center">
-            <img class="search-icon" :src="searchIcon">
-          </span>
-        </el-autocomplete>
+        <div class="search-button">
+          <img class="search-icon" :src="searchIcon">
+        </div>
+        <!-- <div class="search-input-box">
+          <el-autocomplete style="width: 100%;"
+                           v-model="keywords"
+                           placeholder="主体名称/服务名称/服务代码..."
+                           size="normal"
+                           :clearable="false"
+                           type="text"
+                           :maxlength="50"
+                           :debounce="500"
+                           value-key="stockShortName"
+                           :trigger-on-focus="false"
+                           :fetch-suggestions="querySearchAsync"
+                           @select="handleSelect">
+            <span slot="prefix" class="h100 show-flex-box-r show-flex-center">
+              <img class="search-icon" :src="searchIcon">
+            </span>
+          </el-autocomplete>
+        </div> -->
       </div>
 
       <div class="right-menu show-flex-box-r fs-0">
-        <img src="@/assets/images/layout/user-icon.png" class="user-avatar mr-20" />
-
-        <div class="name-bar show-flex-box-c fs-0">
-          <p class="show-flex-box-r hide-line1 align-center">{{ companyName }}</p>
-          <span>{{ account }}</span>
-        </div>
+        <img src="@/assets/images/layout/user-icon.png" class="user-avatar mr-10" />
         
         <el-dropdown trigger="click" @command="handleBtn">
-          <img class="pull-down ml-12 mt-5 cursor-pointer" src="@/assets/images/layout/pull-down-icon.png">
+          <div class="user-handle show-flex-box-r">
+            <div class="name-bar show-flex-box-c fs-0">
+              <strong class="hide-line1">{{ account }}</strong>
+              <span v-if="roleName" class="hide-line1">{{ roleName }}</span>
+            </div>
+            <img class="pull-down ml-12 mt-5 cursor-pointer" src="@/assets/images/layout/pull-down-icon.png">
+          </div>
 
           <template #dropdown>
             <el-dropdown-menu>
@@ -57,13 +67,11 @@
     </div>
 
     <!-- 确认退出登录弹窗 -->
-    <el-dialog
-      title="操作提示"
-      :visible.sync="logoutPopStatus"
-      width="380px"
-      center
-      append-to-body
-    >
+    <el-dialog title="操作提示"
+               :visible.sync="logoutPopStatus"
+               width="380px"
+               center
+               append-to-body>
       <span style="font-weight:bold;">确定退出当前登录的账号吗？</span>
       <span slot="footer" class="dialog-footer">
         <el-button type="danger" @click="logoutPopStatus = false">取 消</el-button>
@@ -86,6 +94,7 @@ import { mapGetters } from "vuex";
 
 import Logo from './Sidebar/Logo';
 import headerMenu from './Sidebar/header-menu';
+import companyList from './Sidebar/company-list';
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
 import changePwdDialog from './change-pwd-dialog';
@@ -98,7 +107,8 @@ export default {
     Breadcrumb,
     Hamburger,
     changePwdDialog,
-    headerMenu
+    headerMenu,
+    companyList,
   },
   data() {
     return {
@@ -126,6 +136,9 @@ export default {
     },
     account(){
       return this.userinfo.account || '';
+    },
+    roleName() {
+      return this.userinfo.roleName || '';
     },
     needChangePassword() {
       const userInfo = this.userinfo;
@@ -219,18 +232,47 @@ export default {
 
   .route-menu {
     margin-left: -10px;
-    margin-right: 10px;
     padding-left: 50px;
-    flex-grow: 1;
+    flex-shrink: 0;
     height: 100%;
     background: url("../../assets/images/common/header_1.png") left top no-repeat;
     background-size: auto 100%;
   }
+  .company-list-box {
+    position: relative;
+    overflow: hidden;
+    flex-grow: 1;
+    justify-content: flex-end;
+    width: 0;
+    height: 100%;
+    margin-left: 50px;
+    margin-right: 20px;
+    padding-left: 20px;
+    &:after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 4px;
+      height: 20px;
+      border-radius: 20px;
+      transform: translateY(-50%);
+      background: #1065A0;
+    }
+  }
 
   .search-box {
     flex-shrink: 0;
-    width: 260px;
-    margin-right: 25px;
+    padding-right: 20px;
+    .search-button {
+      padding: 5px;
+      background: #fff;
+      border-radius: 100%;
+      cursor: pointer;
+    }
+    &>.search-input-box {
+      width: 260px;
+    }
   }
 
   .right-menu {
@@ -240,37 +282,34 @@ export default {
       outline: none;
     }
     .user-avatar {
-      width: 48px;
-      height: 48px;
+      width: 40px;
+      height: 40px;
       border-radius: 100%;
     }
-    .name-bar{
+    .user-handle {
       height: 100%;
-      justify-content: center;
-      > p{
-        padding: 0;
-        margin: 0 0 6px 0;
-        max-width: 200px;
-        display: block;
-        font-family: 'PingFang SC';
-        font-style: normal;
-        font-weight: 600;
-        font-size: 14px;
-        line-height: 20px;
-        color: #1D2129;
+      align-items: center;
+      cursor: pointer;
+      .name-bar{
+        max-width: 80px;
+        flex-grow: 1;
+        justify-content: center;
+        &>strong {
+          font-size: 14px;
+          color: #1065A0;
+        }
+        &>span{
+          font-style: normal;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 18px;
+          color: #86909C;
+        }
       }
-      > span{
-        font-family: 'PingFang SC';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 12px;
-        line-height: 17px;
-        color: #86909C;
+      .pull-down{
+        width: 16px;
+        height: 16px;
       }
-    }
-    .pull-down{
-      width: 16px;
-      height: 16px;
     }
   }
 }
