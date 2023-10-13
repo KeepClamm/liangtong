@@ -3,15 +3,9 @@
     <div class="container-title">
       <div class="container-title-left">{{ overTitle }}</div>
       <div class="component-header-buttons">
-          <div class="component-header-buttons-item">
-            查询
-          </div>
-          <div class="component-header-buttons-item button-color">
-            重置
-          </div>
-          <div class="component-header-buttons-item button-color">
-            导出
-          </div>
+          <div class="component-header-buttons-item" @click="getFilterData">查询</div>
+          <div class="component-header-buttons-item button-color" @click="resetParams">重置</div>
+          <div class="component-header-buttons-item button-color">导出</div>
         </div>
     </div>
     <div class="finance-bid-select-top">
@@ -41,7 +35,7 @@
     <div class="finance-bid-radio">
       <div class="radio-container">
         <div class="radio-container-content">
-          <div v-for="item in radioOpts" :key="item.value" class="radio-container-content-text" :class="{'radio-active': radioActive === item.value}" @click="handleRadio(item)">{{ item.label }}</div>
+          <div v-for="item in radioOpts" :key="item.value" class="radio-container-content-text" :class="{'radio-active': radioActive === item.value}" @click="handleClick(item)">{{ item.label }}</div>
         </div>
       </div>
       <!-- <div class="component-header-buttons-item button-color" @click="handleExport">导出</div> -->
@@ -73,7 +67,6 @@
       </el-table>
       <!-- 分页 -->
       <div class="page-container">
-        <!-- <el-pagination :current-page="page" :page-size="limit" :total="total" layout="total,->,sizes, prev, pager, next, jumper" @size-change="handleLimitChange" @current-change="handlePageChange" /> -->
           <pagination class="mt-24" :total="10" :current-page="1" :cur-limit="10" :showRecods="1"></pagination>
       </div>
     </div>
@@ -204,6 +197,9 @@ export default {
     }
   },
   computed: {
+    // total() {
+    //   return this.tableData && this.tableData
+    // }
   },
   watch: {
     radioActive: {
@@ -234,6 +230,31 @@ export default {
     cellStyle({ row, rowIndex, column, columnIndex }) {
       return 'text-align: center;height: 60px;'
     },
+    // 获取数据
+    getTableData(params = {}) {
+      console.log('--筛选条件params--', params)
+    },
+    // 重置参数 
+    resetParams() {
+      const that = this; 
+      that.marketValue = 0 
+      that.intomarketValue = 0
+      that.tradeSystemValue = 0
+      that.dateValue = ''
+    },
+    // 筛选条件查询
+    getFilterData() {
+      const that = this; 
+      const { marketValue, intomarketValue, tradeSystemValue, dateValue } = that;
+      let params = {
+        marketValue,
+        intomarketValue,
+        tradeSystemValue,
+        dateValue
+      };
+      that.getTableData(params);
+    },
+    // 导出
     handleExport() {
       // test
     },
@@ -248,8 +269,10 @@ export default {
       this.getSupplyList()
     },
     // 单选点击
-    handleRadio(item) {
-      this.radioActive = item.value
+    handleClick(item) {
+      const that = this 
+      that.radioActive = item.value
+      that.getTableData()
     },
     // 表格的筛选
     getfilterNameItem() {

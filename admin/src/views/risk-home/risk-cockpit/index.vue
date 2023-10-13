@@ -12,7 +12,7 @@
               <div v-if="item.today && item.yesterday" class="content-item-main-compare">
                 <img :src="item.today > item.yesterday ? iconList[0] : iconList[1]" class="wh100"/>
               </div>
-              <div class="content-item-main-compare-yestreday" v-if="item.yesterday">昨日 {{ item.yesterday }}</div>
+              <div class="content-item-main-compare-yestreday" v-if="item.yesterday">昨日 {{ item.yesterday }} {{ typeof(item.yesterday) == 'number' ? '个' : ''}}</div>
             </div>
           </div>
         </el-col>

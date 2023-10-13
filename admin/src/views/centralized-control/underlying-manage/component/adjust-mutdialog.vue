@@ -44,7 +44,6 @@ export default {
         stockCode: "",
         chooseStock: "",
       },
-      comForm: {},
     };
   },
   computed: {},

@@ -2,7 +2,7 @@
   <!-- 调整查询 -->
   <div class="template">
     <underlying-top :adjust-label="adjustLabel" :adjust-query="adjustQuery" :global-config="listOfAdjustmentsQuery"/>
-    <underlying-table :adjust-query="adjustQuery" :source="'adjustQuery'" :table-row="tableRow"/>
+    <underlying-table :source="'adjustQuery'" :table-row="tableRow"/>
   </div>
 </template>
 

@@ -68,12 +68,18 @@
         :header-cell-style="rowClass"
         border
       >
-        <el-table-column
-          v-for="item in tableRow"
-          :key="item.label"
-          :prop="item.prop"
-          :label="item.label"
-        />
+        <template v-for="item in tableRow">
+          <el-table-column :key="item.label" :prop="item.prop" :label="item.label" v-if="item.prop != 'mainRisk'" />
+          <el-table-column :key="item.label" :prop="item.prop" :label="item.label" v-if="item.prop == 'mainRisk'">
+            <template slot-scope="scope">
+              <el-popover trigger="hover" content="11111111" placement="top">
+                <div slot="reference">  
+                  <span>{{ scope.row['mainRisk'] }}</span>
+                </div>
+              </el-popover>
+            </template>
+          </el-table-column>
+        </template>
       </el-table>
       <pagination class="mt-24" :total="10" :current-page="1" :cur-limit="10" :showRecods="1"></pagination>
     </div>
