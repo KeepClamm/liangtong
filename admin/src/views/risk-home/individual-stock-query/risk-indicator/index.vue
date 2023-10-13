@@ -43,8 +43,8 @@
       />
       <finance-warning
         v-show="type == 3"
+        ref="financeWarning"
         header-title="财务类退市预警模型详情"
-        :basic-information="{}"
       ></finance-warning>
       <trade-warning
         v-show="type == 4"
@@ -137,6 +137,9 @@ export default {
       };
       console.log(info)
       this.$refs.tableListDataShortCrashRef.setData(info);
+      // this.$refs.financeWarning.setData({
+      //   total: 
+      // })
     },
     getAllPath(tree) {
       const paths = [];

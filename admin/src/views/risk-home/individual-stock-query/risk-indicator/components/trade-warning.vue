@@ -21,6 +21,11 @@
             :border="true"
             showType="no-hover"
           >
+            <template #progress="{ row }">
+              <div class="pl-20 pr-20">
+                <el-progress :text-inside="true" :stroke-width="20" :percentage="row.progress"></el-progress>
+              </div>
+            </template>
           </basic-table>
       </div>
     </div>
@@ -43,13 +48,23 @@
     data() {
       return {
         propConfig: [
-          { prop: "FirstIndex", label: "交易类退市预警规则"},
-          { prop: "SecondIndex", label: "预警情况"},
-          { prop: "ThirdIndex", label: "是否预警", slotName: 'ThirdIndex', width: 190, notOverflow: true, },
-          { prop: "indexScore", label: "预警进度图", slotName: 'indexScore'}
+          { prop: "rule", label: "交易类退市预警规则"},
+          { prop: "situtation", label: "预警情况"},
+          { prop: "status", label: "是否预警", width: 80 },
+          { prop: "progress", label: "预警进度图", slotName: 'progress'}
         ],
         viewOnlyRiskItem: true,
-        tableListData: {},
+        tableListData: {
+          total: 0,
+          items: [
+            {
+              rule: '连续一百二十个交易日股票累计成交量低于 500 万股',
+              situtation: '连续一百二十个交易日股票累计成交量为 450 万股',
+              status: '是',
+              progress: 90
+            }
+          ]
+        },
       }
     },
     mounted() {},
