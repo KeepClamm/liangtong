@@ -13,14 +13,6 @@
 <script>
 export default {
   name: "search-bar-comp",
-  data() {
-    return {
-    };
-  },
-  computed: {},
-  watch: {},
-  created() {},
-  mounted() {},
   methods: {
     onSearch() {
       this.sendInfoOutside("search");

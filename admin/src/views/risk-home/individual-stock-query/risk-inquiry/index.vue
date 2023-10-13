@@ -146,6 +146,16 @@ export default {
             { id: 4, name: '选项D', },
           ],
         },
+        {
+          title: '自选组合',
+          type: 'self',
+          options: [
+            { id: 1, name: '组合A', },
+            { id: 2, name: '组合B', },
+            { id: 3, name: '组合C', },
+            { id: 4, name: '组合D', },
+          ],
+        },
       ]
       
     };

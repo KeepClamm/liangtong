@@ -1,8 +1,8 @@
 <template>
-  <div class='w100'>
-    <div class="w100 br-2 search-bar-comp-box show-flex-box-c" :class="{'is-expanded': isExpand}">
-      <dt class="collapse simple-search-bar show-flex-box-r w100 p-20 pb-0 normal-bg">
-        <ul class="show-flex-box-c w100">
+  <div>
+    <div class="br-2 search-bar-comp-box show-flex-box-c" :class="{'is-expanded': isExpand}">
+      <dt class="collapse simple-search-bar show-flex-box-r p-20 pb-0 normal-bg">
+        <ul class="show-flex-box-c">
           <li
             class="show-flex-box-r"
             :class="`${isExpand ? 'mb-8' : 'mb-4'} ${item.type == 'timePicker' ? 'mb-24' : ''}`"
@@ -10,60 +10,30 @@
             :key="index"
           >
             <span class="title mr-16 white-space" :class="{'time-picker-title': item.type == 'timePicker'}">{{item.title}}</span>
+            <option-list-item
+              :isExpand="isExpand"
+              :item="item"
+              :index="index"
+              @chooseAllType="chooseAllType"
+              @choseItem="chooseThisItem"
+            >
+              <div class="handle-bar show-flex-box-r" v-if="item.type != 'timePicker'">
+                <span v-if="item.type == 'self'" class="expand-btn-bar">添加</span>
+                <div v-if="item.showBtn" class="expand-btn-bar" :class="{ 'mr-20': index == 0 && !isExpand }">
+                  <span v-if="item.isExpand" @click="changeClasslyItemExpandStatus(false, index)">收起</span>
+                  <span v-else @click="changeClasslyItemExpandStatus(true, index)">展开</span>
+                </div>
 
-            <ol class="search-option-list show-flex-box-r" v-if="item.type != 'timePicker'">
-              <li
-                :class="{'selected': checkIsSelectedAll(item.options)}"
-                @click="!checkIsSelectedAll(item.options) && chooseAllType(item, index)"
-              >
-                <strong>全部</strong>
-              </li>
-              <li
-                :class="{'selected': subItem.selected}"
-                v-for="(subItem, subIndex) in item.options"
-                :key="subIndex"
-                @click="chooseThisItem(index, subIndex, item, subItem)"
-              >
-                <strong>{{subItem.name}}</strong>
-              </li>
-            </ol>
-
-            <div v-if="item.type == 'timePicker'" class="fs-0 time-picker-bar">
-              <el-date-picker
-                style="width: 200px;"
-                type="date"
-                placeholder="请选择预警日期"
-                v-model="choosedTime"
-                :editable="false"
-                size="small"
-                clearable
-                format="yyyy-MM-dd"
-                value-format="timestamp"
-                @change="changeChoosedTime"
-              ></el-date-picker>
-            </div>
-
-            <div class="handle-bar show-flex-box-r" v-if="item.type != 'timePicker'">
-              <div
-                v-if="item.showBtn"
-                class="expand-btn-bar"
-                :class="{ 'mr-20': index == 0 && !isExpand }"
-              >
-                <span v-if="item.isExpand" @click="changeClasslyItemExpandStatus(false, index)">收起</span>
-                <span v-else @click="changeClasslyItemExpandStatus(true, index)">展开</span>
+                <div class="search-btns" v-if="index == 0 && !isExpand">
+                  <search-bar @sendInfoOutside="handleSearch"></search-bar>
+                </div>
               </div>
-
-              <div class="search-btn-bar" v-if="index == 0 && !isExpand">
-                <div class="search" @click="clickBtnBar('search')">查 询</div>
-                <div class="reset" @click="clickBtnBar('reset')">重 置</div>
-              </div>
-            </div>
+            </option-list-item>
           </li>
         </ul>
 
-        <div class="search-btn-bar mb-20" v-show="isExpand">
-          <div class="search" @click="clickBtnBar('search')">查 询</div>
-          <div class="reset" @click="clickBtnBar('reset')">重 置</div>
+        <div class="search-btns mb-20" v-show="isExpand">
+          <search-bar @sendInfoOutside="handleSearch"></search-bar>
         </div>
 
         <div class="expand-btn" @click="changeExpandStatus()">
@@ -71,22 +41,7 @@
         </div>
       </dt>
 
-      <dd
-        v-if="selectedList.length > 0"
-        class="border-box w100 selected-item-list show-flex-box-r mt-24 br-2 normal-bg pt-20 pl-20"
-      >
-        <strong class="fs-0 white-space">已选择项</strong>
-        <ul class="show-flex-box-r">
-          <li
-            class="show-flex-box-r mr-20 mb-20"
-            v-for="(item, index) in selectedList"
-            :key="index"
-          >
-            <strong class="mr-6 white-space">{{item.name}}</strong>
-            <em class="fs-0 cursor-pointer" @click="removeChoosedTag(item, index)"></em>
-          </li>
-        </ul>
-      </dd>
+      <selected-tags :selectedList="selectedList" @remove="removeChoosedTag" class="mt-30"></selected-tags>
     </div>
   </div>
 </template>
@@ -96,7 +51,9 @@ import $ from "jquery";
 import '@/../static/js/jquery.actual.js';
 const expandIconUrl = require('@/assets/images/cockpit-risk/expand-icon.png');
 import CommonUtils from '@/utils/commonUtils';
-
+import OptionListItem from './option-list-item.vue';
+import SelectedTags from './selected-tags.vue';
+import SearchBar from './search-bar.vue';
 export default {
   props: {
     showList: {
@@ -114,6 +71,11 @@ export default {
       classlyItemHeightList: [],
 
     };
+  },
+  components: {
+    SearchBar,
+    SelectedTags,
+    OptionListItem
   },
   computed: {
     sidebar() {
@@ -146,7 +108,7 @@ export default {
     },
     resetCheck(){
       $(`.simple-search-bar > ul > li`).each(function(i){
-        let olDom = `.simple-search-bar > ul > li:eq(${i}) > .search-option-list`;
+        let olDom = `.simple-search-bar > ul > li:eq(${i}) > .option-list-item-comp > .search-option-list`;
         $(olDom).css('max-height', 'unset');
         $(olDom).css('overflow-y', 'unset');
       });
@@ -213,7 +175,7 @@ export default {
     // 展开和收起所有筛选栏
     changeExpandStatus(){
       $(`.simple-search-bar > ul > li`).each(function(i){
-        let olDom = `.simple-search-bar > ul > li:eq(${i}) > .search-option-list`;
+        let olDom = `.simple-search-bar > ul > li:eq(${i}) > .option-list-item-comp > .search-option-list`;
         $(olDom).css('max-height', 'unset');
         $(olDom).css('overflow-y', 'unset');
       });
@@ -231,7 +193,7 @@ export default {
         }
       }
 
-      let curClickLiDom = `.simple-search-bar > ul > li:eq(${index}) > .search-option-list`;
+      let curClickLiDom = `.simple-search-bar > ul > li:eq(${index}) > .option-list-item-comp > .search-option-list`;
 
       if (isExpand) {
         $(curClickLiDom).css('max-height', '800px'); // unset 200px
@@ -242,16 +204,6 @@ export default {
       }
       
       this.searchList[index].isExpand = isExpand;
-    },
-    // 是否是选中全部
-    checkIsSelectedAll(options = [], returnList = false){
-      let list = options || [];
-      
-      let result = list.filter(item => {
-        return item.selected;
-      });
-
-      return returnList ? result : result.length == 0;
     },
     // 删除已选择项
     removeChoosedTag(tag, index){
@@ -328,7 +280,7 @@ export default {
       })
     },
     // 查询 重置
-    clickBtnBar(type){
+    handleSearch({ type }){
       if (type == 'search') {
         this.toSearch();
       } else {
@@ -394,38 +346,6 @@ export default {
           opacity: 1;
         }
       }
-      .search-option-list{
-        // width: 0;
-        flex-grow: 1;
-        flex-wrap: wrap;
-        transition: all 0.3s linear;
-        > li{
-          display: flex;
-          margin-bottom: 16px;
-          margin-right: 24px;
-          > strong{
-            cursor: pointer;
-            box-sizing: border-box;
-            white-space: nowrap;
-            border: 1px solid #C9CDD4;
-            border-radius: 2px;
-            padding: 3px 12px;
-            font-family: 'PingFang SC';
-            font-style: normal;
-            font-weight: 500;
-            font-size: 12px;
-            line-height: 16px;
-            color: #4E5969;
-          }
-        }
-        > .selected{
-          > strong{
-            border: 1px solid transparent;
-            background: #00A3E0;
-            color: #FFFFFF;
-          }
-        }
-      }
       .expand-btn{
         display: flex;
         align-items: center;
@@ -448,43 +368,6 @@ export default {
         }
       }
     }
-    .selected-item-list{
-      overflow: hidden;
-      > strong{
-        width: 76px;
-        font-family: 'PingFang SC';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 24px;
-        color: #3E3E3E;
-      }
-      > ul{
-        flex-wrap: wrap;
-        margin-right: -20px;
-        > li{
-          padding: 4px 8px;
-          align-items: center;
-          background: rgba(0, 163, 224, 0.08);
-          border-radius: 2px;
-          > strong{
-            font-family: 'PingFang SC';
-            font-style: normal;
-            font-weight: 600;
-            font-size: 12px;
-            line-height: 16px;
-            color: #00A3E0;
-          }
-          > em{
-            width: 12px;
-            height: 12px;
-            background: url('../../../assets/images/cockpit-risk/close-icon.png') center center no-repeat;
-            background-size: 100% 100%;
-          }
-        }
-      }
-    }
-    
   }
 
   .is-expanded{
@@ -509,7 +392,6 @@ export default {
   }
 
   .title{
-    // width: 115px;
     width: 130px;
     flex-shrink: 0;
     font-family: 'PingFang SC';
@@ -521,32 +403,9 @@ export default {
     color: #3E3E3E;
   }
 
-  .search-btn-bar{
-    display: flex;
-    > div{
-      cursor: pointer;
-      display: flex;
-      flex-shrink: 0;
-      justify-content: center;
-      align-items: center;
-      width: 78px;
-      height: 24px;
-      border-radius: 2px;
-
-      font-family: 'PingFang SC';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 20px;
-    }
-    > .search{
-      margin-right: 12px;
-      background: #012169;
-      color: #FFFFFF;
-    }
-    > .reset{
-      background: #E5E6EB;
-      color: #012169;
+  .search-btns{
+    .search-form-comp-box {
+      padding: 0 10px 0 0 !important;
     }
   }
 
@@ -560,36 +419,5 @@ export default {
     line-height: 24px;
     color: #00A3E0;
   }
-
-
   
-  .time-picker-bar ::v-deep .el-input__prefix{
-    left: unset;
-    top: 9px;
-    right: 9px;
-    width: 14px;
-    height: 14px;
-    background: url('../../../assets/images/cockpit-risk/date-picker-icon.png') center center no-repeat;
-    background-size: 100% 100%;
-  }
-  .time-picker-bar ::v-deep .el-input__suffix{
-    right: 24px;
-  }
-  .time-picker-bar ::v-deep .el-icon-date:before{
-    content: '';
-  }
-  .time-picker-bar ::v-deep .el-input__inner{
-    border: 1px solid #E5E6EB;
-    background-color: #F8F9FB;
-    border-radius: 0px;
-    padding-left: 12px;
-    padding-right: 0px;
-    font-family: 'PingFang SC';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: -0.01em;
-    color: #86909C;
-  }
 </style>
