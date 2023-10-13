@@ -1,4 +1,5 @@
 <template>
+  <!-- 财务类退市预警&交易类退市预警 -->
   <div class="high-risk-warn-container">
     <div class="risk-wark-top">
       <div class="risk-warn-top-left">
@@ -27,12 +28,24 @@
         :header-cell-style="rowClass"
         border
       >
+      <template v-for="item in tableRow">
         <el-table-column
-          v-for="item in tableRow"
           :key="item.label"
           :prop="item.prop"
           :label="item.label"
+          v-if="item.prop != 'stockCode' && item.prop != 'stockAcronyms'"
         />
+        <el-table-column :key="item.label" :prop="item.prop" :label="item.label" v-if="item.prop == 'stockAcronyms'">
+            <template slot-scope="scope">
+              <span class="color-blue cursor-pointer">{{ scope.row['stockAcronyms'] }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column :key="item.label" :prop="item.prop" :label="item.label" v-if="item.prop == 'stockCode'">
+            <template slot-scope="scope">
+              <span class="color-blue cursor-pointer">{{ scope.row['stockCode'] }}</span>
+            </template>
+          </el-table-column>
+      </template>
       </el-table>
       <pagination class="mt-24" :total="10" :current-page="1" :cur-limit="10" :showRecods="1"></pagination>
     </div>

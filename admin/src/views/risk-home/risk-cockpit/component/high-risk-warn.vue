@@ -1,4 +1,5 @@
 <template>
+  <!-- 高危预警&&评级调整 -->
   <div class="high-risk-warn-container">
     <div class="risk-wark-top">
       <div class="risk-warn-top-left">
@@ -69,7 +70,7 @@
         border
       >
         <template v-for="item in tableRow">
-          <el-table-column :key="item.label" :prop="item.prop" :label="item.label" v-if="item.prop != 'mainRisk'" />
+          <el-table-column :key="item.label" :prop="item.prop" :label="item.label" v-if="item.prop != 'mainRisk' && item.prop != 'stockAcronyms' && item.prop != 'stockCode'" />
           <el-table-column :key="item.label" :prop="item.prop" :label="item.label" v-if="item.prop == 'mainRisk'">
             <template slot-scope="scope">
               <el-popover trigger="hover" content="11111111" placement="top">
@@ -77,6 +78,16 @@
                   <span>{{ scope.row['mainRisk'] }}</span>
                 </div>
               </el-popover>
+            </template>
+          </el-table-column>
+          <el-table-column :key="item.label" :prop="item.prop" :label="item.label" v-if="item.prop == 'stockAcronyms'">
+            <template slot-scope="scope">
+              <span class="color-blue cursor-pointer">{{ scope.row['stockAcronyms'] }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column :key="item.label" :prop="item.prop" :label="item.label" v-if="item.prop == 'stockCode'">
+            <template slot-scope="scope">
+              <span class="color-blue cursor-pointer">{{ scope.row['stockCode'] }}</span>
             </template>
           </el-table-column>
         </template>

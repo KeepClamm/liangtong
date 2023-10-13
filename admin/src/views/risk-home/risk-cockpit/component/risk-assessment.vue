@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="chart-container">
-      <div id="bar01" class="chart-container-bar" />
+      <div id="barChart" class="chart-container-bar" />
       <div class="chart-container-table">
         <el-table
           tooltip-effect="dark"
@@ -50,6 +50,7 @@
 
 <script>
 import * as echarts from "echarts";
+import { initBarChart } from './init-echart'
 export default {
   components: {},
   data() {
@@ -104,6 +105,7 @@ export default {
     handleRadioClick(value) {
       const that = this;
       that.isActive = value;
+      this.initEchart()
     },
     // 求和
     sum(arr) {
@@ -112,69 +114,12 @@ export default {
     // 初始化echarts
     initEchart() {
       const that = this;
-      const testValue = [...that.testArr];
-      that.testArr = testValue.map(
-        (item) =>
-          Math.round(
-            (parseFloat(item) / parseFloat(that.sum(testValue))) * 10000
-          ) / 100
-      );
-      const barEchart = echarts.init(document.getElementById("bar01"));
+      initBarChart(that.testArr, 'barChart')
       const lineChart = echarts.init(document.getElementById("lineChart"));
-      barEchart.setOption({
-        title: {
-          show: true,
-          text: "短期下跌风险",
-          textStyle: {
-            fontWeight: "bold",
-            fontSize: 18,
-          },
-          x: "center",
-          y: "bottom",
-        },
-        tooltip: {
-          trigger: "axis",
-          formatter: function (params) {
-            var dataIndex = params[0].dataIndex;
-            var tooltipContent = params[0].name + "<br>";
-            tooltipContent += "占比: " + params[0].data + "%<br>"; // 显示百分比
-            tooltipContent += "数量: " + testValue[dataIndex] + "<br>"; // 显示原始值
-            return tooltipContent;
-          },
-        },
-        xAxis: {
-          type: "category",
-          data: ["SR1", "SR2", "SR3", "SR4", "SR5"],
-          axisTick: { show: false },
-          axisLabel: {
-            interval: 0,
-            textStyle: {
-              color: "#666666",
-            },
-          },
-          axisLine: { lineStyle: { color: "#dddddd" } },
-        },
-        yAxis: {
-          type: "value",
-          name: "单位（%）",
-          nameGap: 35,
-          min: 0,
-          max: 100,
-          interval: 25
-        },
-        series: [
-          {
-            name: "收入",
-            type: "bar",
-            data: that.testArr,
-            barWidth: 20,
-          },
-        ],
-      });
       lineChart.setOption({
         title: {
           show: true,
-          text: "两融折算率分布图",
+          text: that.isActive == 1 ? '两融折算率分布图' : '股票质押率分布图',
           textStyle: {
             fontWeight: "bold",
             fontSize: 18,
@@ -248,10 +193,6 @@ export default {
         tooltip: {
           trigger: 'axis'
         }
-      });
-      window.addEventListener("resize", function () {
-        barEchart.resize();
-        lineChart.resize();
       });
     },
   },

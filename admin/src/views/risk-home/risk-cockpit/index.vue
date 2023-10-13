@@ -79,8 +79,14 @@ export default {
   watch: {
 
   },
+  mounted() {
+    this.getRiskWarningData()
+  },
   methods: {
-
+    // 今日风险提示数据
+    getRiskWarningData() {
+      
+    }
   }
 }
 </script>
