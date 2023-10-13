@@ -38,7 +38,7 @@ export default {
   watch: {
     permission_routes: {
       handler(newName, oldName) {
-        this.setMenuList();
+        // this.setMenuList();
       },
       deep: true
     },
@@ -46,7 +46,7 @@ export default {
       this.setMenuActiveByRoute(to);
     },
     activeMenuName() {
-      this.activeName = this.activeMenuName;
+      // this.activeName = this.activeMenuName;
     }
   },
   mounted() {
@@ -85,7 +85,7 @@ export default {
           }
         }
       }
-      console.log("------获取的名称---" + routeName);
+
       this.setCurrentActiveMenuName(routeName);
     },
     getRouterPushPath(routerData,path) {
@@ -100,12 +100,12 @@ export default {
       return routerPath;
     },
     setCurrentActiveMenuName(name) {
+      this.activeName = name;
       this.$store.dispatch('settings/setActiveMenuName',name);
     },
     setMenuList() {
       let list = this.permission_routes;
       let menuList = [];
-      let activeMenuName = '';
 
       list.forEach(item => {
         if (item.hasOwnProperty('header') && item.header) {
@@ -113,12 +113,10 @@ export default {
 
           menuList.push(item);
 
-          activeMenuName = activeMenuName || routerName;
           this.menuRouterMap[routerName] = item;
         }
       });
 
-      this.activeName = this.activeMenuName || activeMenuName;
       this.menuList = menuList;
     }
   }
