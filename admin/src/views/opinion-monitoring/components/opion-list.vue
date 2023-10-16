@@ -5,9 +5,9 @@
         <div v-for="item in data.items" :key="item.id" class="list-item">
           <div>
             <span class="tag mr-20">已读</span>
-            <span class="hide-line1">{{ item.title }}</span>
+            <span @click="openNegativeNewsDialog" class="hide-line1 cursor-pointer">{{ item.title }}</span>
           </div>
-          <p class="gray-sed-text f-12 hide-line1 mt-8 mb-8">{{ item.desc }}</p>
+          <p @click="openNegativeNewsDialog" class="gray-sed-text f-12 hide-line1 cursor-pointer mt-8 mb-8">{{ item.desc }}</p>
           <div class="show-flex-box-r">
             <div class="stock-wrap color-sed f-12">
               <span class="point mr-5"></span>
@@ -29,17 +29,20 @@
       />
     </div>
     <no-data v-else></no-data>
+    <negative-news-dialog ref="negativeNewsDialog"></negative-news-dialog>
   </div>
 </template>
 
 <script>
 import NoData from "@/components/show-ui/no-data";
 import Pagination from "@/components/show-ui/table/pagination-comp";
+import NegativeNewsDialog from '@/components/show-ui/negative-news-dialog';
 export default {
   name: "opinion-list-comp",
   components: {
     NoData,
-    Pagination
+    Pagination,
+    NegativeNewsDialog
   },
   props: {
     data: {
@@ -54,6 +57,9 @@ export default {
     };
   },
   methods: {
+    openNegativeNewsDialog() {
+      this.$refs.negativeNewsDialog.open();
+    },
     changeCurPage(v) {
       this.page = v;
     },

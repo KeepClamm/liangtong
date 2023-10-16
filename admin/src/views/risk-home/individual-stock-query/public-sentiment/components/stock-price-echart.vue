@@ -49,7 +49,7 @@
 <script>
 const echarts = require("echarts");
 import CommonUtils from '@/utils/commonUtils';
-import negativeNewsDialog from './negative-news-dialog';
+import negativeNewsDialog from '@/components/show-ui/negative-news-dialog';
 
 export default {
   components: {

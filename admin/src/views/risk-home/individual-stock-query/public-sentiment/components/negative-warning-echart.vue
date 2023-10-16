@@ -31,7 +31,7 @@
 
 <script>
 const echarts = require("echarts");
-import negativeNewsDialog from './negative-news-dialog';
+import negativeNewsDialog from '@/components/show-ui/negative-news-dialog';
 import CommonUtils from '@/utils/commonUtils';
 
 export default {

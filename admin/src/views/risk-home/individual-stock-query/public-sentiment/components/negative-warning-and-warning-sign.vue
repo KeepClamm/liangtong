@@ -61,7 +61,7 @@
 import BasicTable from '@/components/show-ui/table/basic-table';
 import negativeWarningEchart from './negative-warning-echart';
 import CommonUtils from '@/utils/commonUtils';
-import negativeNewsDialog from './negative-news-dialog';
+import negativeNewsDialog from '@/components/show-ui/negative-news-dialog';
 import { TABLE_DATA } from '../mock';
 
 export default {
@@ -139,17 +139,17 @@ export default {
     // 点击 预警信号/负面舆情    详情
     watchThisRecord(row){
       // this.$refs.earningsGrowthRef.open(row);
-      negativePublicOpinionDetail({ id: row.id }).then(res => {
-        let data = res.data;
+      // negativePublicOpinionDetail({ id: row.id }).then(res => {
+        // let data = res.data;
 
       this.$refs.negativeNewsDialogRef.open({
-        title: data.newsTitle || '',
-        time: CommonUtils.formateDate(data.newsTime, 'YYYY-MM-DD'),
-        source: data.newsSource,
-        content: data.newsText
+        // title: data.newsTitle || '',
+        // time: CommonUtils.formateDate(data.newsTime, 'YYYY-MM-DD'),
+        // source: data.newsSource,
+        // content: data.newsText
        });
 
-      }).catch(err => { })
+      // }).catch(err => { })
     },
     
   },
