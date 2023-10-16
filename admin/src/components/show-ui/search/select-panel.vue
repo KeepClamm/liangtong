@@ -18,7 +18,7 @@
               @choseItem="chooseThisItem"
             >
               <div class="handle-bar show-flex-box-r" v-if="item.type != 'timePicker'">
-                <span v-if="item.type == 'self'" class="expand-btn-bar">添加</span>
+                <span @click="openAddOptionalDialog" v-if="item.type == 'self'" class="expand-btn-bar">添加</span>
                 <div v-if="item.showBtn" class="expand-btn-bar" :class="{ 'mr-20': index == 0 && !isExpand }">
                   <span v-if="item.isExpand" @click="changeClasslyItemExpandStatus(false, index)">收起</span>
                   <span v-else @click="changeClasslyItemExpandStatus(true, index)">展开</span>
@@ -43,6 +43,7 @@
 
       <selected-tags :selectedList="selectedList" @remove="removeChoosedTag" class="mt-30"></selected-tags>
     </div>
+    <add-optional-combination-dialog ref="addOptionsDialog"></add-optional-combination-dialog>
   </div>
 </template>
 
@@ -54,6 +55,7 @@ import CommonUtils from '@/utils/commonUtils';
 import OptionListItem from './option-list-item.vue';
 import SelectedTags from './selected-tags.vue';
 import SearchBar from './search-bar.vue';
+import AddOptionalCombinationDialog from './add-optional-combination-dialog.vue';
 export default {
   props: {
     showList: {
@@ -69,13 +71,13 @@ export default {
       selectedList: [],
       choosedTime: '',
       classlyItemHeightList: [],
-
     };
   },
   components: {
     SearchBar,
     SelectedTags,
-    OptionListItem
+    OptionListItem,
+    AddOptionalCombinationDialog
   },
   computed: {
     sidebar() {
@@ -307,6 +309,9 @@ export default {
       }
 
       this.sendInfoOutside(params);
+    },
+    openAddOptionalDialog() {
+      this.$refs.addOptionsDialog.open(this.searchList);
     },
     // 重置
     toReset(){
