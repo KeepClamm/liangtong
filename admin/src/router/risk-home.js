@@ -54,30 +54,6 @@ export default [
               title: '个股集中控制度查询',
             }
           },
-          {
-            path: '/risk-home/individual-stocks/risk-fluctuation',
-            name: 'RiskFluctuation',
-            component: () => import('@/views/risk-home/individual-stock-query/risk-fluctuation/index'),
-            meta: {
-              title: '风险波动概览',
-            }
-          },
-          {
-            path: '/risk-home/individual-stocks/risk-indicator',
-            name: 'RiskIndicator',
-            component: () => import('@/views/risk-home/individual-stock-query/risk-indicator/index'),
-            meta: {
-              title: '风险指标详情',
-            }
-          },
-          {
-            path: '/risk-home/individual-stocks/public-sentiment',
-            name: 'PublicSentiment',
-            component: () => import('@/views/risk-home/individual-stock-query/public-sentiment/index'),
-            meta: {
-              title: '个股舆情预警',
-            }
-          },
         ]
       },
       {

@@ -1,6 +1,6 @@
 <template>
   <div class="company-list-wrap">
-    <el-tabs v-model="activeName" @tab-click="handleClick">
+    <el-tabs v-model="activeStock" @tab-click="handleStockClick">
       <el-tab-pane v-for="(item) in companyList" 
                    :key="item.code"
                    :label="item.name" 
@@ -20,7 +20,7 @@ export default {
   props: {},
   data() {
     return {
-      activeName: '',
+      activeStock: '',
       companyList: [
         {name: '万科A000002.SZ',code: '1'},
         {name: '紫光国微002049.SZ',code: '2'},
@@ -44,8 +44,9 @@ export default {
 
   },
   methods: {
-    handleClick() {
-
+    handleStockClick() {
+      this.$store.dispatch('settings/setActiveMenuName', 'IndividualStockDetail');
+      this.$router.push({ name: 'RiskFluctuation' })
     }
   }
 };

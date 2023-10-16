@@ -41,7 +41,17 @@ export default {
   data() {
     return {
       dialogVisible: false,
-      searchList: [
+      selectedList: [],
+      searchList: []
+    }
+  },
+  components: {
+    OptionListItem
+  },
+  methods: {
+    open(data) {
+      this.dialogVisible = true;
+      this.searchList =  [
         {
           title: '五级分类',
           type: 'industry',
@@ -122,19 +132,29 @@ export default {
           ],
         },
       ]
-    }
-  },
-  components: {
-    OptionListItem
-  },
-  methods: {
-    open(data) {
-      this.dialogVisible = true;
-      // this.searchList = _.cloneDeep(data);
-      // console.log(this.searchList)
+      this.setShowSearchList();
     },
     handleConfirm() {
 
+    },
+    setShowSearchList(){
+      let list = this.searchList.map(item => {
+        let options = item.options || [];
+
+        let newOptions = options.map(subItem => {
+          return Object.assign(subItem, { selected: false });
+        });
+
+        const obj = {
+          ...item
+        };
+
+        obj.options = newOptions;
+
+        return obj;
+      });
+
+      this.searchList = list;
     },
     // 选择全部的这一分类选项
     chooseAllType(item, index){
@@ -144,18 +164,42 @@ export default {
       });
 
       this.searchList[index].options = newOptions;
+      this.deleteThisTypeOptions(item.type);
     },
     // 选中某一个选项
     chooseThisItem(index, subIndex, item, subItem){
-      console.log(index, subIndex, item, subItem)
       const flag = !subItem.selected;
       this.changeThisItemSelectedStatus(index, subIndex, subItem);
+      this.setSelectedItem(flag, item.type, subItem.id, subItem.name);
     },
     changeThisItemSelectedStatus(index, subIndex, subItem){
       const flag = !subItem.selected;
       this.searchList[index].options[subIndex].selected = flag;
 
       this.$forceUpdate();
+    },
+    setSelectedItem(isSelected, type, id, name){
+      if (isSelected) {
+        this.selectedList.push({
+          type: type,
+          id: id,
+          name: name,
+        });
+      } else {
+        let list = this.selectedList;
+
+        let index = list.findIndex(item => {
+          return item.type == type && item.id == id;
+        });
+
+        this.selectedList.splice(index, 1);
+      }
+    },
+    // 删除该分类的选项
+    deleteThisTypeOptions(type){
+      this.selectedList = this.selectedList.filter(item=>{
+        return item.type != type;
+      })
     },
     close() {
       this.dialogVisible = false;

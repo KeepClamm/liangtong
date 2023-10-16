@@ -10,7 +10,7 @@ export default [
       icon: 'ComparisonOfPeers'
     },
     header: true,
-    redirect: '/centralized-control/underlying-query',
+    redirect: '/centralized-control/underlying-query/collateral-securities',
     children: [
       {
       path: '/centralized-control/underlying-query',

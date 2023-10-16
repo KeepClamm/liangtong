@@ -35,39 +35,18 @@ export default {
       return this.$store.state.settings.activeMenuName;
     },
   },
-  watch: {
-    permission_routes: {
-      handler(newName, oldName) {
-        // this.setMenuList();
-      },
-      deep: true
-    },
-    $route(to,from){
-      this.setMenuActiveByRoute(to);
-    },
-    activeMenuName() {
-      // this.activeName = this.activeMenuName;
-    }
-  },
   mounted() {
     this.setMenuList();
     this.setMenuActiveByRoute(this.$route);
   },
   methods: {
-    handleClick(menuData) {
+    handleClick() {
       this.jumpPageByActiveName();
     },
     jumpPageByActiveName() {
-      const routerData = this.menuRouterMap[this.activeName];
-
-      if (!routerData) {
-        return;
-      }
-
-      const path = this.getRouterPushPath(routerData);
-
+      this.setCurrentActiveMenuName(this.activeName);
       this.$router.push({
-        path: path
+        name: this.activeName
       })
     },
     setMenuActiveByRoute(to) {
@@ -85,7 +64,6 @@ export default {
           }
         }
       }
-
       this.setCurrentActiveMenuName(routeName);
     },
     getRouterPushPath(routerData,path) {
@@ -101,7 +79,7 @@ export default {
     },
     setCurrentActiveMenuName(name) {
       this.activeName = name;
-      this.$store.dispatch('settings/setActiveMenuName',name);
+      this.$store.dispatch('settings/setActiveMenuName', name);
     },
     setMenuList() {
       let list = this.permission_routes;
