@@ -5,7 +5,7 @@ import router from './router';
 import Vuex from 'vuex';
 import store from './store';
 import Element from 'element-ui';
-import { useDirectives } from './directives';
+import { useDirectives, hasPermisstion } from './directives';
 
 import '@/icons'; // icon
 import '@/permission'; // permission control
@@ -22,6 +22,8 @@ import 'element-ui/lib/theme-chalk/index.css'; // element css file
 Vue.use(Vuex);
 Vue.use(Element, { size: 'medium'}); // set element-ui default size
 Vue.config.productionTip = false;
+
+Vue.prototype.$permission = hasPermisstion;
 
 new Vue({
   el: '#app',

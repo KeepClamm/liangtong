@@ -8,20 +8,20 @@ export default [
     meta: {
       title: '个股详情'
     },
-    header: false,
+    header: true,
+    hidden: true,
     redirect: '/individual-stock-detail/risk-fluctuation',
     children: [
       {
-        path: '/risk-fluctuation',
+        path: '/individual-stock-detail/risk-fluctuation',
         name: 'RiskFluctuation',
         component: () => import('@/views/risk-home/individual-stock-query/risk-fluctuation/index'),
         meta: {
           title: '风险波动概览',
         },
-        header: false,
       },
       {
-        path: '/risk-indicator',
+        path: '/individual-stock-detail/risk-indicator',
         name: 'RiskIndicator',
         component: () => import('@/views/risk-home/individual-stock-query/risk-indicator/index'),
         meta: {
@@ -29,7 +29,7 @@ export default [
         }
       },
       {
-        path: '/public-sentiment',
+        path: '/individual-stock-detail/public-sentiment',
         name: 'PublicSentiment',
         component: () => import('@/views/risk-home/individual-stock-query/public-sentiment/index'),
         meta: {

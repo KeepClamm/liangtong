@@ -109,7 +109,15 @@ export default {
       if (isExternal(this.basePath)) {
         return this.basePath
       }
-      return path.resolve(this.basePath, routePath)
+      
+      let basePath = this.basePath;
+
+      if (basePath.indexOf('/individual-stock-detail') >= 0) {
+        const routeId = this.$route.query.id;
+        basePath = routeId ? `${basePath}?id=${routeId}` : basePath;
+      }
+
+      return path.resolve(basePath, routePath)
     }
   }
 }

@@ -35,6 +35,17 @@ export default {
       return this.$store.state.settings.activeMenuName;
     },
   },
+  watch: {
+    permission_routes: {
+      handler(newName, oldName) {
+        // this.setMenuList();
+      },
+      deep: true
+    },
+    $route(to,from){
+      this.setMenuActiveByRoute(to);
+    },
+  },
   mounted() {
     this.setMenuList();
     this.setMenuActiveByRoute(this.$route);
@@ -44,9 +55,16 @@ export default {
       this.jumpPageByActiveName();
     },
     jumpPageByActiveName() {
-      this.setCurrentActiveMenuName(this.activeName);
+      const routerData = this.menuRouterMap[this.activeName];
+
+      if (!routerData) {
+        return;
+      }
+
+      const path = this.getRouterPushPath(routerData);
+
       this.$router.push({
-        name: this.activeName
+        path: path
       })
     },
     setMenuActiveByRoute(to) {
@@ -64,6 +82,7 @@ export default {
           }
         }
       }
+      
       this.setCurrentActiveMenuName(routeName);
     },
     getRouterPushPath(routerData,path) {
@@ -89,7 +108,11 @@ export default {
         if (item.hasOwnProperty('header') && item.header) {
           let routerName = item.name;
 
-          menuList.push(item);
+          if (item.hidden) {
+            
+          } else {
+            menuList.push(item);
+          }
 
           this.menuRouterMap[routerName] = item;
         }

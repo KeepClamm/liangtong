@@ -197,7 +197,6 @@ export default {
       let list = [];
 
       userHistory.forEach((item,index) => {
-        console.log(index);
         if (item.name != searchKeyword) {
           list.push(item);
         }

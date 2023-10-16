@@ -49,6 +49,7 @@ export function removeActiveMunuName() {
   Storage.remove('activeMenuName');
 }
 
+// 搜索历史 start
 export function setSearchHistory(data) {
   Storage.set(UserSearch, data);
 }
@@ -60,3 +61,18 @@ export function getSearchHistory() {
 export function removeSearchHistory() {
   Storage.remove(UserSearch);
 }
+// 搜索历史 end
+
+// 头部公司列表 start
+export function setHeaderCompany(data) {
+  Storage.set('headerCompany', data);
+}
+
+export function getHeaderCompany() {
+  return Storage.get('headerCompany');
+}
+
+export function removeHeaderCompany() {
+  Storage.remove('headerCompany');
+}
+// 头部公司列表 end
