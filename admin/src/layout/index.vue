@@ -89,8 +89,6 @@ export default {
 <style lang="scss" scoped>
   @import "~@/styles/mixin.scss";
   @import "~@/styles/variables.scss";
-  @import "~@/layout/common.scss";
-
 
   .app-wrapper {
     @include clearfix;

@@ -139,7 +139,7 @@ export default {
         .el-tabs__item {
           display: flex;
           align-items: center;
-          font-size: 18px;
+          font-size: $topMenuFontSize;
           font-weight: bold;
           &:hover {
             color: #1065A0;

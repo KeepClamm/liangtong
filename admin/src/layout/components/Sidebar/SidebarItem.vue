@@ -135,7 +135,7 @@ export default {
     font-family: 'PingFang SC';
     font-style: normal;
     font-weight: 400;
-    font-size: 18px;
+    font-size: $leftMenuFontSize;
     // font-size: 16px;
     // line-height: 25px;
     line-height: 24px;
@@ -151,7 +151,7 @@ export default {
     font-family: 'PingFang SC';
     font-style: normal;
     font-weight: 400;
-    font-size: 18px;
+    font-size: $leftMenuFontSize;
     // font-size: 16px;
     line-height: 24px;
     letter-spacing: 0.02em;
@@ -188,7 +188,7 @@ export default {
     content: '';
   }
   ::v-deep .sub-item{
-    font-size: 18px;
+    font-size: $leftMenuFontSize;
     padding-left: 20px;
     transition: background-color .3s;
     border-radius: 4px;

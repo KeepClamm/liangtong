@@ -49,6 +49,14 @@ module.exports = {
       }
     }
   },
+  css: {
+    loaderOptions: {
+      sass: {
+        // scss-loader(8.0及以上)使用prependData
+        prependData: `@import "@/styles/show-ui/page.scss";`,
+      },
+    },
+  },
   chainWebpack(config) {
     // it can improve the speed of the first screen, it is recommended to turn on preload
     config.plugin('preload').tap(() => [

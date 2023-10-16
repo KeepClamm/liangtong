@@ -2,6 +2,7 @@ import Storage from './storage';
 
 const TokenKey = 'ct_user_token';
 const UserInfoKey = 'ct_user_userinfo';
+const UserSearch = 'ct_history';
 
 export function getToken() {
   return Storage.get(TokenKey);
@@ -46,4 +47,16 @@ export function setActiveMenuName(name) {
 
 export function removeActiveMunuName() {
   Storage.remove('activeMenuName');
+}
+
+export function setSearchHistory(data) {
+  Storage.set(UserSearch, data);
+}
+
+export function getSearchHistory() {
+  return Storage.get(UserSearch);
+}
+
+export function removeSearchHistory() {
+  Storage.remove(UserSearch);
 }

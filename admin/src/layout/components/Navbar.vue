@@ -219,7 +219,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/layout/common.scss";
 
 .navbar {
   overflow: hidden;
@@ -235,7 +234,7 @@ export default {
   }
 
   .route-menu {
-    margin-left: -10px;
+    margin-left: -20px;
     padding-left: 50px;
     flex-shrink: 0;
     height: 100%;
