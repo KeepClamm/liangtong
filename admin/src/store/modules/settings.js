@@ -26,7 +26,7 @@ const actions = {
     // if (!name) {
     //   return;
     // }
-
+    console.log(111, name)
     setActiveMenuName(name);
 
     commit('CHANGE_SETTING', {

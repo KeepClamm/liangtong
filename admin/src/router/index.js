@@ -7,6 +7,7 @@ import riskHome from './risk-home';
 import centralizedControl from './centralized-control';
 import opinionMonitoring from "./opinion-monitoring";
 import authorityManagement from './authority-management';
+import individualStockDetail from './individual-stock-detail';
 import search from './search';
 // risk-home
 // opinion-monitoring
@@ -55,6 +56,7 @@ export const asyncRoutes = [
   ...centralizedControl,
   ...opinionMonitoring,
   ...authorityManagement,
+  ...individualStockDetail,
   ...search
   // 404 page must be placed at the end !!!
   // {
