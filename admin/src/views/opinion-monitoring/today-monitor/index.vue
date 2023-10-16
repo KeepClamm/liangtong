@@ -7,7 +7,7 @@
         <header>
           <span class="f-17 color-primary">舆情列表</span>
           <div class="search-box">
-            <div class="select-btn">高级筛选</div>
+            <div @click="openAdvancedFilterDialog" class="select-btn">高级筛选</div>
             <el-select v-model="searchParams.sort" size="mini" placeholder="请选择排序规则" class="ml-8 mr-8">
                 <el-option
                     v-for="item in sortTypeOpts"
@@ -38,6 +38,7 @@
         </div>
       </div>
     </div>
+    <advanced-filter-dialog ref="advancedFilterDialog"></advanced-filter-dialog>
   </div>
 </template>
 
@@ -45,6 +46,7 @@
 import SummaryBox from '../components/summary-box.vue';
 import OpinionList from '../components/opion-list.vue';
 import StockList from '../components/stock-list.vue';
+import AdvancedFilterDialog from '../components/advanced-filter-dialog.vue';
 export default {
   name: 'today-monitor',
   data() {
@@ -68,8 +70,14 @@ export default {
   components: {
     SummaryBox,
     StockList,
-    OpinionList
+    OpinionList,
+    AdvancedFilterDialog
   },
+  methods: {
+    openAdvancedFilterDialog() {
+      this.$refs.advancedFilterDialog.open()
+    }
+  }
 }
 </script>
 

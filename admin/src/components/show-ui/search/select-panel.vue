@@ -235,7 +235,9 @@ export default {
       this.changeThisItemSelectedStatus(firstIndex, secondIndex, optionItem);
     },
     // 日期选择器
-    changeChoosedTime(){},
+    changeChoosedTime(val){
+      this.choosedTime = val;
+    },
     // 选择全部的这一分类选项
     chooseAllType(item, index){
       let list = item.options || [];

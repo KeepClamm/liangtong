@@ -1,6 +1,30 @@
 <template>
   <div class="option-list-item-comp show-flex-box-r">
-    <ol class="search-option-list show-flex-box-r" v-if="item.type != 'timePicker'">
+    <div v-if="item.type == 'timePicker'" class="fs-0 time-picker-bar">
+      <el-date-picker
+        style="width: 200px;"
+        type="date"
+        placeholder="请选择预警日期"
+        v-model="item.val"
+        :editable="false"
+        size="small"
+        clearable
+        format="yyyy-MM-dd"
+        value-format="timestamp"
+        @change="changeChoosedTime"
+      ></el-date-picker>
+    </div>
+    <div v-else-if="item.type == 'radio'" class="search-option-list show-flex-box-r">
+      <el-radio-group v-model="item.val">
+        <el-radio
+          v-for="(subItem, subIndex) in item.options"
+          :key="subItem.id"
+          :label="subItem.id"
+          @change="chooseItem(index, subIndex, item, subItem)"
+        >{{ subItem.name }}</el-radio>
+      </el-radio-group>
+    </div>
+    <ol class="search-option-list show-flex-box-r" v-else>
       <li
         :class="{'selected': checkIsSelectedAll(item.options)}"
         @click="!checkIsSelectedAll(item.options) && chooseAllType(item, index)"
@@ -16,20 +40,6 @@
         <strong>{{subItem.name}}</strong>
       </li>
     </ol>
-    <div v-if="item.type == 'timePicker'" class="fs-0 time-picker-bar">
-      <el-date-picker
-        style="width: 200px;"
-        type="date"
-        placeholder="请选择预警日期"
-        v-model="choosedTime"
-        :editable="false"
-        size="small"
-        clearable
-        format="yyyy-MM-dd"
-        value-format="timestamp"
-        @change="changeChoosedTime"
-      ></el-date-picker>
-    </div>
 
     <slot></slot>
   </div>
@@ -67,6 +77,9 @@ export default {
     chooseAllType(item, index){
       this.$emit('chooseAllType', item, index)
     },
+    changeChoosedTime(val) {
+      this.$emit('changeChoosedTime', val)
+    },
     // 选中某一个选项
     chooseItem(index, subIndex, item, subItem){
       this.$emit('choseItem', index, subIndex, item, subItem)
@@ -78,7 +91,7 @@ export default {
 <style lang="scss" scoped>
 .option-list-item-comp {
   .search-option-list {
-    // width: 0;
+    min-height: 40px;
     flex-grow: 1;
     flex-wrap: wrap;
     transition: all 0.3s linear;

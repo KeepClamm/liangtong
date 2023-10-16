@@ -58,7 +58,6 @@
               {{ row.stockPledgeRate === null ? '--' : row.stockPledgeRate.toFixed(2) }}
             </span>
           </template>
-          <!-- toFixed() -->
           <template #longClassification="{ row }">
             <span>
               {{row.longTermFiveLevelClassification || '--'}}/{{row.longTermDurationDays|| 0}}天
