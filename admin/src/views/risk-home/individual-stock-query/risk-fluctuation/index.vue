@@ -1,6 +1,6 @@
 <template>
   <div class="risk-fluctuation-page h100 show-flex-box-c">
-    <breadcrumb-bar title="风险波动概览"></breadcrumb-bar>
+    <!-- <breadcrumb-bar title="风险波动概览"></breadcrumb-bar> -->
 
     <div class="container">
       <!-- 股票信息 -->
@@ -403,6 +403,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "@/styles/show-ui/common_risk_style.scss";
+.risk-fluctuation-page {
+  padding: 30px;
+}
 .exclamation-circle {
   width: 14px;
   height: 14px;

@@ -1,6 +1,6 @@
 <template>
   <div class="risk-indicator-page h100 show-flex-box-c">
-    <breadcrumb-bar title="风险指标详情"></breadcrumb-bar>
+    <!-- <breadcrumb-bar title="风险指标详情"></breadcrumb-bar> -->
 
     <div class="container">
       <!-- 股票信息 -->
@@ -223,4 +223,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/styles/show-ui/common_risk_style.scss";
+.risk-indicator-page {
+  padding: 30px;
+}
 </style>

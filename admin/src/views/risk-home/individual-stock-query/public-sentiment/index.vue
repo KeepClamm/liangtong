@@ -1,6 +1,6 @@
 <template>
   <div class="public-sentiment h100 show-flex-box-c">
-    <breadcrumb-bar title="个股舆情预警"></breadcrumb-bar>
+    <!-- <breadcrumb-bar title="个股舆情预警"></breadcrumb-bar> -->
     <div class="container">
       <!-- 股票信息 -->
       <div class="short-crash-header card">
@@ -144,4 +144,7 @@ export default {
 
 <style>
 @import "~@/styles/show-ui/common_risk_style.scss";
+.public-sentiment {
+  padding: 30px;
+}
 </style>
