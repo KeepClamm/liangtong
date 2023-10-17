@@ -76,3 +76,17 @@ export function removeHeaderCompany() {
   Storage.remove('headerCompany');
 }
 // 头部公司列表 end
+
+// 登录 start
+export function setCTLogin(data) {
+  Storage.set('ct_login', data);
+}
+
+export function getCTLogin() {
+  return Storage.get('ct_login');
+}
+
+export function removeCTLogin() {
+  Storage.remove('ct_login');
+}
+// 登录 end

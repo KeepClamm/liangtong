@@ -25,6 +25,11 @@
               </div>
             </div>
           </el-form-item>
+          <el-form-item prop="rememberPassword">
+            <div class="remember-pwd-checkbox show-flex-box-r">
+              <el-checkbox v-model="rememberPasswordStatus">记住密码</el-checkbox>
+            </div>
+          </el-form-item>
         </el-form>
         <div class="login-btn">
           <el-button type="primary" :loading="loginLoading" @click="confirmLogin">登录</el-button>
@@ -38,6 +43,9 @@
 
 import { getLoginVerifyImage, userLogin } from '@/api/service/login';
 import verificationCode from './components/verification-code-comp';
+
+import { setCTLogin, getCTLogin, removeCTLogin } from '@/utils/auth';
+import { encrypt, decrypt } from './aes';
 
 export default {
   name: "Login",
@@ -61,6 +69,7 @@ export default {
         password: '',
         verificationCode: ''
       },
+      rememberPasswordStatus: false,
       loginRules: {
         account: [
           { required: true, message: '请输入账号', trigger: 'blur' }
@@ -82,8 +91,40 @@ export default {
   },
   mounted() {
     this.getAuthCodeImage();
+    this.checkRememberPassword();
   },
   methods: {
+    checkRememberPassword() {
+      const loginData = this.getRememberPassword();
+
+      if (!loginData) {
+        return;
+      }
+
+      this.loginForm.account = loginData.account;
+      this.loginForm.password = loginData.password;
+      this.rememberPasswordStatus = true;
+    },
+    setRememberPassword() {
+      let loginData = {
+        "account": this.loginForm.account,
+        "password": this.loginForm.password,
+      };
+
+      const encryptData = encrypt(loginData);
+      setCTLogin(encryptData);
+    },
+    getRememberPassword() {
+      const localLoginData = getCTLogin();
+      let loginData = null;
+
+      if (localLoginData) {
+        const decryptData = decrypt(localLoginData);
+        loginData = decryptData ? JSON.parse(decryptData) : null;
+      }
+
+      return loginData;
+    },
     onCreateCode() {
       this.$refs.verification_code_ref.autoDraw(({ code })=> {
         this.authTrueCode = code;
@@ -108,6 +149,13 @@ export default {
         codeCount: 4
       });
     },
+    setRememberPasswordWithLoginSuccess() {
+      if (this.rememberPasswordStatus) {
+        this.setRememberPassword();
+      } else {
+        removeCTLogin();
+      }
+    },
     toLogin() {
       let params = {
         "account": this.loginForm.account,
@@ -120,10 +168,9 @@ export default {
       userLogin(params)
         .then((ret)=> {
           const curData = ret.data;
-          // account: "admin"
-          // changePassword: null
 
           if (curData.token) {
+            this.setRememberPasswordWithLoginSuccess();
             this.$store.dispatch('setToken',curData.token);
             location.reload();
           }
@@ -183,6 +230,9 @@ export default {
             margin-left: 10px;
             background: #afafaf;
           }
+        }
+        .remember-pwd-checkbox {
+          justify-content: flex-end;
         }
         .login-btn {
           margin-top: 50px;

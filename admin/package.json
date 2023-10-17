@@ -18,6 +18,7 @@
     "axios": "0.18.1",
     "core-js": "3.6.5",
     "cos-js-sdk-v5": "^1.0.1",
+    "crypto-js": "^4.1.1",
     "echarts": "^5.4.0",
     "element-ui": "2.15.7",
     "file-saver": "^2.0.5",
