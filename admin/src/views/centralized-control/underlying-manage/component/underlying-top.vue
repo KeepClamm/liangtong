@@ -13,36 +13,32 @@
             </div>
           </template>
           <template v-if="adjustQuery">
-            <div class="component-header-buttons-item button-color">
-              导出
-            </div>
+            <div class="component-header-buttons-item button-color">导出</div>
           </template>
         </div>  
       </div>
       <div class="select-container">
         <template v-for="(val, key, index) in globalConfig">
           <div class="select-item" :key="index">
-          <div class="select-container-label">
-            {{val.label}}:
-          </div>
-          <div class="select-container-options">
-            <template v-if="val.type == 'input'">
-                <el-input v-model="selectVal[val.valName]" :placeholder="val.placeHolder" @change="handleChange"/>
-            </template>
-            <template v-if="val.type == 'select'">
-              <el-select v-model="selectVal[val.valName]" @change="handleChange">
-                <el-option v-for="item in val.selectOpts" :key="item.value" :value="item.value" :label="item.label"></el-option>
-              </el-select>
-            </template>
-            <template v-if="val.type == 'selectMut'">
-              <el-select v-model="selectVal[val.valName]" multiple collapse-tags class="tags-select-input" @change="handleChange">
-                <el-option v-for="item in val.selectOpts" :key="item.value" :value="item.value" :label="item.label"></el-option>
-              </el-select>
-            </template>
-            <template v-if="val.type == 'date'">
-                <el-date-picker v-model="selectVal[val.valName]" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" />
-            </template>
-          </div>
+            <div class="select-container-label">{{val.label}}:</div>
+            <div class="select-container-options">
+              <template v-if="val.type == 'input'">
+                  <el-input v-model="selectVal[val.valName]" :placeholder="val.placeHolder" @change="handleChange"/>
+              </template>
+              <template v-if="val.type == 'select'">
+                <el-select v-model="selectVal[val.valName]" @change="handleChange">
+                  <el-option v-for="item in val.selectOpts" :key="item.value" :value="item.value" :label="item.label"></el-option>
+                </el-select>
+              </template>
+              <template v-if="val.type == 'selectMut'">
+                <el-select v-model="selectVal[val.valName]" multiple collapse-tags class="tags-select-input" @change="handleChange">
+                  <el-option v-for="item in val.selectOpts" :key="item.value" :value="item.value" :label="item.label"></el-option>
+                </el-select>
+              </template>
+              <template v-if="val.type == 'date'">
+                  <el-date-picker v-model="selectVal[val.valName]" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" />
+              </template>
+            </div>
         </div>
         </template>
       </div>
@@ -79,7 +75,6 @@ export default {
   },
   data() {
     return {
-      testObj: {},
       selectVal: { // 筛选条件的所有值
         tradeFloorVal: 1, // 交易市场
         stockCodeVal: '', // 证券名称

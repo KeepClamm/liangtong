@@ -38,9 +38,9 @@ Vue.filter('formatDate', function(timestamp, format) {
 })
 
 Vue.filter('dateformat', function (dataStr, pattern = 'YYYY-MM-DD HH:mm:ss', ) {
-  return dataStr ? moment(dataStr * 1000).format(pattern) : '-'
+  return dataStr ? moment(dataStr).format(pattern) : '-'
 })
 
 Vue.filter('filterDateformat', function (dataStr) {
-  return moment(dataStr * 1000).format()
+  return moment(dataStr).format()
 })

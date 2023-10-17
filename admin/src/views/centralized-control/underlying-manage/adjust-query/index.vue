@@ -1,6 +1,7 @@
+
 <template>
   <!-- 调整查询 -->
-  <div class="template">
+  <div>
     <underlying-top :adjust-label="adjustLabel" :adjust-query="adjustQuery" :global-config="listOfAdjustmentsQuery"/>
     <underlying-table :source="'adjustQuery'" :table-row="tableRow"/>
   </div>
@@ -12,7 +13,6 @@ import UnderlyingTop from '../component/underlying-top.vue'
 import pagination from '@/components/show-ui/table/pagination-comp.vue'
 import { listOfAdjustmentsQuery } from '../adjustment-config'
 export default {
-  name: 'Template',
   components: {
     UnderlyingTable,
     UnderlyingTop,
@@ -24,7 +24,7 @@ export default {
       adjustLabel: {
         title: '标的调整查询'
       },
-      listOfAdjustmentsQuery: {},
+      listOfAdjustmentsQuery: {}, // 筛选规则的配置项
       tableRow: {
         '标的范围调整': [
           { label: "融资标的证券", prop: "rzStock" },

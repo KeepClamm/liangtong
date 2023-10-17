@@ -16,7 +16,7 @@
             {{ item.label }}
           </div>
         </div>
-        <div class="component-header-buttons-item button-color">导出</div>
+        <div class="component-header-buttons-item button-color" @click="exportExcel">导出</div>
       </div>
     </div>
     <div class="risk-warn-table">
@@ -26,6 +26,7 @@
         :data="tableData"
         :cell-style="cellStyle"
         :header-cell-style="rowClass"
+        id="out-table"
         border
       >
       <template v-for="item in tableRow">
@@ -33,7 +34,7 @@
           :key="item.label"
           :prop="item.prop"
           :label="item.label"
-          v-if="item.prop != 'stockCode' && item.prop != 'stockAcronyms'"
+          v-if="item.prop != 'stockCode' && item.prop != 'stockAcronyms' && item.prop !='mainRisks'"
         />
         <el-table-column :key="item.label" :prop="item.prop" :label="item.label" v-if="item.prop == 'stockAcronyms'">
             <template slot-scope="scope">
@@ -45,27 +46,40 @@
               <span class="color-blue cursor-pointer">{{ scope.row['stockCode'] }}</span>
             </template>
           </el-table-column>
+          <el-table-column :key="item.label" :prop="item.prop" :label="item.label" v-if="item.prop == 'mainRisks'">
+            <template slot-scope="scope">
+              <el-popover trigger="hover" :content="scope.row.mainRisks" placement="top">
+                <div slot="reference">
+                  <div class="rownowrap">{{ scope.row["mainRisks"] }}</div>
+                </div>
+              </el-popover>
+            </template>
+          </el-table-column>
       </template>
       </el-table>
-      <pagination class="mt-24" :total="10" :current-page="1" :cur-limit="10" :showRecods="1"></pagination>
+      <pagination class="mt-24" :total="total" :current-page="page" :cur-limit="limit" :showRecods="1" @post-cur-page="recieveCurNOP" @post-cur-limit="recieveCurLimit"></pagination>
     </div>
   </div>
 </template>
   
 <script>
+import CommonUtils from '@/utils/commonUtils';
 import pagination from '@/components/show-ui/table/pagination-comp.vue'
+import {
+  getFinancialDlistWarning,
+  getTradeDlistWarning
+} from "@/api/risk-homepage/risk-cockpit";
 export default {
   props: {
-    tableData: {
-      type: Array,
-      default: () => { ([]) }
-    }
   },
   components:{
     pagination
   },
   data() {
     return {
+      page: 1,
+      total: 0,
+      limit: 10,
       dateValue: "",
       upgrateValue: 1,
       dateRange: "",
@@ -76,27 +90,35 @@ export default {
         },
         {
           label: "股票简称",
-          prop: "stockAcronyms",
+          prop: "stockShortName",
         },
         {
           label: "折算率",
-          prop: "conversionRate",
+          prop: "lossRate",
         },
         {
           label: "主要风险项",
-          prop: "mainRisk",
+          prop: "mainRisks",
         },
       ],
       radioOpts: [
         { label: "财务类退市预警个股展示", value: 1 },
         { label: "交易类退市预警个股展示", value: 2 },
       ],
-      upgradeOpts: [
-        { label: "评级下调", value: 1 },
-        { label: "评级上调", value: 2 },
-      ],
       isActive: 1,
+      tableData: []
     };
+  },
+  watch: {
+    isActive: {
+      handler(newval, oldVal) {
+        newval == 1 ? this.getFinancialDlistWarning() : this.getTradeDlistWarning()
+      },
+      immediate: true
+    }
+  },
+  created() {
+
   },
   methods: {
     rowClass({ row, rowIndex }) {
@@ -110,6 +132,54 @@ export default {
       const that = this;
       that.isActive = value;
     },
+    // 财务退市预警
+    async getFinancialDlistWarning() {
+      let params = {
+        page: this.page,
+        limit: this.limit
+      }
+      const res = await getFinancialDlistWarning(params) 
+      const data = res.data.items || []
+      this.tableData = data
+      this.total = res.data.total | 0
+      console.log('财务退市预警', res)
+    },
+    // 交易类退市预警
+    async getTradeDlistWarning() {
+      let params = {
+        page: this.page,
+        limit: this.limit
+      }
+      const res = await getTradeDlistWarning(params) 
+      const data = res.data.items || []
+      this.tableData = data
+      this.total = res.data.total | 0
+      console.log('交易类退市预警', res)
+    },
+    recieveCurNOP(curNOP) {
+      const info = {
+        type: "pagination",
+        page: this.page,
+        limit: this.limit,
+      };
+      this.handlePage(info);
+    },
+    recieveCurLimit(curLimit) {
+      const info = {
+        type: "pagination",
+        page: this.page,
+        limit: curLimit,
+      };
+      this.handlePage(info);
+    },
+    handlePage(info) {
+      this.page = info.page;
+      this.limit = info.limit;
+    },
+    exportExcel() {
+      // let title = this.radioOpts.filter(option => option.value == this.isActive).map(item => item.label)
+      // CommonUtils.exportExcelNew('out-table', title)
+    }
   },
 };
 </script>

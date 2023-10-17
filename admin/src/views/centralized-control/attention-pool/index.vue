@@ -25,7 +25,7 @@
             </template>
           </el-table-column>
       </el-table>
-      <pagination class="mt-24" :total="10" :current-page="1" :cur-limit="10" :showRecods="1"></pagination>
+      <pagination class="mt-24" :total="total" :current-page="page" :cur-limit="limit" :showRecods="tableData.length"  @post-cur-page="recieveCurNOP" @post-cur-limit="recieveCurLimit"></pagination>
     </div>
     <composition-dialog ref="compositionDialogRef"></composition-dialog>
   </div>
@@ -46,10 +46,20 @@ export default {
   data() {
     return {
       page: 1,
-      limit: 10,
+      limit: 5,
+      total: 10,
       serachVal: '',
       tableData: [
-        {'groupName': '组合A', 'numOfSecurities': 10, 'createName': 'admin'}
+        {'groupName': '组合A', 'numOfSecurities': 10, 'createName': 'admin'},
+        {'groupName': '组合A', 'numOfSecurities': 10, 'createName': 'admin'},
+        {'groupName': '组合A', 'numOfSecurities': 10, 'createName': 'admin'},
+        {'groupName': '组合A', 'numOfSecurities': 10, 'createName': 'admin'},
+        {'groupName': '组合A', 'numOfSecurities': 10, 'createName': 'admin'},
+        {'groupName': '组合A', 'numOfSecurities': 10, 'createName': 'admin'},
+        {'groupName': '组合A', 'numOfSecurities': 10, 'createName': 'admin'},
+        {'groupName': '组合A', 'numOfSecurities': 10, 'createName': 'admin'},
+        {'groupName': '组合A', 'numOfSecurities': 10, 'createName': 'admin'},
+        {'groupName': '组合A', 'numOfSecurities': 10, 'createName': 'admin'},
       ]
     }
   },
@@ -68,8 +78,10 @@ export default {
     cellStyle({ row, rowIndex, column, columnIndex }) {
       return 'text-align: center;height: 60px;'
     },
-    handlePage() {
-
+    handlePage(info) {
+      this.page = info.page;
+      this.limit = info.limit;
+      // this.getTableData(false);
     },
     // 打开弹窗
     openCompositionDialog() {
@@ -88,7 +100,29 @@ export default {
     // 编辑
     handleEdit(row) {
       this.$refs.compositionDialogRef.open()
-    }
+    },
+    // 分页
+    recieveCurNOP(curNOP){
+      const info = {
+        type: 'pagination',
+        page: curNOP,
+        limit: this.limit,
+      };
+      this.sendInfo(info, 'handlePage');
+    },
+    // 分页
+    recieveCurLimit(curLimit){
+      const info = {
+        type: 'pagination',
+        page: this.page,
+        limit: curLimit,
+      };
+      this.sendInfo(info, 'handlePage');
+    },
+    sendInfo(info, func = 'clickInfo'){
+      this[func](info)
+    },
+    clickInfo(info) {}
   }
 }
 </script>

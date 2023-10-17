@@ -9,7 +9,7 @@
             placement="right"
             width="200"
             trigger="hover"
-            content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。"
+            content="近期评级处于市场尾部且在标的和保证金池中的个股"
           >
             <img
               slot="reference"
@@ -20,7 +20,11 @@
           </el-popover>
         </div>
         <div v-if="isActive === 2" class="upgarte-container">
-          <el-select v-model="upgrateValue" placeholder="请选择">
+          <el-select
+            v-model="upgrateValue"
+            placeholder="请选择"
+            @change="handleGradeChange"
+          >
             <el-option
               v-for="item in upgradeOpts"
               :key="item.value"
@@ -36,13 +40,17 @@
             v-if="isActive === 1"
             v-model="dateValue"
             type="date"
+            value-format="timestamp"
             placeholder="选择日期"
+            @change="handleDateChange"
           />
           <el-date-picker
             v-else
             v-model="dateRange"
             type="daterange"
             range-separator="至"
+            value-format="timestamp"
+            @change="handleDateRangeChange"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
           />
@@ -57,7 +65,7 @@
             {{ item.label }}
           </div>
         </div>
-        <div class="component-header-buttons-item button-color">导出</div>
+        <div class="component-header-buttons-item button-color" @click="exportExcel">导出</div>
       </div>
     </div>
     <div class="risk-warn-table">
@@ -67,52 +75,141 @@
         :data="tableData"
         :cell-style="cellStyle"
         :header-cell-style="rowClass"
+        id="out-table"
         border
       >
         <template v-for="item in tableRow">
-          <el-table-column :key="item.label" :prop="item.prop" :label="item.label" v-if="item.prop != 'mainRisk' && item.prop != 'stockAcronyms' && item.prop != 'stockCode'" />
-          <el-table-column :key="item.label" :prop="item.prop" :label="item.label" v-if="item.prop == 'mainRisk'">
+          <el-table-column
+            :key="item.label"
+            :prop="item.prop"
+            :label="item.label"
+            v-if="
+              item.prop != 'mainRisks' &&
+              item.prop != 'stockShortName' &&
+              item.prop != 'stockCode' &&
+              item.prop != 'alteredDate' &&
+              item.prop != 'currentRating'
+            "
+          />
+          <el-table-column
+            :key="item.label"
+            :prop="item.prop"
+            :label="item.label"
+            v-if="item.prop == 'alteredDate'"
+          >
             <template slot-scope="scope">
-              <el-popover trigger="hover" content="11111111" placement="top">
-                <div slot="reference">  
-                  <span>{{ scope.row['mainRisk'] }}</span>
+              <span>{{
+                scope.row.alteredDate
+                  ? $options.filters.dateformat(
+                      scope.row.alteredDate,
+                      "YYYY-MM-DD"
+                    )
+                  : "--"
+              }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            :key="item.label"
+            :prop="item.prop"
+            :label="item.label"
+            v-if="item.prop == 'mainRisks'"
+          >
+            <template slot-scope="scope">
+              <el-popover
+                trigger="hover"
+                :content="scope.row.mainRisks"
+                placement="top"
+              >
+                <div slot="reference">
+                  <div class="rownowrap">{{ scope.row["mainRisks"] }}</div>
                 </div>
               </el-popover>
             </template>
           </el-table-column>
-          <el-table-column :key="item.label" :prop="item.prop" :label="item.label" v-if="item.prop == 'stockAcronyms'">
+          <el-table-column
+            :key="item.label"
+            :prop="item.prop"
+            :label="item.label"
+            v-if="item.prop == 'stockShortName'"
+          >
             <template slot-scope="scope">
-              <span class="color-blue cursor-pointer">{{ scope.row['stockAcronyms'] }}</span>
+              <span class="color-blue cursor-pointer" @click="gotoIndividual">{{
+                scope.row["stockShortName"]
+              }}</span>
             </template>
           </el-table-column>
-          <el-table-column :key="item.label" :prop="item.prop" :label="item.label" v-if="item.prop == 'stockCode'">
+          <el-table-column
+            :key="item.label"
+            :prop="item.prop"
+            :label="item.label"
+            v-if="item.prop == 'stockCode'"
+          >
             <template slot-scope="scope">
-              <span class="color-blue cursor-pointer">{{ scope.row['stockCode'] }}</span>
+              <span class="color-blue cursor-pointer">{{
+                scope.row["stockCode"]
+              }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            :key="item.label"
+            :prop="item.prop"
+            :label="item.label"
+            v-if="item.prop == 'currentRating'"
+          >
+            <template slot-scope="scope">
+              <div class="currentRating-flex">
+                <template v-if="isActive == 2">
+                  <div>{{ scope.row["currentRating"] }}</div>
+                  <div style="width: 20px; height: 20px">
+                    <img
+                      :src="upgrateValue == 2 ? iconList[0] : iconList[1]"
+                      style="width: 100%; height: 100%"
+                    />
+                  </div>
+                  <div>{{ scope.row["reduceRange"] }}</div>
+                </template>
+                <template v-else>
+                  <div>{{ scope.row["currentRating"] }}</div>
+                </template>
+              </div>
             </template>
           </el-table-column>
         </template>
       </el-table>
-      <pagination class="mt-24" :total="10" :current-page="1" :cur-limit="10" :showRecods="1"></pagination>
+      <pagination
+        class="mt-24"
+        :total="total"
+        :current-page="page"
+        :cur-limit="limit"
+        :showRecods="1"
+        @post-cur-page="recieveCurNOP"
+        @post-cur-limit="recieveCurLimit"
+        v-if="isActive == 2"
+      ></pagination>
     </div>
   </div>
 </template>
 
 <script>
-import pagination from '@/components/show-ui/table/pagination-comp.vue'
+import CommonUtils from '@/utils/commonUtils';
+import pagination from "@/components/show-ui/table/pagination-comp.vue";
+import {
+  getDownGrade,
+  getUpGrade,
+  getHighRiskAlert,
+} from "@/api/risk-homepage/risk-cockpit";
 export default {
-  props: {
-    tableData: {
-      type: Array,
-      default: () => {[]},
-    },
-  },
-  components:{
-    pagination
+  props: {},
+  components: {
+    pagination,
   },
   data() {
     return {
+      page: 1,
+      total: 0,
+      limit: 10,
       dateValue: "",
-      upgrateValue: 1,
+      upgrateValue: 1, // 评级上下调
       dateRange: "",
       tableRow: [],
       radioOpts: [
@@ -124,9 +221,13 @@ export default {
         { label: "评级上调", value: 2 },
       ],
       isActive: 1,
+      tableData: [],
+      iconList: [
+        require("@/assets/images/cockpit-risk/arrow-up.png"),
+        require("@/assets/images/cockpit-risk/arrow-down.png"),
+      ],
     };
   },
-  created() {},
   watch: {
     isActive: {
       handler(newVal, oldVal) {
@@ -138,52 +239,55 @@ export default {
             },
             {
               label: "股票简称",
-              prop: "stockAcronyms",
+              prop: "stockShortName",
             },
             {
               label: "当前评级",
-              prop: "currentRate",
+              prop: "currentRating",
             },
             {
               label: "折算率",
-              prop: "conversionRate",
+              prop: "lossRate",
             },
             {
               label: "主要风险项",
-              prop: "mainRisk",
+              prop: "mainRisks",
             },
           ];
         } else {
           this.tableRow = [
-          {
+            {
               label: "股票代码",
               prop: "stockCode",
             },
             {
               label: "股票简称",
-              prop: "stockAcronyms",
+              prop: "stockShortName",
             },
             {
               label: "当前评级(调整幅度)",
-              prop: "currentRate",
+              prop: "currentRating",
             },
             {
               label: "原始评级",
-              prop: "oldRate",
+              prop: "originalRating",
             },
             {
               label: "变动时间",
-              prop: "time",
+              prop: "alteredDate",
             },
             {
               label: "主要风险项",
-              prop: "mainRisk",
+              prop: "mainRisks",
             },
-          ]
+          ];
         }
       },
       immediate: true,
     },
+  },
+  created() {
+    this.getHighRiskAlert();
   },
   methods: {
     rowClass({ row, rowIndex }) {
@@ -192,11 +296,104 @@ export default {
     cellStyle({ row, rowIndex, column, columnIndex }) {
       return "text-align: center;height: 60px;";
     },
+    // 分页
+    recieveCurNOP(curNOP) {
+      const info = {
+        type: "pagination",
+        page: curNOP,
+        limit: this.limit,
+      };
+      this.handlePage(info);
+    },
+    // 分页
+    recieveCurLimit(curLimit) {
+      const info = {
+        type: "pagination",
+        page: this.page,
+        limit: curLimit,
+      };
+      this.handlePage(info);
+    },
+    handlePage(info) {
+      this.page = info.page;
+      this.limit = info.limit;
+      this.rateAdjust()
+    },
     // 单选框点击
     handleRadioClick(value) {
       const that = this;
       that.isActive = value;
+      that.isActive == 1
+        ? that.handleRadioHighRisk()
+        : that.handleRadioGradeAdjust();
     },
+    handleRadioHighRisk() {
+      this.dateValue = ""; // 重置数据
+      this.getHighRiskAlert();
+    },
+    handleRadioGradeAdjust() {
+      this.dateRange = ""; // 重置数据
+      this.upgrateValue = 1;
+      this.rateAdjust();
+    },
+    handleGradeChange(val) {
+      this.rateAdjust();
+    },
+    handleDateChange() {
+      let params = {
+        startTime: this.dateValue,
+      };
+      this.getHighRiskAlert(params);
+    },
+    handleDateRangeChange() {
+      this.rateAdjust();
+    },
+    // 高危预警个股展示
+    async getHighRiskAlert(params) {
+      const res = await getHighRiskAlert(params);
+      const data = res.data || [];
+      this.tableData = data;
+    },
+    // 评级调整
+    async rateAdjust() {
+      let params = {
+        page: this.page,
+        limit: this.limit,
+      };
+      let res = [];
+      if (!!this.dateRange) {
+        (params.startTime = this.dateRange[0]),
+          (params.endTime = this.dateRange[1]);
+      }
+      if (this.upgrateValue == 1) {
+        res = await getDownGrade(params);
+      } else {
+        res = await getUpGrade(params);
+      }
+      const tableData = res.data.items || [];
+      this.total = res.data.total || 0;
+      this.tableData = tableData;
+    },
+    // 跳转个股风险画像
+    gotoIndividual() {
+      //TODO:
+    },
+    // 评级上调
+    async getUpGrade(params) {
+      const res = await getUpGrade(params);
+      const tableData = res.data.items || [];
+      this.tableData = tableData;
+    },
+    // 评级下调
+    async getDownGrade(params) {
+      const res = await getDownGrade(params);
+      const tableData = res.data.items || [];
+      this.tableData = tableData;
+    },
+    exportExcel() {
+      // let title = this.radioOpts.filter(option => option.value == this.isActive).map(item => item.label)
+      // CommonUtils.exportExcelNew('out-table', title)
+    }
   },
 };
 </script>
@@ -232,6 +429,19 @@ export default {
 .is-active {
   background-color: #fff;
   color: #00a3e0 !important;
+}
+.rownowrap {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.currentRating-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  & div {
+    margin-right: 5px;
+  }
 }
 .high-risk-warn-container {
   width: 100%;

@@ -25,14 +25,12 @@
     </div>
     <div class="button-container">
       <div class="component-header-buttons-item">确认</div>
-      <div class="component-header-buttons-item button-color" @click="close">
-        取消
-      </div>
+      <div class="component-header-buttons-item button-color" @click="close">取消</div>
     </div>
   </el-dialog>
 </template>
     
-    <script>
+<script>
 export default {
   components: {},
   data() {
@@ -63,9 +61,9 @@ export default {
 };
 </script>
     
-  <style lang="scss" scoped src="@/styles/show-ui/common_dialog_style.scss"></style>
-  
-  <style lang="scss" scoped>
+<style lang="scss" scoped src="@/styles/show-ui/common_dialog_style.scss"></style>
+
+<style lang="scss" scoped>
 ::v-deep .el-dialog {
   height: 388px;
   margin-top: calc(54vh - 344px) !important;

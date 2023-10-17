@@ -4,15 +4,9 @@
       <div class="component-header-desc">
         <div class="component-header-title">{{ labelObj.title }}</div>
         <div class="component-header-buttons">
-          <div class="component-header-buttons-item">
-            查询
-          </div>
-          <div class="component-header-buttons-item button-color">
-            重置
-          </div>
-          <div class="component-header-buttons-item button-color">
-            导出
-          </div>
+          <div class="component-header-buttons-item">查询</div>
+          <div class="component-header-buttons-item button-color">重置</div>
+          <div class="component-header-buttons-item button-color">导出</div>
         </div>
       </div>
       <div class="component-select">
