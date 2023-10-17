@@ -176,6 +176,7 @@ export default {
           }
         }).catch((err)=> {
           this.loginLoading = false;
+          this.updateAuthCode();
         })
     },
   }
