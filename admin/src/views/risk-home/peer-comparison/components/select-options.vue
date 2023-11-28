@@ -38,14 +38,13 @@
           <div v-for="item in radioOpts" :key="item.value" class="radio-container-content-text" :class="{'radio-active': radioActive === item.value}" @click="handleClick(item)">{{ item.label }}</div>
         </div>
       </div>
-      <!-- <div class="component-header-buttons-item button-color" @click="handleExport">导出</div> -->
     </div>
     <div class="table-container">
       <!-- 表格 -->
       <el-table tooltip-effect="dark" style="width: 100%" :data="tableData" :cell-style="cellStyle" :header-cell-style="rowClass" border>
         <template v-for="item in tableRow">
           <el-table-column v-if="item.prop !== 'test06' && item.prop !== 'test07'" :key="item.label" :prop="item.prop" :label="item.label" />
-          <el-table-column v-if="item.prop == 'test06'" :key="item.label" :prop="item.prop" :label="item.label" sortable :filters="getfilterNameItem()" column-key="filterTag" :filter-method="filterChange">
+          <el-table-column v-if="item.prop == 'test06'" :key="item.label" :prop="item.prop" :label="item.label" sortable :filters="getfilterNameItem()" column-key="filterTag" :filter-method="filterChange" width="220">
             <template slot-scope="scope">
               <el-popover trigger="hover" placement="right" content="测试测试测111试">
                 <div slot="reference">
@@ -54,7 +53,7 @@
               </el-popover>
             </template>
           </el-table-column>
-          <el-table-column v-if="item.prop == 'test07'" :key="item.label" :prop="item.prop" :label="item.label" sortable>
+          <el-table-column v-if="item.prop == 'test07'" :key="item.label" :prop="item.prop" :label="item.label" sortable width="220">
             <template slot-scope="scope">
               <el-popover trigger="hover" placement="right" content="312321321">
                 <div slot="reference">

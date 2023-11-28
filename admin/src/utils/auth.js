@@ -15,6 +15,12 @@ export function setToken(token) {
 export function removeToken() {
   Storage.remove(TokenKey);
 }
+export function removeAccount() {
+  Storage.remove('userAccount');
+}
+export function removeBlackList() {
+  Storage.remove('blackList');
+}
 
 export function setUserInfo(userInfo) {
   Storage.set(UserInfoKey, userInfo);

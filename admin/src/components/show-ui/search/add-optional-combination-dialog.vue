@@ -79,7 +79,6 @@ export default {
     open(data) {
       this.dialogVisible = true;
       this.searchList = _.cloneDeep(data);
-      console.log(this.searchList)
       this.setCheckItemHeightIsOver();
     },
     handleConfirm() {

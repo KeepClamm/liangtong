@@ -2,13 +2,13 @@
   <div class="login-wrap show-flex-box-c">
     <div class="logo-box">
       <h1 class="logo">
-        <img src="@/assets/logo.png">
+        <!-- <img src="@/assets/logo.png"> -->
       </h1>
     </div>
     <div class="login-form show-flex-box-r">
       <div class="login-box">
         <div class="title">
-          <h2>登录</h2>
+          <h2>信用风险管理系统</h2>
         </div>
         <el-form ref="loginForm" :model="loginForm" :rules="loginRules">
           <el-form-item prop="account">
@@ -46,6 +46,7 @@ import verificationCode from './components/verification-code-comp';
 
 import { setCTLogin, getCTLogin, removeCTLogin } from '@/utils/auth';
 import { encrypt, decrypt } from './aes';
+import router from '@/router';
 
 export default {
   name: "Login",
@@ -156,28 +157,51 @@ export default {
         removeCTLogin();
       }
     },
+    setBlackList() {
+      const blackList = [
+          {id: 1, name: 'test1', code: '21312313', serviceName: '约定购回', serviceNum: '124467883232', limitNum: '1221000', sDate: '2023/08/09', eDate: '2023/09/22', status: 0},
+          {id: 2, name: 'test2', code: '77432111', serviceName: '约定购回', serviceNum: '124467883232', limitNum: '5631000', sDate: '2023/08/19', eDate: '2023/09/12', status: 1},
+          {id: 3, name: 'test3', code: '12789033', serviceName: '约定购回', serviceNum: '124467883232', limitNum: '2321200', sDate: '2023/08/02', eDate: '2023/10/09', status: 2},
+          {id: 4, name: 'test4', code: '90532221', serviceName: '约定购回', serviceNum: '124467883232', limitNum: '8621250', sDate: '2023/08/01', eDate: '2023/09/02', status: 0},
+          {id: 5, name: 'test5', code: '36883232', serviceName: '约定购回', serviceNum: '124467883232', limitNum: '9821000', sDate: '2023/08/09', eDate: '2023/09/27', status: 0},
+          {id: 6, name: 'test6', code: '24574345', serviceName: '约定购回', serviceNum: '124467883232', limitNum: '2321000', sDate: '2023/08/09', eDate: '2023/09/25', status: 2},
+          {id: 7, name: 'test7', code: '24574345', serviceName: '约定购回', serviceNum: '124467883232', limitNum: '2321000', sDate: '2023/08/09', eDate: '2023/09/25', status: 1},
+          {id: 8, name: 'test8', code: '24574345', serviceName: '约定购回', serviceNum: '124467883232', limitNum: '2321000', sDate: '2023/08/09', eDate: '2023/09/25', status: 0},
+          {id: 9, name: 'test9', code: '24574345', serviceName: '约定购回', serviceNum: '124467883232', limitNum: '2321000', sDate: '2023/08/09', eDate: '2023/09/25', status: 1},
+          {id: 10, name: 'test10', code: '24574345', serviceName: '约定购回', serviceNum: '124467883232', limitNum: '2321000', sDate: '2023/08/09', eDate: '2023/09/25', status: 0},
+          {id: 11, name: 'test11', code: '24574345', serviceName: '约定购回', serviceNum: '124467883232', limitNum: '2321000', sDate: '2023/08/09', eDate: '2023/09/25', status: 0},
+      ]
+      localStorage.setItem('blackList', JSON.stringify(blackList))
+    },
     toLogin() {
       let params = {
         "account": this.loginForm.account,
         "password": this.loginForm.password,
         "code": this.loginForm.verificationCode
       };
+      if (['admin', 'test01'].includes(this.loginForm.account)) {
+        localStorage.setItem('userAccount', this.loginForm.account)
+        this.$store.dispatch('setToken',"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsInN1YiI6IjEiLCJpYXQiOjE3MDA0NTgzODUsImV4cCI6MTcwMzA1MDM4NX0.d5_-Sukj8Z4pJDgQWGP-B0rQYYCV2mXC4DYhBeUJUFE");
+        location.reload()
+        // this.$router.push('/risk-home/same-client')
+        this.loginLoading = true;
+        this.setBlackList()
+      } else {
+        this.$message.error('请输入正确的用户名或者密码')
+      }
+      // userLogin(params)
+      //   .then((ret)=> {
+      //     const curData = ret.data;
 
-      this.loginLoading = true;
-
-      userLogin(params)
-        .then((ret)=> {
-          const curData = ret.data;
-
-          if (curData.token) {
-            this.setRememberPasswordWithLoginSuccess();
-            this.$store.dispatch('setToken',curData.token);
-            location.reload();
-          }
-        }).catch((err)=> {
-          this.loginLoading = false;
-          this.updateAuthCode();
-        })
+      //     if (curData.token) {
+      //       this.setRememberPasswordWithLoginSuccess();
+      //       this.$store.dispatch('setToken',curData.token);
+      //       location.reload();
+      //     }
+      //   }).catch((err)=> {
+      //     this.loginLoading = false;
+      //     this.updateAuthCode();
+      //   })
     },
   }
 };

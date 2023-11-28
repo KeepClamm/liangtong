@@ -71,14 +71,14 @@ axios.interceptors.response.use(
       switch (ErrorCode) {
         case 401:
         case 403:
-          store.dispatch('LOGOUT').then(res => {
-            router.replace('/login');
+          // store.dispatch('LOGOUT').then(res => {
+          //   router.replace('/login');
             
-            Message({
-              message: '登录超时，请重新登录',
-              type: 'error'
-            });
-          });
+          //   Message({
+          //     message: '登录超时，请重新登录',
+          //     type: 'error'
+          //   });
+          // });
         break;
         case 404:
         break;

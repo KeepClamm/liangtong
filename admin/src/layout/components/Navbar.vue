@@ -17,13 +17,14 @@
         </el-select>
       </div> -->
       <div class="company-list-box">
-        <company-list></company-list>
-      </div>
-      
+        
       <div class="search-box">
-        <div class="search-button" @click="toSearch">
+        <el-input placeholder="请输入业务/产品名称/单一客户识别码/身份证/护照/企业统一社会信用码/工商注册号/组织机构代码/证券代码" v-model="keywords">
+            <i slot="suffix" class="el-input__icon el-icon-search"></i>
+        </el-input>
+        <!-- <div class="search-button" @click="toSearch">
           <img class="search-icon" :src="searchIcon">
-        </div>
+        </div> -->
         <!-- <div class="search-input-box">
           <el-autocomplete style="width: 100%;"
                            v-model="keywords"
@@ -43,6 +44,9 @@
           </el-autocomplete>
         </div> -->
       </div>
+        <!-- <company-list></company-list> -->
+      </div>
+      
 
       <div class="right-menu show-flex-box-r fs-0">
         <img src="@/assets/images/layout/user-icon.png" class="user-avatar mr-10" />
@@ -50,7 +54,7 @@
         <el-dropdown trigger="click" @command="handleBtn">
           <div class="user-handle show-flex-box-r">
             <div class="name-bar show-flex-box-c fs-0">
-              <strong class="hide-line1">{{ account }}</strong>
+              <strong class="hide-line1">{{ userAccount }}</strong>
               <span v-if="roleName" class="hide-line1">{{ roleName }}</span>
             </div>
             <img class="pull-down ml-12 mt-5 cursor-pointer" src="@/assets/images/layout/pull-down-icon.png">
@@ -81,11 +85,8 @@
 
     <!-- 修改密码 弹窗 -->
     <div>
-      <change-pwd-dialog ref="change-pwd-ref"
-                         :showClose="!needChangePassword" 
-                         @change-pwd="logout()" />
+      <change-pwd-dialog ref="change-pwd-ref" :showClose="!needChangePassword" @change-pwd="logout()" />
     </div>
-
   </div>
 </template>
 
@@ -144,6 +145,9 @@ export default {
       const userInfo = this.userinfo;
       return userInfo && userInfo.account != 'admin' ? !userInfo.changePassword : false;
     },
+    userAccount() {
+      return localStorage.getItem('userAccount')
+    }
   },
   inject: ['reload'],
   watch: {
@@ -198,9 +202,9 @@ export default {
     },
     // 搜索
     toSearch(){
-      this.$router.push({
-        path: '/search/home'
-      })
+      // this.$router.push({
+      //   path: '/search/home'
+      // })
     },
     querySearchAsync(queryString, cb) {
       const params = { keywords: queryString };
@@ -219,7 +223,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+::v-deep .search-box .el-input {
+  width: 100%;
+  flex: 1;
+}
 .navbar {
   overflow: hidden;
   height: 100%;
@@ -251,20 +258,24 @@ export default {
     margin-left: 50px;
     margin-right: 20px;
     padding-left: 20px;
-    &:after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 0;
-      width: 4px;
-      height: 20px;
-      border-radius: 20px;
-      transform: translateY(-50%);
-      background: #1065A0;
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // &:after {
+    //   content: "";
+    //   position: absolute;
+    //   top: 50%;
+    //   left: 0;
+    //   width: 4px;
+    //   height: 20px;
+    //   border-radius: 20px;
+    //   transform: translateY(-50%);
+    //   background: #1065A0;
+    // }
   }
 
   .search-box {
+    width: 100%;
     flex-shrink: 0;
     padding-right: 20px;
     .search-button {

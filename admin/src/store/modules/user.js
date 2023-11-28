@@ -7,7 +7,9 @@ import {
   getUserInfo,
   getCurWatchStockInfo,
   setCurWatchStockInfo,
-  removeActiveMunuName
+  removeActiveMunuName,
+  removeAccount,
+  removeBlackList
 } from '@/utils/auth';
 
 import { reqUserInfo } from '@/api/service/login';
@@ -18,6 +20,7 @@ const user = {
     userInfo: getUserInfo(),
     roles: [],
     curWatchStockInfo: getCurWatchStockInfo(),
+    whiteList: ['admin']
   },
 
   mutations: {
@@ -85,6 +88,8 @@ const user = {
     },
     LOGOUT({ commit, state }) {
       removeToken();
+      removeAccount();
+      removeBlackList();
       removeActiveMunuName();
       clearUserInfo();
       commit('SET_ROLES', []);

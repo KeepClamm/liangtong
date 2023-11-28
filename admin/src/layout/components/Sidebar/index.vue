@@ -1,10 +1,10 @@
 <template>
-  <div :class="{'slide-item-box':true,'has-logo':showLogo}">
+  <div :class="{ 'slide-item-box': true, 'has-logo': showLogo }">
     <!-- 原始 start -->
     <!-- <logo v-if="showLogo" :collapse="isCollapse" /> -->
     <!-- <div :class="{'h100': true, 'border-box w100 pl-24 pr-24': !isCollapse}"> -->
     <!-- 原始 end -->
-    <div :class="{'h100 border-box w100': true}">
+    <div :class="{ 'h100 border-box w100': true }">
       <el-scrollbar wrap-class="scrollbar-wrapper pt-24 pl-24 pr-24">
         <el-menu
           :default-active="activeMenu"
@@ -16,11 +16,13 @@
           :collapse-transition="false"
           mode="vertical"
         >
-          <sidebar-item classType="parent"
-                        v-for="route in permissionRoutes"
-                        :key="route.path + Math.random()"
-                        :item="route"
-                        :base-path="route.path"/>
+          <sidebar-item
+            classType="parent"
+            v-for="route in permissionRoutes"
+            :key="route.path + Math.random()"
+            :item="route"
+            :base-path="route.path"
+          />
         </el-menu>
       </el-scrollbar>
     </div>
@@ -28,35 +30,32 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import Logo from './Logo';
-import SidebarItem from './SidebarItem';
-import variables from '@/styles/variables.scss';
+import { mapGetters } from "vuex";
+import Logo from "./Logo";
+import SidebarItem from "./SidebarItem";
+import variables from "@/styles/variables.scss";
 
 export default {
   components: { SidebarItem, Logo },
   computed: {
-    ...mapGetters([
-      'permission_routes',
-      'sidebar'
-    ]),
+    ...mapGetters(["permission_routes", "sidebar"]),
     routes() {
-      return this.$router.options.routes
+      return this.$router.options.routes;
     },
     activeMenu() {
-      const route = this.$route
-      const { meta, path } = route
+      const route = this.$route;
+      const { meta, path } = route;
       // if set path, the sidebar will highlight the path you set
       if (meta.activeMenu) {
-        return meta.activeMenu
+        return meta.activeMenu;
       }
-      return path
+      return path;
     },
     showLogo() {
-      return this.$store.state.settings.sidebarLogo
+      return this.$store.state.settings.sidebarLogo;
     },
     variables() {
-      return variables
+      return variables;
     },
     isCollapse() {
       // return !this.sidebar.opened
@@ -66,21 +65,22 @@ export default {
       return this.$store.state.settings.activeMenuName;
     },
   },
-  inject: ['isRouterAlive'],
+  mounted() {
+  },
+  inject: ["isRouterAlive"],
   data() {
     return {
       permissionRoutes: [],
-
-    }
+    };
   },
   watch: {
     permission_routes: {
       handler(newName, oldName) {
         this.checkIsNeedHidden();
       },
-      deep: true
+      deep: true,
     },
-    $route(to,from){
+    $route(to, from) {
       this.checkIsNeedHidden();
     },
     isRouterAlive: {
@@ -88,36 +88,32 @@ export default {
         this.checkIsNeedHidden();
       },
       immediate: true,
-      deep: true
+      deep: true,
     },
     activeMenuName() {
       this.checkIsNeedHidden();
-    }
+    },
   },
   methods: {
-    checkIsNeedHidden(){
+    checkIsNeedHidden() {
       // const curRouteName = this.$route.name || '/';
       let list = this.permission_routes;
       let routeList = [];
 
-      list.forEach(item=> {
-        if (item.hasOwnProperty('header')) {
-          if (item.name == this.activeMenuName) {
-            routeList.push(...item.children);
-          }
+      list.forEach((item) => {
+        if (item.hasOwnProperty("header")) {
+          routeList.push(...item.children);
+          // if (item.name == this.activeMenuName) {
+          //   routeList.push(...item.children);
+          // }
         } else {
           routeList.push(item);
         }
-      })
+      });
 
       this.permissionRoutes = routeList;
     },
-    getItemRoute(route) {
- 
-    }
+    getItemRoute(route) {},
   },
-
-
-
-}
+};
 </script>

@@ -177,13 +177,13 @@ export default {
             confirmPwd: this.form.confirmPassword, 
           };
 
-          userModifyPasswors(params)
-            .then((ret)=> {
-              this.openCallback && this.openCallback({type: 'success'});
-            }).catch((err)=>{
-              this.submitting = false;
-              this.openCallback && this.openCallback({type: 'fail'});
-            })
+          // userModifyPasswors(params)
+          //   .then((ret)=> {
+          //     this.openCallback && this.openCallback({type: 'success'});
+          //   }).catch((err)=>{
+          //     this.submitting = false;
+          //     this.openCallback && this.openCallback({type: 'fail'});
+          //   })
         } else {
           return false;
         }

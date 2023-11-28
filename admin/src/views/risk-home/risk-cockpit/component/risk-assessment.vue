@@ -377,7 +377,6 @@ export default {
     }
     .assessment-top-right {
       white-space: nowrap;
-      height: 36px;
       padding: 4px;
       background: #f2f3f5;
       border-radius: 3px;

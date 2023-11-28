@@ -48,16 +48,12 @@ export const constantRoutes = [
     path: '/',
     component: () => import('@/views/login/index'),
     hidden: true
-  }
+  },
+  // ...riskHome
 ]
 
 export const asyncRoutes = [
-  ...riskHome,
-  ...centralizedControl,
-  ...opinionMonitoring,
-  ...authorityManagement,
-  ...individualStockDetail,
-  ...search
+  ...riskHome
   // 404 page must be placed at the end !!!
   // {
   //   path: '*',
@@ -65,25 +61,6 @@ export const asyncRoutes = [
   //   hidden: true
   // },
 ]
-
-// 导出权限树
-// console.log(JSON.stringify(convert(asyncRoutes)));
-// function convert(arr) {
-//   return arr.reduce((acc, cur) => {
-//     let obj = {
-//       label: cur.meta.title,
-//       code: cur.meta.code
-//     }
-//     if (cur.children) {
-//       obj.children = convert(cur.children);
-//     } else if (cur.meta.roles && cur.meta.roles.length > 0) {
-//       obj.children = cur.meta.roles;
-//     }
-
-//     acc.push(obj);
-//     return acc;
-//   }, []);
-// }
 
 const createRouter = () => new Router({
   mode: 'history', // require service support

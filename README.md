@@ -18,7 +18,8 @@
 1.  xxxx
 2.  xxxx
 3.  xxxx
-
+#### 部署路径
+`/data/git/liangtong`
 #### 参与贡献
 
 1.  Fork 本仓库

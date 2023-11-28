@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '智慧股票',
+  title: '信用风险管理系统',
 
   /**
    * @type {boolean} true | false

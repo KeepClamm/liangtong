@@ -17,7 +17,7 @@ function getBaseUrl() {
 const currentOrigin = getBaseUrl();
 const hasDeloitte = origin && origin.indexOf('deloitte') >= 0;
 const hasLocalhost = origin && origin.indexOf('localhost') >= 0;
-let domain = hasDeloitte ? currentOrigin : (hasLocalhost ? 'http://47.114.3.239:6808' : currentOrigin);
+let domain = 'http://47.114.3.239:6808' 
 let baseUrl = domain + '/api';
 
 const DOMAIN_NAME = {

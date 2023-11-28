@@ -469,7 +469,6 @@ export default {
       align-items: center;
       .risk-warn-top-right-radio {
         white-space: nowrap;
-        height: 36px;
         padding: 4px;
         margin-left: 15px;
         background: #f2f3f5;

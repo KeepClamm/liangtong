@@ -22,7 +22,8 @@ import 'element-ui/lib/theme-chalk/index.css'; // element css file
 Vue.use(Vuex);
 Vue.use(Element, { size: 'medium'}); // set element-ui default size
 Vue.config.productionTip = false;
-
+const { mockXHR } = require('../mock')
+mockXHR()
 Vue.prototype.$permission = hasPermisstion;
 
 new Vue({

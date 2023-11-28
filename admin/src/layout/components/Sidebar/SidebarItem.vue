@@ -127,8 +127,8 @@ export default {
   .parent-item,
   .parent-sidebar-item-box ::v-deep .el-menu-item,
   .parent-sidebar-item-box ::v-deep .el-submenu__title{
-    height: 64px;
-    line-height: 64px;
+    height: 48px;
+    line-height: 48px;
     margin-bottom: 12px;
   }
   .sub-item,
@@ -140,9 +140,10 @@ export default {
     margin-bottom: 12px;
   }
   .parent-sidebar-item-box ::v-deep .parent-item > span {
+    padding-left: 15px;
     font-family: 'PingFang SC';
     font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
     font-size: $leftMenuFontSize;
     // font-size: 16px;
     // line-height: 25px;

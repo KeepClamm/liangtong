@@ -7,115 +7,51 @@ export default [
     name: 'RiskHome',
     component: Layout,
     meta: {
-      title: '风险首页',
+      title: '信用风险管理系统',
       icon: 'ComparisonOfPeers'
     },
-    redirect: '/risk-home/risk-cockpit',
+    redirect: '/risk-home/same-client',
     header: true,
     children: [
       {
-        path: '/risk-home/risk-cockpit',
-        name: 'RiskCockpit',
-        component: () => import('@/views/risk-home/risk-cockpit/index'),
+        path: '/risk-home/same-client',
+        name: 'SameClient',
+        component: () => import('@/views/risk-home/same-client/index'),
         meta: {
-          title: '风险驾驶舱'
+          title: '同一客户管理'
         }
       },
       {
-        path: '/risk-home/individual-stocks',
-        component: () => import('@/views/risk-home/individual-stock-query/index'),
+        path: '/risk-home/same-service',
+        name: 'SameService',
+        component: () => import('@/views/risk-home/same-service/index'),
         meta: {
-          title: '个股查询',
-          // icon: 'ComparisonOfPeers',
-        },
-        redirect: '/risk-home/individual-stocks/risk-inquiry',
-        children: [
-          {
-            path: '/risk-home/individual-stocks/risk-inquiry',
-            name: 'RiskInquiry',
-            component: () => import('@/views/risk-home/individual-stock-query/risk-inquiry/index'),
-            meta: {
-              title: '个股风险查询',
-            }
-          },
-          {
-            path: '/risk-home/individual-stocks/equity-inquiry',
-            name: 'EquityInquiry',
-            component: () => import('@/views/risk-home/individual-stock-query/equity-inquiry/index'),
-            meta: {
-              title: '个股权益查询',
-            }
-          },
-          {
-            path: '/risk-home/individual-stocks/oncentration-query',
-            name: 'ConcentrationControl',
-            component: () => import('@/views/risk-home/individual-stock-query/concentration-query/index'),
-            meta: {
-              title: '个股集中控制度查询',
-            }
-          },
-        ]
+          title: '同一业务管理'
+        }
       },
       {
-        path: '/risk-home/peer-comparison',
-        name: 'PeerComparison',
-        component: () => import('@/views/risk-home/peer-comparison/index'),
+        path: '/risk-home/defaults-blacklists',
+        name: 'DefaultsBlacklists',
+        component: () => import('@/views/risk-home/defaults-blacklist/index'),
         meta: {
-          title: '同业对比'
-        },
-        children: [
-          {
-            path: '/risk-home/peer-comparison/finance-bid',
-            name: 'FinanceBid',
-            component: () => import('@/views/risk-home/peer-comparison/finance-bid'),
-            meta: {
-              title: '融资标的查询'
-            }
-          },
-          {
-            path: '/risk-home/peer-comparison/margin-auction',
-            name: 'MarginAuction',
-            component: () => import('@/views/risk-home/peer-comparison/margin-auction'),
-            meta: {
-              title: '融券标的查询'
-            }
-          },
-          {
-            path: '/risk-home/peer-comparison/deductible-deposit',
-            name: 'DeductibleDeposit',
-            component: () => import('@/views/risk-home/peer-comparison/deductible-deposit'),
-            meta: {
-              title: '可充抵保证金查询'
-            },
-            children: [
-              {
-                path: '/risk-home/peer-comparison/deductible-deposit/conversion-rate',
-                name: 'ConversionRate',
-                component: () => import('@/views/risk-home/peer-comparison/deductible-deposit/conversion-rate'),
-                meta: {
-                  title: '折算率查询'
-                }
-              },
-              {
-                path: '/risk-home/peer-comparison/deductible-deposit/concentration-degree',
-                name: 'ConcentrationDegree',
-                component: () => import('@/views/risk-home/peer-comparison/deductible-deposit/concentration-degree'),
-                meta: {
-                  title: '集中度查询'
-                }
-              }
-            ]
-          },
-          {
-            path: '/risk-home/peer-comparison/statistical-analysis',
-            name: 'StatisticalAnalysis',
-            component: () => import('@/views/risk-home/peer-comparison/statistical-analysis'),
-            meta: {
-              title: '统计分析'
-            }
-          }
-        ]
-      }
+          title: '违约及黑名单'
+        }
+      },
+      {
+        path: '/risk-home/client-detail',
+        name: 'ClientDetail',
+        component: () => import('@/views/risk-home/client-detail/index'),
+      },
+      {
+        path: '/risk-home/company-relation-detail',
+        name: 'CompanyRelationDetail',
+        component: () => import('@/views/risk-home/company-relation-detail/index'),
+      },
+      {
+        path: '/risk-home/negative-sentiment',
+        name: 'NegativeSentiment',
+        component: () => import('@/views/risk-home/negative-sentiment/index'),
+      },
     ]
   },
 ]
