@@ -3,7 +3,7 @@
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren) && !item.alwaysShow">
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
-          <div :class="`${classType}-item ${classType == 'sub' ? 'pl-20' : ''}`">
+          <div :class="`${classType}-item ${classType == 'sub' ? '' : ''}`">
             <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />
           </div>
         </el-menu-item>
@@ -198,7 +198,7 @@ export default {
   }
   ::v-deep .sub-item{
     font-size: $leftMenuFontSize;
-    padding-left: 20px;
+    padding-left: 10px;
     transition: background-color .3s;
     border-radius: 4px;
     overflow: hidden;

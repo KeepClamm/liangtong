@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <el-page-header @back="goBack" :content="companyName"> </el-page-header>
+    <el-page-header @back="goBack" :content="stockName"> </el-page-header>
     <div class="main-content">
       <div class="container-table">
         <el-card style="border-radius: 16px;">
@@ -98,7 +98,7 @@ import RelationGraph from "relation-graph";
 export default {
   data() {
     return {
-      companyName: '',
+      stockName: '',
       graphOptions: {
         allowSwitchLineShape: true,
         allowSwitchJunctionPoint: true,
@@ -145,7 +145,8 @@ export default {
   },
   components: { RelationGraph },
   mounted() {
-    this.companyName = this.$route.query.title || ''
+    console.log('--------------------------', this.$route.query)
+    this.stockName = this.$route.query.stockName || ''
     this.showGraph();
   },
   methods: {
@@ -157,7 +158,7 @@ export default {
       this.$router.push({
         name: 'CompanyRelationDetail',
         query: {
-          companyName: this.companyName
+          stockName: this.stockName
         }
       });
     },
@@ -168,7 +169,7 @@ export default {
       const jsonData = {
         rootId: "a",
         nodes: [
-          { id: "a", text: this.companyName, borderColor: "yellow", width: 100, height: 100 },
+          { id: "a", text: this.stockName, borderColor: "yellow", width: 100, height: 100 },
           { id: "b", text: "中华人民共和国财政部", borderColor: "yellow", width: 120, height: 120 },
           { id: "c", text: "中央汇金投资有限责任公司", borderColor: "yellow", width: 120, height: 120 },
           { id: "d", text: "梧桐树投资平台有限责任公司", width: 120, height: 120 },

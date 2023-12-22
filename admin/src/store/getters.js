@@ -6,7 +6,9 @@ const getters = {
   roles: state => state.user.roles,
   permission_routes: state => state.permission.routes,
   CurWatchStock: state => state.user.curWatchStockInfo,
-  userWhiteList: state => state.user.whiteList
+  userWhiteList: state => state.user.whiteList,
+  stockList: state => state.stock.stockList,
+  activeStock: state => state.stock.activeStock,
 };
 
 export default getters;

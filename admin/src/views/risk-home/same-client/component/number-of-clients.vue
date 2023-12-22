@@ -3,71 +3,9 @@
     <div>
       <div class="component-title">客户数量分布情况</div>
       <div class="component-main">
-        <div class="client-total">总客户数：2312</div>
-        <div class="compare-container">
-          <div class="abs-progress">
-            <div class="abs-progress-child">
-              <div class="progress-numshow">100</div>
-            </div>
-          </div>
-          <div class="circle" style="margin-right: 30px;">
-            <div class="circle-text">单一业务客户</div>
-          </div>
-          <div style="width: 80px;height: 80px;">
-            <img src="@/assets/compare.png" alt="" class="wh100">
-          </div>
-          <div class="circle" style="margin-left: 30px;">
-            <div class="circle-text">跨业务客户</div>
-          </div>
-          <div class="abs-progress-right">
-            <div class="abs-progress-child-right">
-              <div class="progress-numshow-right">2000</div>
-            </div>
-          </div>
-        </div>
-        <div class="compare-container">
-          <div class="abs-progress">
-            <div class="abs-progress-child" style="width: 200px;">
-              <div class="progress-numshow">400</div>
-            </div>
-          </div>
-          <div class="circle" style="margin-right: 30px;">
-            <div class="circle-text">机构客户</div>
-          </div>
-          <div style="width: 80px;height: 80px;">
-            <img src="@/assets/compare.png" alt="" class="wh100">
-          </div>
-          <div class="circle" style="margin-left: 30px;">
-            <div class="circle-text">个人客户</div>
-          </div>
-          <div class="abs-progress-right">
-            <div class="abs-progress-child-right" style="width: 230px;">
-              <div class="progress-numshow-right">4120</div>
-            </div>
-          </div>
-        </div>
-        <div class="compare-container">
-          <div class="abs-progress" style="border: 2px solid #62b5e5">
-            <div class="abs-progress-child" style="width: 200px;background-color: #62b5e5;">
-              <div class="progress-numshow">390</div>
-            </div>
-          </div>
-          <div class="circle" style="margin-right: 30px;background-color: #62b5e5;">
-            <div class="circle-text">高风险客户</div>
-          </div>
-          <div style="width: 80px;height: 80px;">
-            <img src="@/assets/compare.png" alt="" class="wh100">
-          </div>
-          <div class="circle" style="margin-left: 30px; background-color: #62b5e5;">
-            <div class="circle-text">非高风险客户</div>
-          </div>
-          <div class="abs-progress-right" style="border: 2px solid #62b5e5">
-            <div class="abs-progress-child-right" style="width: 130px;background-color: #62b5e5">
-              <div class="progress-numshow-right">976</div>
-            </div>
-          </div>
-        </div>
+        <div class="client-total">总客户数：71419</div>
       </div>
+      <circle-progress></circle-progress>
       <div class="top-client">
         <el-card style="width: 49%;">
           <div class="top-client-table">
@@ -90,7 +28,7 @@
               <span>非信用类业务前十大规模客户</span>
             </div>
             <div style="width: 100%;">
-              <el-table :data="tableData" style="width: 100%" :cell-style="cellStyle" :header-cell-style="rowClass" stripe>
+              <el-table :data="noCreditData" style="width: 100%" :cell-style="cellStyle" :header-cell-style="rowClass" stripe>
                 <el-table-column  type="index" label="序号" width="60"></el-table-column>
                 <el-table-column  label="客户名称" prop="name"></el-table-column>
                 <el-table-column  label="已用额度占比" prop="percentage"></el-table-column>
@@ -108,10 +46,13 @@
 
 <script>
 import { getSameClientTopCredit, getSameClientTopNonCredit } from '@/api/sameClient'
+import circleProgress from './circle-progress.vue'
 export default {
+  components: { circleProgress },
   data() {
     return {
-      tableData: []
+      tableData: [],
+      noCreditData: []
     }
   },
   created() {
@@ -126,9 +67,12 @@ export default {
     },
     async getData() {
       const creditData = await getSameClientTopCredit()
+      const noCreditData = await getSameClientTopNonCredit()
+
       console.log(creditData)
       // const noncreditData = await getSameClientTopNonCredit()
       this.tableData = creditData.data.items || []
+      this.noCreditData = noCreditData.data.items || []
     }
   }
 };
@@ -153,8 +97,8 @@ div {
 }
 .boxchart-container {
   width: 100%;
+  flex: 1;
   padding: 20px 24px 40px 24px;
-  overflow-y: auto;
   .component-title {
     font-size: 16px;
     font-weight: 700;

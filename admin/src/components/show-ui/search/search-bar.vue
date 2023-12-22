@@ -81,7 +81,7 @@ export default {
   padding: 10px 15px;
   box-sizing: border-box;
   flex-shrink: 0;
-  background-color: #fafafa;
+  // background-color: #fafafa;
   .search-section {
     overflow: hidden;
     transition: all 0.3s linear;

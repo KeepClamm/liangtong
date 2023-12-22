@@ -8,7 +8,7 @@
     <div class="login-form show-flex-box-r">
       <div class="login-box">
         <div class="title">
-          <h2>信用风险管理系统</h2>
+          <h2>登录</h2>
         </div>
         <el-form ref="loginForm" :model="loginForm" :rules="loginRules">
           <el-form-item prop="account">
@@ -46,7 +46,6 @@ import verificationCode from './components/verification-code-comp';
 
 import { setCTLogin, getCTLogin, removeCTLogin } from '@/utils/auth';
 import { encrypt, decrypt } from './aes';
-import router from '@/router';
 
 export default {
   name: "Login",
@@ -181,9 +180,9 @@ export default {
       };
       if (['admin', 'test01'].includes(this.loginForm.account)) {
         localStorage.setItem('userAccount', this.loginForm.account)
-        this.$store.dispatch('setToken',"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsInN1YiI6IjEiLCJpYXQiOjE3MDA0NTgzODUsImV4cCI6MTcwMzA1MDM4NX0.d5_-Sukj8Z4pJDgQWGP-B0rQYYCV2mXC4DYhBeUJUFE");
-        location.reload()
-        // this.$router.push('/risk-home/same-client')
+        // this.$store.dispatch('setToken',"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsInN1YiI6IjEiLCJpYXQiOjE3MDMxMjU1MzcsImV4cCI6MTcwNTcxNzUzN30.pWpiCKA-XnPXRT_gjIbZmagYRYzmxfoyld2atlgYv0s");
+        this.$store.dispatch('setToken',"abvs");
+        location.reload();
         this.loginLoading = true;
         this.setBlackList()
       } else {

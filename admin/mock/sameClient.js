@@ -1,26 +1,36 @@
 
 const Mock = require('mockjs')
-
+let order = ['信用客户A', '信用客户B', '信用客户C', '信用客户D', '信用客户E', '信用客户F', '信用客户G', '信用客户H', '信用客户I', '信用客户J'];
+let orderY = ['非信用客户A','非信用客户B', '非信用客户C','非信用客户D', '非信用客户E','非信用客户F', '非信用客户G', '非信用客户H', '非信用客户I', '非信用客户J'];
 const creditData = Mock.mock({
   'items|10': [{
     'percentage|1': ['99%', '88%', '100%', '23%'],
-    name: 'xxxx',
+    'name|+1': order,
+    'outJudge|1': ['AA','AAA','A'],
+    'mainRisks|1': ['高风险','低风险'],
+    'inJudge|1': ['A-', 'AAA', 'A']
+  }]
+})
+const dataNocredit = Mock.mock({
+  'items|10': [{
+    'percentage|1': ['99%', '88%', '100%', '23%'],
+    'name|+1': orderY,
     'outJudge|1': ['AA','AAA','A'],
     'mainRisks|1': ['高风险','低风险'],
     'inJudge|1': ['A-', 'AAA', 'A']
   }]
 })
 const serviceData = [
-  {num: '123456', name: '国家开发银行', bigClass: '机构', smallClass: '银行', belong: '中央国有企业', serviceRange: '跨业务', limitNum: '760000000', percentage: '249.67%', mainrisks: '低风险', blackFlag: '否'},
-  {num: '125637', name: '宁波银行股份有限公司', bigClass: '机构', smallClass: '银行', belong: '地方国有企业', serviceRange: '跨业务', limitNum: '290000000', percentage: '77.22%', mainrisks: '低风险', blackFlag: '否'},
-  {num: '127818', name: '中信建投证券股份有限公司', bigClass: '机构', smallClass: '券商', belong: '中央国有企业', serviceRange: '跨业务', limitNum: '799532013', percentage: '103.84%', mainrisks: '低风险', blackFlag: '否'},
-  {num: '129999', name: '正信期货有限公司', bigClass: '机构', smallClass: '期货', belong: '民营企业', serviceRange: '单业务', limitNum: '135000000', percentage: '79.46%', mainrisks: '低风险', blackFlag: '否'},
-  {num: '132180', name: '深圳前海微众银行股份有限公司', bigClass: '机构', smallClass: '银行', belong: '民营企业', serviceRange: '单业务', limitNum: '44100000', percentage: '77.10%', mainrisks: '低风险', blackFlag: '否'},
-  {num: '134361', name: '天虹基金管理有限公司', bigClass: '机构', smallClass: '基金', belong: '民营企业', serviceRange: '跨业务', limitNum: '187000000', percentage: '88.69%', mainrisks: '中风险', blackFlag: '否'},
-  {num: '136542', name: '中国光大银行股份有限公司', bigClass: '机构', smallClass: '银行', belong: '中央国有企业', serviceRange: '跨业务', limitNum: '140000000', percentage: '99.85%', mainrisks: '低风险', blackFlag: '否'},
-  {num: '138723', name: '五矿期货有限公司', bigClass: '机构', smallClass: '期货', belong: '中央国有企业', serviceRange: '单业务', limitNum: '24500000', percentage: '113.07%', mainrisks: '高风险', blackFlag: '否'},
-  {num: '140904', name: '美国友邦保险有限公司', bigClass: '机构', smallClass: '其他金融机构', belong: '外商独资企业', serviceRange: '单业务', limitNum: '105000000', percentage: '93.67%', mainrisks: '中高风险', blackFlag: '否'},
-  {num: '143085', name: '比亚迪汽车金融有限公司', bigClass: '机构', smallClass: '其他金融机构', belong: '民营企业', serviceRange: '跨业务', limitNum: '65000000', percentage: '68.77%', mainrisks: '中风险', blackFlag: '否'},
+  {num: '123456',stockCode: '1', stockName: '国家开发银行', bigClass: '机构', smallClass: '银行', belong: '中央国有企业', serviceRange: '跨业务', limitNum: '760000000', percentage: '249.67%', mainrisks: '低风险', blackFlag: '否'},
+  {num: '125637',stockCode: '2', stockName: '宁波银行股份有限公司', bigClass: '机构', smallClass: '银行', belong: '地方国有企业', serviceRange: '跨业务', limitNum: '290000000', percentage: '77.22%', mainrisks: '低风险', blackFlag: '否'},
+  {num: '127818',stockCode: '3', stockName: '中信建投证券股份有限公司', bigClass: '机构', smallClass: '券商', belong: '中央国有企业', serviceRange: '跨业务', limitNum: '799532013', percentage: '103.84%', mainrisks: '低风险', blackFlag: '否'},
+  {num: '129999',stockCode: '4', stockName: '正信期货有限公司', bigClass: '机构', smallClass: '期货', belong: '民营企业', serviceRange: '单业务', limitNum: '135000000', percentage: '79.46%', mainrisks: '低风险', blackFlag: '否'},
+  {num: '132180', stockCode: '5',stockName: '深圳前海微众银行股份有限公司', bigClass: '机构', smallClass: '银行', belong: '民营企业', serviceRange: '单业务', limitNum: '44100000', percentage: '77.10%', mainrisks: '低风险', blackFlag: '否'},
+  {num: '134361',stockCode: '6', stockName: '天虹基金管理有限公司', bigClass: '机构', smallClass: '基金', belong: '民营企业', serviceRange: '跨业务', limitNum: '187000000', percentage: '88.69%', mainrisks: '中风险', blackFlag: '否'},
+  {num: '136542',stockCode: '7', stockName: '中国光大银行股份有限公司', bigClass: '机构', smallClass: '银行', belong: '中央国有企业', serviceRange: '跨业务', limitNum: '140000000', percentage: '99.85%', mainrisks: '低风险', blackFlag: '否'},
+  {num: '138723', stockCode: '8',stockName: '五矿期货有限公司', bigClass: '机构', smallClass: '期货', belong: '中央国有企业', serviceRange: '单业务', limitNum: '24500000', percentage: '113.07%', mainrisks: '高风险', blackFlag: '否'},
+  {num: '140904',stockCode: '9', stockName: '美国友邦保险有限公司', bigClass: '机构', smallClass: '其他金融机构', belong: '外商独资企业', serviceRange: '单业务', limitNum: '105000000', percentage: '93.67%', mainrisks: '中高风险', blackFlag: '否'},
+  {num: '143085', stockCode: '10',stockName: '比亚迪汽车金融有限公司', bigClass: '机构', smallClass: '其他金融机构', belong: '民营企业', serviceRange: '跨业务', limitNum: '65000000', percentage: '68.77%', mainrisks: '中风险', blackFlag: '否'},
 ]
 //status: 0 待审核 1 审核不通过 2 审核通过
 const blacklist = [
@@ -65,7 +75,7 @@ module.exports = [
     response: _ => {
       return {
         code: 20000,
-        data: creditData
+        data: dataNocredit
       }
     }
   },

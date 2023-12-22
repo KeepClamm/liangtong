@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-    <div style="text-align: center;">主体业务及风险一览表</div>
+    <div style="text-align: center; font-weight: 600;font-size: 18px;">主体业务及风险一览表</div>
     <el-table :data="tableData" style="width: 100%;" :header-cell-style="rowClass" :cell-style="cellStyle">
       <el-table-column label="客户代码" prop="num"></el-table-column>
       <el-table-column label="客户名称" prop="name" width="230">
         <template slot-scope="scope">
-          <el-link type="primary" @click="gotoDetail(scope.row.name)">{{ scope.row.name }}</el-link>
+          <el-link type="primary" @click="jumpStockDetail(scope.row.stockName, scope.row.stockCode)">{{ scope.row.stockName }}</el-link>
         </template>
       </el-table-column>
       <el-table-column label="客户大类" prop="bigClass"></el-table-column>
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { jumpStockDetail } from '@/utils';
 import { getSameClientServiceRisk } from '@/api/sameClient'
 export default {
   data() {
@@ -38,6 +39,7 @@ export default {
     })
   },
   methods: {
+    jumpStockDetail,
     rowClass({ row, rowIndex }) {
       return 'text-align: center;color: #000;height:48px;font-size:12px;font-weight:700'
     },

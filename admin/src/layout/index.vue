@@ -7,7 +7,8 @@
       <sidebar class="sidebar-container" />
     </div>
     <div :class="{'main-content':true, 'full-main-content': sidebarHidden}">
-      <app-main />
+      <breadcrumb></breadcrumb>
+      <app-main/>
     </div>
 
     <!-- 原始 start -->
@@ -25,7 +26,8 @@
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain } from './components'
+import { Navbar, Sidebar, AppMain } from './components';
+import Breadcrumb from '../components/Breadcrumb/index'
 // import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
@@ -33,7 +35,8 @@ export default {
   components: {
     Navbar,
     Sidebar,
-    AppMain
+    AppMain,
+    Breadcrumb
   },
   data() {
     return {
@@ -123,6 +126,8 @@ export default {
       padding-top: $headerHeight;
       padding-left: $sliderWidth;
       min-height: 100%;
+      display: flex;
+      flex-direction: column;
       &.full-main-content {
         padding-left: 0;
       }

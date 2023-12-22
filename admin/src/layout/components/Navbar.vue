@@ -17,7 +17,8 @@
         </el-select>
       </div> -->
       <div class="company-list-box">
-        
+        <company-list></company-list>
+      </div>
       <div class="search-box">
         <el-input placeholder="请输入业务/产品名称/单一客户识别码/身份证/护照/企业统一社会信用码/工商注册号/组织机构代码/证券代码" v-model="keywords">
             <i slot="suffix" class="el-input__icon el-icon-search"></i>
@@ -43,8 +44,6 @@
             </span>
           </el-autocomplete>
         </div> -->
-      </div>
-        <!-- <company-list></company-list> -->
       </div>
       
 
@@ -95,7 +94,7 @@ import { mapGetters } from "vuex";
 
 import Logo from './Sidebar/Logo';
 import headerMenu from './Sidebar/header-menu';
-import companyList from './Sidebar/company-list';
+import companyList from './Navbar/company-list.vue';
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
 import changePwdDialog from './change-pwd-dialog';
@@ -258,24 +257,10 @@ export default {
     margin-left: 50px;
     margin-right: 20px;
     padding-left: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    // &:after {
-    //   content: "";
-    //   position: absolute;
-    //   top: 50%;
-    //   left: 0;
-    //   width: 4px;
-    //   height: 20px;
-    //   border-radius: 20px;
-    //   transform: translateY(-50%);
-    //   background: #1065A0;
-    // }
   }
 
   .search-box {
-    width: 100%;
+    width: 500px;
     flex-shrink: 0;
     padding-right: 20px;
     .search-button {

@@ -1,3 +1,5 @@
+import store from '@/store';
+import router from '@/router';
 /**
  * Created by PanJiaChen on 16/11/18.
  */
@@ -125,4 +127,11 @@ export function removeClass(ele, cls) {
     const reg = new RegExp('(\\s|^)' + cls + '(\\s|$)')
     ele.className = ele.className.replace(reg, ' ')
   }
+}
+export function jumpStockDetail(stockName, stockCode = '0000000') {
+  store.dispatch('stock/setActiveStock', { stockName, stockCode })
+  router.push({
+    path: '/risk-home/client-detail',
+    query: { stockName }
+  });
 }
